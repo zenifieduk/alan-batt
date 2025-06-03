@@ -16,14 +16,13 @@ interface UploadedFile {
   uploadedAt: string
 }
 
-const STORAGE_KEY = 'alan-batt-uploaded-files'
 const AUTH_KEY = 'alan-batt-auth'
 
 export default function DownloadsPage() {
   const [files, setFiles] = useState<UploadedFile[]>([])
-  const [isUploading, setIsUploading] = useState(false)
-  const [uploadStatus, setUploadStatus] = useState<{type: 'success' | 'error', message: string} | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadStatus, setUploadStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null)
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [authError, setAuthError] = useState('')
@@ -33,39 +32,41 @@ export default function DownloadsPage() {
   useEffect(() => {
     const savedAuth = localStorage.getItem(AUTH_KEY)
     if (savedAuth) {
-      const authData = JSON.parse(savedAuth)
-      // Check if session is still valid (24 hours)
-      const sessionAge = Date.now() - authData.timestamp
-      if (sessionAge < 24 * 60 * 60 * 1000) {
-        setIsAuthenticated(true)
-      } else {
+      try {
+        const authData = JSON.parse(savedAuth)
+        const now = Date.now()
+        if (now < authData.expires) {
+          setIsAuthenticated(true)
+        } else {
+          localStorage.removeItem(AUTH_KEY)
+        }
+      } catch (error) {
         localStorage.removeItem(AUTH_KEY)
       }
     }
     setIsLoading(false)
   }, [])
 
-  // Load files from localStorage on component mount
+  // Load files from API when authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      const savedFiles = localStorage.getItem(STORAGE_KEY)
-      if (savedFiles) {
-        try {
-          const parsedFiles = JSON.parse(savedFiles)
-          setFiles(parsedFiles)
-        } catch (error) {
-          console.error('Error loading saved files:', error)
-        }
-      }
+      fetchFiles()
     }
   }, [isAuthenticated])
 
-  // Save files to localStorage whenever files state changes
-  useEffect(() => {
-    if (isAuthenticated) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(files))
+  const fetchFiles = async () => {
+    try {
+      const response = await fetch('/api/files')
+      if (response.ok) {
+        const fetchedFiles = await response.json()
+        setFiles(fetchedFiles)
+      } else {
+        console.error('Failed to fetch files')
+      }
+    } catch (error) {
+      console.error('Error fetching files:', error)
     }
-  }, [files, isAuthenticated])
+  }
 
   const handleLogin = async () => {
     setAuthError('')
@@ -80,7 +81,7 @@ export default function DownloadsPage() {
         setIsAuthenticated(true)
         localStorage.setItem(AUTH_KEY, JSON.stringify({
           authenticated: true,
-          timestamp: Date.now()
+          expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours from now
         }))
         setPassword('')
       } else {
@@ -221,7 +222,8 @@ export default function DownloadsPage() {
         throw new Error(result.error || 'Upload failed')
       }
 
-      setFiles(prev => [result, ...prev])
+      // Refresh the file list from the API
+      await fetchFiles()
       setUploadStatus({ type: 'success', message: `File "${file.name}" uploaded successfully!` })
       
       // Clear the input
@@ -237,9 +239,32 @@ export default function DownloadsPage() {
     }
   }
 
-  const handleDeleteFile = (indexToDelete: number) => {
-    setFiles(prev => prev.filter((_, index) => index !== indexToDelete))
-    setUploadStatus({ type: 'success', message: 'File removed from list' })
+  const handleDeleteFile = async (indexToDelete: number) => {
+    const fileToDelete = files[indexToDelete]
+    
+    try {
+      const response = await fetch(`/api/files/${encodeURIComponent(fileToDelete.filename)}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: fileToDelete.url }),
+      })
+
+      if (response.ok) {
+        // Remove from local state
+        setFiles(prev => prev.filter((_, index) => index !== indexToDelete))
+        setUploadStatus({ type: 'success', message: 'File deleted successfully' })
+      } else {
+        throw new Error('Failed to delete file')
+      }
+    } catch (error) {
+      console.error('Delete error:', error)
+      setUploadStatus({ 
+        type: 'error', 
+        message: 'Failed to delete file. Please try again.' 
+      })
+    }
   }
 
   const formatFileSize = (bytes: number) => {
