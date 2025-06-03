@@ -161,16 +161,16 @@ export default function BlogPostPage({ params }: PageProps) {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
-      // Always set as active when clicked, regardless of current state
+      // Set as active immediately
       setActiveSection(id)
       
-      // Force scroll even if already "active"
-      setTimeout(() => {
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
         element.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         })
-      }, 50)
+      })
     }
   }
 
