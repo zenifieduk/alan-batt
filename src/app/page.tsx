@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Rocket, Sparkles, Palette, Zap, Bot, Github, ArrowRight, Users, Target, Lightbulb } from "lucide-react"
+import { Sparkles, Palette, Zap, Bot, Github, ArrowRight, Users, Target, Lightbulb } from "lucide-react"
 import { MobileMenu } from "@/components/ui/mobile-menu"
 
 export default function Home() {
@@ -84,21 +84,21 @@ export default function Home() {
                 
                 <div className="prose prose-lg max-w-none text-slate-700 leading-relaxed">
                   <p className="mb-6">
-                    This mini-site represents Magicalogical's pioneering approach to showcasing development capabilities 
-                    directly to our valued clients. Rather than traditional project documentation, we've created an 
+                    This mini-site represents Magicalogical&apos;s pioneering approach to showcasing development capabilities 
+                    directly to our valued clients. Rather than traditional project documentation, we&apos;ve created an 
                     interactive platform that demonstrates our expertise in real-time.
                   </p>
                   
                   <p className="mb-6">
                     From advanced AI integrations and voice technology to cutting-edge content creation tools, 
-                    this platform showcases everything we're building to keep your operations at the forefront 
+                    this platform showcases everything we&apos;re building to keep your operations at the forefront 
                     of modern technology. Each section demonstrates live capabilities, allowing you to experience 
                     first-hand how these innovations can transform and scale your business operations.
                   </p>
                   
                   <p className="mb-8">
                     This represents our commitment to transparency, innovation, and ensuring our clients understand 
-                    not just what we're building, but how it will revolutionise their competitive advantage in an 
+                    not just what we&apos;re building, but how it will revolutionise their competitive advantage in an 
                     increasingly digital marketplace.
                   </p>
                   
