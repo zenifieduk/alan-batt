@@ -1,7 +1,8 @@
 "use client"
 
+import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Github, Rocket, Sparkles, Code, Palette, Zap, Bot } from "lucide-react"
+import { Github, Rocket, Sparkles, Palette, Zap, Bot } from "lucide-react"
 
 export default function Home() {
   return (
@@ -17,10 +18,10 @@ export default function Home() {
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" asChild>
-              <a href="/ai">
+              <Link href="/ai">
                 <Bot className="h-4 w-4 mr-2" />
                 AI Demo
-              </a>
+              </Link>
             </Button>
             <Button variant="outline" size="sm">
               <Github className="h-4 w-4 mr-2" />
@@ -52,10 +53,10 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <Button size="lg" className="text-base px-8" asChild>
-              <a href="/ai">
+              <Link href="/ai">
                 <Bot className="h-4 w-4 mr-2" />
                 Try AI Demo
-              </a>
+              </Link>
             </Button>
             <Button variant="outline" size="lg" className="text-base px-8">
               <Palette className="h-4 w-4 mr-2" />

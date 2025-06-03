@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react"
 import { useConversation } from '@elevenlabs/react';
+import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { MessageCircle, Phone, Sparkles, Mic, PhoneOff, Loader2, ArrowLeft } from "lucide-react"
 
@@ -95,7 +96,7 @@ export default function AIPage() {
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" asChild>
-              <a href="/">Home</a>
+              <Link href="/">Home</Link>
             </Button>
             <Button variant="outline" size="sm">
               Contact
@@ -223,8 +224,8 @@ export default function AIPage() {
 
                       {!hasRequestedMicPermission && conversation.status === 'disconnected' && (
                         <div className="text-sm text-slate-600 text-center">
-                          <p className="mb-2">Hi! I'm Ellie, your AI sales assistant.</p>
-                          <p>I'll need microphone access to chat with you!</p>
+                          <p className="mb-2">Hi! I&apos;m Ellie, your AI sales assistant.</p>
+                          <p>I&apos;ll need microphone access to chat with you!</p>
                         </div>
                       )}
 
