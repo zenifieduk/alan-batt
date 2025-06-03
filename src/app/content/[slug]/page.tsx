@@ -115,29 +115,56 @@ export default function BlogPostPage({ params }: PageProps) {
   useEffect(() => {
     if (!post || tocItems.length === 0) return
 
-    // Don't auto-set first section - let user interaction or scrolling determine it
-    
     // Wait for content to be rendered
     const timer = setTimeout(() => {
+      console.log('Setting up intersection observer...')
+      
       const observerOptions = {
-        rootMargin: '-20% 0px -60% 0px',
-        threshold: 0.1
+        root: null,
+        rootMargin: '-100px 0px -60% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1]
       }
 
+      const visibleSections = new Set<string>()
+
       const observerCallback = (entries: IntersectionObserverEntry[]) => {
-        // Only update if we have visible entries
-        const visibleEntries = entries.filter(entry => entry.isIntersecting)
-        if (visibleEntries.length > 0) {
-          // Find the entry that's most visible
-          const mostVisible = visibleEntries.reduce((prev, current) => {
-            const prevRect = prev.boundingClientRect
-            const currentRect = current.boundingClientRect
-            
-            // Prefer the section that's closest to the top of the viewport
-            return Math.abs(currentRect.top) < Math.abs(prevRect.top) ? current : prev
+        console.log('Observer callback triggered with', entries.length, 'entries')
+        
+        entries.forEach((entry) => {
+          const id = entry.target.id
+          console.log(`Section ${id}:`, {
+            isIntersecting: entry.isIntersecting,
+            intersectionRatio: entry.intersectionRatio,
+            boundingRect: entry.boundingClientRect.top
           })
           
-          setActiveSection(mostVisible.target.id)
+          if (entry.isIntersecting && entry.intersectionRatio > 0) {
+            visibleSections.add(id)
+          } else {
+            visibleSections.delete(id)
+          }
+        })
+
+        // Find the topmost visible section
+        if (visibleSections.size > 0) {
+          const headingElements = Array.from(document.querySelectorAll('h2[id], h3[id]'))
+          let topMostSection = null
+          let smallestTop = Infinity
+
+          headingElements.forEach((el) => {
+            if (visibleSections.has(el.id)) {
+              const rect = el.getBoundingClientRect()
+              if (rect.top < smallestTop && rect.top >= -100) {
+                smallestTop = rect.top
+                topMostSection = el.id
+              }
+            }
+          })
+
+          if (topMostSection) {
+            console.log('Setting active section to:', topMostSection)
+            setActiveSection(topMostSection)
+          }
         }
       }
 
@@ -145,31 +172,80 @@ export default function BlogPostPage({ params }: PageProps) {
 
       // Observe all heading elements
       const headingElements = document.querySelectorAll('h2[id], h3[id]')
+      console.log('Found heading elements for observation:', headingElements.length)
+      
+      headingElements.forEach((el, index) => {
+        console.log(`Observing heading ${index + 1}:`, el.id, el.textContent?.trim())
+        observer.observe(el)
+      })
+      
       if (headingElements.length > 0) {
-        headingElements.forEach((el) => observer.observe(el))
-        
         return () => {
-          headingElements.forEach((el) => observer.unobserve(el))
+          console.log('Cleaning up intersection observer')
           observer.disconnect()
         }
       }
-    }, 300)
+    }, 1000) // Increased delay to ensure content is fully rendered
 
     return () => clearTimeout(timer)
   }, [post, tocItems])
 
+  // Backup scroll listener for active section tracking
+  useEffect(() => {
+    if (!post || tocItems.length === 0) return
+
+    const handleScroll = () => {
+      const headingElements = Array.from(document.querySelectorAll('h2[id], h3[id]'))
+      let activeId = ''
+      let closestDistance = Infinity
+
+      headingElements.forEach((el) => {
+        const rect = el.getBoundingClientRect()
+        const distance = Math.abs(rect.top - 150) // 150px from top
+        
+        if (rect.top <= 200 && distance < closestDistance) {
+          closestDistance = distance
+          activeId = el.id
+        }
+      })
+
+      if (activeId && activeId !== activeSection) {
+        console.log('Scroll listener setting active section to:', activeId)
+        setActiveSection(activeId)
+      }
+    }
+
+    // Throttle scroll events
+    let ticking = false
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll()
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', throttledScroll, { passive: true })
+    
+    // Initial check
+    setTimeout(handleScroll, 1500)
+
+    return () => {
+      window.removeEventListener('scroll', throttledScroll)
+    }
+  }, [post, tocItems, activeSection])
+
   const scrollToSection = (id: string) => {
+    // Remove immediate active state setting - let scroll tracking handle it
+    
+    // Find and scroll to element directly
     const element = document.getElementById(id)
     if (element) {
-      // Set as active immediately
-      setActiveSection(id)
-      
-      // Use requestAnimationFrame to ensure DOM is ready
-      requestAnimationFrame(() => {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        })
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
       })
     }
   }
