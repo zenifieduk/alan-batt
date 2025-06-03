@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Sparkles, Code, Github } from "lucide-react"
+import { MobileMenu } from "@/components/ui/mobile-menu"
 
 export default function NewDevPage() {
   return (
@@ -15,30 +16,36 @@ export default function NewDevPage() {
             <span className="text-xl font-bold">Alan Batt Technology Hub</span>
           </div>
           <div className="flex items-center space-x-6">
-            <Button variant="ghost" asChild>
-              <Link href="/">Home</Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/ai">AI</Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/content">Content</Link>
-            </Button>
-            <Button variant="ghost" asChild className="bg-blue-50 text-blue-600">
-              <Link href="/new-dev">New Dev</Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/reports">Reports</Link>
-            </Button>
-            <Button variant="outline" size="sm" asChild>
-              <Link href="https://github.com/zenifieduk/alan-batt" target="_blank">
-                <Github className="h-4 w-4 mr-2" />
-                GitHub
-              </Link>
-            </Button>
-            <Button variant="outline" size="sm">
-              Contact
-            </Button>
+            {/* Desktop Navigation - Hidden on mobile */}
+            <div className="hidden lg:flex items-center space-x-6">
+              <Button variant="ghost" asChild>
+                <Link href="/">Home</Link>
+              </Button>
+              <Button variant="ghost" asChild>
+                <Link href="/ai">AI</Link>
+              </Button>
+              <Button variant="ghost" asChild>
+                <Link href="/content">Content</Link>
+              </Button>
+              <Button variant="ghost" asChild className="bg-blue-50 text-blue-600">
+                <Link href="/new-dev">New Dev</Link>
+              </Button>
+              <Button variant="ghost" asChild>
+                <Link href="/reports">Reports</Link>
+              </Button>
+              <Button variant="outline" size="sm" asChild>
+                <Link href="https://github.com/zenifieduk/alan-batt" target="_blank">
+                  <Github className="h-4 w-4 mr-2" />
+                  GitHub
+                </Link>
+              </Button>
+              <Button variant="outline" size="sm">
+                Contact
+              </Button>
+            </div>
+            
+            {/* Mobile Menu */}
+            <MobileMenu currentPage="new-dev" />
           </div>
         </nav>
       </header>
