@@ -1,9 +1,54 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, FileText, Github, Calendar, Clock, ArrowRight, TrendingUp } from "lucide-react"
+import { Sparkles, FileText, Github, Calendar, Clock, ArrowRight, TrendingUp, CheckCircle, Eye, Users } from "lucide-react"
 import { MobileMenu } from "@/components/ui/mobile-menu"
 
+interface BlogPost {
+  slug: string
+  title: string
+  excerpt: string
+  date: string
+  readTime: string
+  status: 'draft' | 'review' | 'approved' | 'published'
+  category: string
+}
+
+const blogPosts: BlogPost[] = [
+  {
+    slug: 'uk-house-price-data-lag-2025',
+    title: 'Why UK House Price Data is 6 Months Behind Reality (And How Smart Buyers Are Staying Ahead in 2025)',
+    excerpt: 'Official UK house price data lags 2-6 months behind actual market conditions. Discover how to read real-time market signals and make informed property decisions.',
+    date: '3rd June 2025',
+    readTime: '5 minutes',
+    status: 'published',
+    category: 'Market Analysis'
+  }
+  // Add more posts here as they're created
+]
+
 export default function ContentPage() {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'draft': return 'bg-gray-100 text-gray-800'
+      case 'review': return 'bg-yellow-100 text-yellow-800'
+      case 'approved': return 'bg-green-100 text-green-800'
+      case 'published': return 'bg-blue-100 text-blue-800'
+      default: return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'approved':
+      case 'published':
+        return <CheckCircle className="w-4 h-4" />
+      case 'review':
+        return <Eye className="w-4 h-4" />
+      default:
+        return <FileText className="w-4 h-4" />
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
       {/* Header */}
@@ -68,92 +113,103 @@ export default function ContentPage() {
               <FileText className="w-8 h-8 text-green-600" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">
-              News & Insights
+              Content Blog & Repository
             </h1>
             <p className="text-lg text-slate-600 mb-8 max-w-3xl mx-auto">
-              Stay informed with the latest property market analysis, data insights, and professional perspectives.
+              Professional property market insights, analysis, and client-ready content for review and approval.
             </p>
           </div>
 
-          {/* Featured Article */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8 mb-8">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-4 h-4 text-orange-600" />
-              </div>
-              <span className="text-sm font-medium text-orange-600">Featured Analysis</span>
+          {/* Blog Stats */}
+          <div className="grid md:grid-cols-4 gap-4 mb-12">
+            <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-white/30 p-4 text-center">
+              <div className="text-2xl font-bold text-slate-900">{blogPosts.length}</div>
+              <div className="text-sm text-slate-600">Total Articles</div>
             </div>
-            
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">
-              Why UK House Price Data is 6 Months Behind Reality (And How Smart Buyers Are Staying Ahead in 2025)
-            </h2>
-            
-            <div className="flex items-center space-x-6 mb-6 text-slate-500">
-              <div className="flex items-center space-x-2">
-                <Calendar className="w-4 h-4" />
-                <span className="text-sm">3rd June 2025</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm">5 minutes read</span>
-              </div>
+            <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-white/30 p-4 text-center">
+              <div className="text-2xl font-bold text-green-600">{blogPosts.filter(p => p.status === 'published').length}</div>
+              <div className="text-sm text-slate-600">Published</div>
             </div>
-
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
-              <p className="text-blue-800 font-medium">
-                <strong>Quick takeaway:</strong> Official UK house price data lags 2-6 months behind actual market conditions. 
-                Whilst Land Registry data shows what happened, smart property decisions require understanding what's happening now. 
-                Here's how to read the real market signals.
-              </p>
+            <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-white/30 p-4 text-center">
+              <div className="text-2xl font-bold text-yellow-600">{blogPosts.filter(p => p.status === 'review').length}</div>
+              <div className="text-sm text-slate-600">In Review</div>
             </div>
-
-            <div className="prose prose-slate max-w-none mb-6">
-              <h3 className="text-xl font-semibold text-slate-900 mb-3">The Data Lag Problem Most People Don't Know About</h3>
-              <p className="text-slate-700 mb-4">
-                When BBC News reports "UK house prices rose 6.4% this year" or you check your property's value online, you're looking at <strong>old news</strong>. 
-                The uncomfortable truth about UK housing market data is that it consistently runs months behind reality.
-              </p>
-              
-              <p className="text-slate-700 mb-4">
-                HM Land Registry data typically lags 2-6 months behind because transactions must complete and be formally registered before appearing in statistics. 
-                The ONS House Price Index uses 13-month revision periods for accuracy, which means even their "current" data reflects past market conditions.
-              </p>
-
-              <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">Why This Matters in 2025</h3>
-              <p className="text-slate-700 mb-4">
-                <strong>The market you're buying or selling in today is fundamentally different from the data you're seeing.</strong> Understanding this data lag changes everything about how you should approach property decisions.
-              </p>
-
-              <ul className="list-disc list-inside text-slate-700 space-y-2 mb-6">
-                <li>Asking prices on Rightmove and Zoopla show current market sentiment</li>
-                <li>Mortgage approval rates indicate demand trends happening right now</li>
-                <li>Days on market reveal real-time supply and demand balance</li>
-                <li>Local estate agent insights capture immediate neighbourhood changes</li>
-              </ul>
-            </div>
-
-            <div className="border-t border-slate-200 pt-6">
-              <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">
-                <Link href="mailto:hello@alanbatt.co.uk" className="flex items-center">
-                  Read Full Analysis
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
+            <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-white/30 p-4 text-center">
+              <div className="text-2xl font-bold text-gray-600">{blogPosts.filter(p => p.status === 'draft').length}</div>
+              <div className="text-sm text-slate-600">Drafts</div>
             </div>
           </div>
 
-          {/* Article Management */}
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Blog Posts */}
+          <div className="space-y-6">
+            {blogPosts.map((post) => (
+              <div key={post.slug} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <TrendingUp className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-sm font-medium text-blue-600">{post.category}</span>
+                  </div>
+                  
+                  <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(post.status)}`}>
+                    {getStatusIcon(post.status)}
+                    <span className="capitalize">{post.status}</span>
+                  </div>
+                </div>
+                
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 leading-tight">
+                  {post.title}
+                </h2>
+                
+                <p className="text-slate-700 mb-6 leading-relaxed">
+                  {post.excerpt}
+                </p>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-6 text-slate-500">
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="w-4 h-4" />
+                      <span className="text-sm">{post.date}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-4 h-4" />
+                      <span className="text-sm">{post.readTime}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex space-x-3">
+                    <Button variant="outline" size="sm" asChild>
+                      <Link href={`/content/${post.slug}`} className="flex items-center">
+                        <Eye className="w-4 h-4 mr-2" />
+                        Preview
+                      </Link>
+                    </Button>
+                    <Button size="sm" asChild>
+                      <Link href={`/content/${post.slug}`} className="flex items-center">
+                        Read Article
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Content Management Info */}
+          <div className="grid md:grid-cols-2 gap-6 mt-12">
             <div className="bg-white/60 backdrop-blur-sm rounded-xl shadow-lg border border-white/30 p-6">
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <FileText className="w-6 h-6 text-purple-600" />
+                <Users className="w-6 h-6 text-purple-600" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Market Research</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">Client Review Process</h3>
               <p className="text-slate-600 text-sm mb-4">
-                In-depth analysis of property market trends, data interpretation, and professional insights for informed decision-making.
+                All content goes through a structured review and approval process. Clients can preview articles, 
+                provide feedback, and approve content before publication.
               </p>
               <div className="text-xs text-slate-500">
-                Updated weekly • Next: UK English compliance updates
+                Draft → Review → Approved → Published
               </div>
             </div>
 
@@ -161,13 +217,31 @@ export default function ContentPage() {
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                 <TrendingUp className="w-6 h-6 text-green-600" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Industry Insights</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">Content Strategy</h3>
               <p className="text-slate-600 text-sm mb-4">
-                Professional perspectives on property investment, market timing, and strategic approaches to buying and selling.
+                Professional property market analysis, data-driven insights, and thought leadership content 
+                designed to establish expertise and drive engagement.
               </p>
               <div className="text-xs text-slate-500">
-                File location: public/articles/ • Format: Markdown
+                Articles stored in: public/articles/ • Format: Markdown
               </div>
+            </div>
+          </div>
+
+          {/* Add New Content */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 mt-12 text-center">
+            <h3 className="text-xl font-semibold text-slate-900 mb-2">Need New Content?</h3>
+            <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
+              Ready to add more articles to your content repository? Our team can create professional, 
+              data-driven property market content tailored to your audience.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+              <Button variant="outline" asChild>
+                <Link href="mailto:hello@alanbatt.co.uk?subject=Content Request">Request New Article</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/downloads">Upload Draft Content</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -175,7 +249,7 @@ export default function ContentPage() {
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center text-slate-500">
-        <p>&copy; 2025 Alan Batt Technology Hub. Professional property market insights.</p>
+        <p>&copy; 2025 Alan Batt Technology Hub. Professional content creation and management.</p>
       </footer>
     </div>
   )
