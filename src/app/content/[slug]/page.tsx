@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, ArrowLeft, Calendar, Clock, CheckCircle, XCircle, Github } from "lucide-react"
+import { Sparkles, ArrowLeft, Calendar, Clock, CheckCircle, XCircle, Github, Newspaper, Share2, Mail } from "lucide-react"
 import { MobileMenu } from "@/components/ui/mobile-menu"
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -14,6 +14,7 @@ interface BlogPost {
   date: string
   readTime: string
   status: 'draft' | 'review' | 'approved' | 'published'
+  category: 'News & Insights Post' | 'Social Post' | 'Email'
 }
 
 interface PageProps {
@@ -58,7 +59,8 @@ export default function BlogPostPage({ params }: PageProps) {
             content,
             date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '3rd June 2025',
             readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '5 minutes',
-            status: 'published'
+            status: 'published',
+            category: 'News & Insights Post'
           })
         } else {
           throw new Error('Post not found')
@@ -95,6 +97,24 @@ export default function BlogPostPage({ params }: PageProps) {
     }
   }
 
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'News & Insights Post': return 'bg-blue-100 text-blue-800'
+      case 'Social Post': return 'bg-purple-100 text-purple-800'
+      case 'Email': return 'bg-green-100 text-green-800'
+      default: return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'News & Insights Post': return <Newspaper className="w-4 h-4" />
+      case 'Social Post': return <Share2 className="w-4 h-4" />
+      case 'Email': return <Mail className="w-4 h-4" />
+      default: return <CheckCircle className="w-4 h-4" />
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 flex items-center justify-center">
@@ -118,7 +138,7 @@ export default function BlogPostPage({ params }: PageProps) {
               <Button variant="ghost" asChild>
                 <Link href="/content">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Blog
+                  Back to Repository
                 </Link>
               </Button>
             </div>
@@ -127,10 +147,10 @@ export default function BlogPostPage({ params }: PageProps) {
 
         <main className="container mx-auto px-4 py-16 text-center">
           <div className="max-w-2xl mx-auto">
-            <h1 className="text-4xl font-bold text-slate-900 mb-4">Post Not Found</h1>
-            <p className="text-slate-600 mb-8">The blog post you're looking for doesn't exist or has been moved.</p>
+            <h1 className="text-4xl font-bold text-slate-900 mb-4">Content Not Found</h1>
+            <p className="text-slate-600 mb-8">The content you're looking for doesn't exist or has been moved.</p>
             <Button asChild>
-              <Link href="/content">Return to Blog</Link>
+              <Link href="/content">Return to Repository</Link>
             </Button>
           </div>
         </main>
@@ -198,7 +218,7 @@ export default function BlogPostPage({ params }: PageProps) {
             <Button variant="ghost" asChild className="text-slate-600 hover:text-slate-900">
               <Link href="/content" className="flex items-center">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Blog
+                Back to Repository
               </Link>
             </Button>
           </div>
@@ -217,9 +237,15 @@ export default function BlogPostPage({ params }: PageProps) {
                 </div>
               </div>
               
-              <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(post.status)}`}>
-                {getStatusIcon(post.status)}
-                <span className="capitalize">{post.status}</span>
+              <div className="flex items-center space-x-3">
+                <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(post.category)}`}>
+                  {getCategoryIcon(post.category)}
+                  <span>{post.category}</span>
+                </div>
+                <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(post.status)}`}>
+                  {getStatusIcon(post.status)}
+                  <span className="capitalize">{post.status}</span>
+                </div>
               </div>
             </div>
 
@@ -258,12 +284,12 @@ export default function BlogPostPage({ params }: PageProps) {
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6 mt-8">
             <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
               <div className="text-center sm:text-left">
-                <h3 className="font-semibold text-slate-900 mb-1">Found this article helpful?</h3>
+                <h3 className="font-semibold text-slate-900 mb-1">Found this content helpful?</h3>
                 <p className="text-sm text-slate-600">Get in touch to discuss your property needs.</p>
               </div>
               <div className="flex space-x-3">
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="/content">More Articles</Link>
+                  <Link href="/content">More Content</Link>
                 </Button>
                 <Button size="sm" asChild>
                   <Link href="mailto:hello@alanbatt.co.uk">Contact Us</Link>

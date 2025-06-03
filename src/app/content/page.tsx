@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, FileText, Github, Calendar, Clock, ArrowRight, TrendingUp, CheckCircle, Eye, Users } from "lucide-react"
+import { Sparkles, FileText, Github, Calendar, Clock, ArrowRight, TrendingUp, CheckCircle, Eye, Users, Mail, Share2, Newspaper } from "lucide-react"
 import { MobileMenu } from "@/components/ui/mobile-menu"
 
 interface BlogPost {
@@ -10,7 +10,7 @@ interface BlogPost {
   date: string
   readTime: string
   status: 'draft' | 'review' | 'approved' | 'published'
-  category: string
+  category: 'News & Insights Post' | 'Social Post' | 'Email'
 }
 
 const blogPosts: BlogPost[] = [
@@ -21,7 +21,7 @@ const blogPosts: BlogPost[] = [
     date: '3rd June 2025',
     readTime: '5 minutes',
     status: 'published',
-    category: 'Market Analysis'
+    category: 'News & Insights Post'
   }
   // Add more posts here as they're created
 ]
@@ -47,6 +47,30 @@ export default function ContentPage() {
       default:
         return <FileText className="w-4 h-4" />
     }
+  }
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'News & Insights Post': return 'bg-blue-100 text-blue-800'
+      case 'Social Post': return 'bg-purple-100 text-purple-800'
+      case 'Email': return 'bg-green-100 text-green-800'
+      default: return 'bg-gray-100 text-gray-800'
+    }
+  }
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'News & Insights Post': return <Newspaper className="w-4 h-4" />
+      case 'Social Post': return <Share2 className="w-4 h-4" />
+      case 'Email': return <Mail className="w-4 h-4" />
+      default: return <FileText className="w-4 h-4" />
+    }
+  }
+
+  const categoryStats = {
+    'News & Insights Post': blogPosts.filter(p => p.category === 'News & Insights Post').length,
+    'Social Post': blogPosts.filter(p => p.category === 'Social Post').length,
+    'Email': blogPosts.filter(p => p.category === 'Email').length
   }
 
   return (
@@ -113,18 +137,46 @@ export default function ContentPage() {
               <FileText className="w-8 h-8 text-green-600" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">
-              Content Blog & Repository
+              Content Repository
             </h1>
             <p className="text-lg text-slate-600 mb-8 max-w-3xl mx-auto">
-              Professional property market insights, analysis, and client-ready content for review and approval.
+              Professional content creation and management across all channels - articles, social posts, and email campaigns.
             </p>
           </div>
 
-          {/* Blog Stats */}
+          {/* Content Categories Overview */}
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Newspaper className="w-5 h-5 text-blue-600 mr-2" />
+                <span className="font-semibold text-blue-900">News & Insights</span>
+              </div>
+              <div className="text-2xl font-bold text-blue-600">{categoryStats['News & Insights Post']}</div>
+              <div className="text-sm text-blue-700">Long-form articles</div>
+            </div>
+            <div className="bg-purple-50 border border-purple-200 rounded-xl p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Share2 className="w-5 h-5 text-purple-600 mr-2" />
+                <span className="font-semibold text-purple-900">Social Posts</span>
+              </div>
+              <div className="text-2xl font-bold text-purple-600">{categoryStats['Social Post']}</div>
+              <div className="text-sm text-purple-700">Social media content</div>
+            </div>
+            <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Mail className="w-5 h-5 text-green-600 mr-2" />
+                <span className="font-semibold text-green-900">Emails</span>
+              </div>
+              <div className="text-2xl font-bold text-green-600">{categoryStats['Email']}</div>
+              <div className="text-sm text-green-700">Email campaigns</div>
+            </div>
+          </div>
+
+          {/* Status Overview */}
           <div className="grid md:grid-cols-4 gap-4 mb-12">
             <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-white/30 p-4 text-center">
               <div className="text-2xl font-bold text-slate-900">{blogPosts.length}</div>
-              <div className="text-sm text-slate-600">Total Articles</div>
+              <div className="text-sm text-slate-600">Total Content</div>
             </div>
             <div className="bg-white/60 backdrop-blur-sm rounded-xl border border-white/30 p-4 text-center">
               <div className="text-2xl font-bold text-green-600">{blogPosts.filter(p => p.status === 'published').length}</div>
@@ -140,16 +192,18 @@ export default function ContentPage() {
             </div>
           </div>
 
-          {/* Blog Posts */}
+          {/* Content Posts */}
           <div className="space-y-6">
             {blogPosts.map((post) => (
               <div key={post.slug} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <TrendingUp className="w-4 h-4 text-blue-600" />
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${getCategoryColor(post.category).replace('text-', 'text-').replace('bg-', 'bg-')}`}>
+                      {getCategoryIcon(post.category)}
                     </div>
-                    <span className="text-sm font-medium text-blue-600">{post.category}</span>
+                    <span className={`text-sm font-medium px-3 py-1 rounded-full ${getCategoryColor(post.category)}`}>
+                      {post.category}
+                    </span>
                   </div>
                   
                   <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(post.status)}`}>
@@ -187,7 +241,7 @@ export default function ContentPage() {
                     </Button>
                     <Button size="sm" asChild>
                       <Link href={`/content/${post.slug}`} className="flex items-center">
-                        Read Article
+                        Read Content
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Link>
                     </Button>
@@ -205,11 +259,11 @@ export default function ContentPage() {
               </div>
               <h3 className="text-lg font-semibold text-slate-900 mb-2">Client Review Process</h3>
               <p className="text-slate-600 text-sm mb-4">
-                All content goes through a structured review and approval process. Clients can preview articles, 
-                provide feedback, and approve content before publication.
+                All content goes through a structured review and approval process. Clients can preview content across all formats, 
+                provide feedback, and approve before publication or distribution.
               </p>
               <div className="text-xs text-slate-500">
-                Draft → Review → Approved → Published
+                Draft → Review → Approved → Published/Sent
               </div>
             </div>
 
@@ -217,30 +271,42 @@ export default function ContentPage() {
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                 <TrendingUp className="w-6 h-6 text-green-600" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">Content Strategy</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">Multi-Channel Strategy</h3>
               <p className="text-slate-600 text-sm mb-4">
-                Professional property market analysis, data-driven insights, and thought leadership content 
-                designed to establish expertise and drive engagement.
+                Comprehensive content strategy across news articles, social media posts, and email campaigns. 
+                Consistent messaging adapted for each platform and audience.
               </p>
               <div className="text-xs text-slate-500">
-                Articles stored in: public/articles/ • Format: Markdown
+                Content types: Articles • Social Posts • Email Campaigns
               </div>
             </div>
           </div>
 
           {/* Add New Content */}
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-8 mt-12 text-center">
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">Need New Content?</h3>
+            <h3 className="text-xl font-semibold text-slate-900 mb-2">Create New Content</h3>
             <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
-              Ready to add more articles to your content repository? Our team can create professional, 
-              data-driven property market content tailored to your audience.
+              Ready to add more content to your repository? Choose the type of content you need and our team 
+              will create professional, engaging material tailored to your audience.
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
               <Button variant="outline" asChild>
-                <Link href="mailto:hello@alanbatt.co.uk?subject=Content Request">Request New Article</Link>
+                <Link href="mailto:hello@alanbatt.co.uk?subject=News Article Request">
+                  <Newspaper className="w-4 h-4 mr-2" />
+                  Request Article
+                </Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link href="mailto:hello@alanbatt.co.uk?subject=Social Content Request">
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Social Content
+                </Link>
               </Button>
               <Button asChild>
-                <Link href="/downloads">Upload Draft Content</Link>
+                <Link href="mailto:hello@alanbatt.co.uk?subject=Email Campaign Request">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Email Campaign
+                </Link>
               </Button>
             </div>
           </div>
