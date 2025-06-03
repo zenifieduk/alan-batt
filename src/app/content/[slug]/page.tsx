@@ -115,25 +115,28 @@ export default function BlogPostPage({ params }: PageProps) {
   useEffect(() => {
     if (!post || tocItems.length === 0) return
 
-    // Set first section as active initially
-    if (tocItems.length > 0 && !activeSection) {
-      setActiveSection(tocItems[0].id)
-    }
-
+    // Don't auto-set first section - let user interaction or scrolling determine it
+    
     // Wait for content to be rendered
     const timer = setTimeout(() => {
       const observerOptions = {
-        rootMargin: '-10% 0px -60% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1]
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0.1
       }
 
       const observerCallback = (entries: IntersectionObserverEntry[]) => {
-        // Find the entry with the highest intersection ratio that is intersecting
+        // Only update if we have visible entries
         const visibleEntries = entries.filter(entry => entry.isIntersecting)
         if (visibleEntries.length > 0) {
-          const mostVisible = visibleEntries.reduce((prev, current) => 
-            current.intersectionRatio > prev.intersectionRatio ? current : prev
-          )
+          // Find the entry that's most visible
+          const mostVisible = visibleEntries.reduce((prev, current) => {
+            const prevRect = prev.boundingClientRect
+            const currentRect = current.boundingClientRect
+            
+            // Prefer the section that's closest to the top of the viewport
+            return Math.abs(currentRect.top) < Math.abs(prevRect.top) ? current : prev
+          })
+          
           setActiveSection(mostVisible.target.id)
         }
       }
@@ -150,20 +153,24 @@ export default function BlogPostPage({ params }: PageProps) {
           observer.disconnect()
         }
       }
-    }, 200)
+    }, 300)
 
     return () => clearTimeout(timer)
-  }, [post, tocItems, activeSection])
+  }, [post, tocItems])
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
-      // Immediately set as active when clicked
+      // Always set as active when clicked, regardless of current state
       setActiveSection(id)
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      })
+      
+      // Force scroll even if already "active"
+      setTimeout(() => {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        })
+      }, 50)
     }
   }
 
@@ -335,8 +342,8 @@ export default function BlogPostPage({ params }: PageProps) {
                             block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors
                             ${item.level === 3 ? 'ml-4' : ''}
                             ${activeSection === item.id 
-                              ? 'bg-purple-100 text-purple-800 font-medium' 
-                              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                              ? 'bg-purple-100 text-purple-800 font-medium border-l-2 border-purple-400' 
+                              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-l-2 border-transparent'
                             }
                           `}
                         >
