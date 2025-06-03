@@ -80,8 +80,8 @@ export default function AIPage() {
     }
   }
 
-  const handleChatWithTrevor = () => {
-    window.open('https://classiccarclubs.uk', '_blank')
+  const handleChatWithEllieChatbot = () => {
+    window.open('#', '_blank')
   }
 
   return (
@@ -421,20 +421,21 @@ export default function AIPage() {
               </div>
             </section>
 
-            {/* Trevor Section */}
+            {/* Ellie Chatbot Section */}
             <section className="space-y-8">
-              {/* Trevor Introduction */}
+              {/* Ellie Chatbot Introduction */}
               <div className="text-left max-w-4xl">
                 <h2 className="text-3xl font-bold text-slate-900 mb-4">
-                  2. Classic Car Expert - Trevor
+                  2. Alan Batt Chatbot Development - Ellie Chatbot
                 </h2>
                 <p className="text-lg text-slate-600">
-                  Trevor is our specialized chatbot for ClassicCarClubs.uk, providing expert knowledge 
-                  about classic cars, parts, restoration advice, and connecting enthusiasts.
+                  Ellie Chatbot represents our advanced text-based conversational AI development capabilities. 
+                  Designed for Alan Batt's client services, it demonstrates sophisticated natural language processing 
+                  and intelligent response generation for business applications.
                 </p>
               </div>
 
-              {/* Trevor Demo Card - Centered */}
+              {/* Ellie Chatbot Demo Card - Centered */}
               <div className="flex justify-center">
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8 hover:shadow-xl transition-all duration-300 w-full max-w-md">
                   <div className="flex flex-col items-center text-center">
@@ -445,28 +446,28 @@ export default function AIPage() {
 
                     {/* Title */}
                     <h3 className="text-2xl font-bold text-slate-900 mb-4">
-                      Chat with Trevor
+                      Ellie Chatbot
                     </h3>
 
                     {/* Description */}
                     <p className="text-slate-600 mb-3">
-                      Classic car expert chatbot (External Demo)
+                      Advanced text-based AI assistant (Development Demo)
                     </p>
 
                     {/* Additional Info */}
                     <p className="text-slate-700 font-medium mb-8">
-                      Available on ClassicCarClubs.uk
+                      Showcasing chatbot development capabilities
                     </p>
 
                     {/* Button */}
                     <Button 
-                      onClick={handleChatWithTrevor}
+                      onClick={handleChatWithEllieChatbot}
                       variant="outline"
                       className="w-full border-2 border-green-500 text-green-600 hover:bg-green-50 py-4 px-8 text-lg font-medium rounded-xl transition-all duration-300"
                       size="lg"
                     >
                       <MessageCircle className="w-5 h-5 mr-3" />
-                      Request Demo
+                      View Development Demo
                     </Button>
                   </div>
                 </div>
