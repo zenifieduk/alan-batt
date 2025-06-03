@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, Menu, X, ChevronRight, ChevronDown, Github, Phone, Bot, FileText, Code, BarChart3, Search } from "lucide-react"
+import { Sparkles, Menu, X, ChevronRight, ChevronDown, Github, Phone, Bot, FileText, Code, BarChart3, Search, Download } from "lucide-react"
 import { LucideIcon } from 'lucide-react'
 
 interface MobileMenuProps {
@@ -47,6 +47,7 @@ export function MobileMenu({ currentPage }: MobileMenuProps) {
         { href: '/new-dev', label: 'New Dev', icon: Code, active: currentPage === 'new-dev' },
         { href: '/reports', label: 'Reports', icon: BarChart3, active: currentPage === 'reports' },
         { href: '/seo', label: 'SEO', icon: Search, active: currentPage === 'seo' },
+        { href: '/downloads', label: 'Downloads', icon: Download, active: currentPage === 'downloads' },
       ]
     },
     {

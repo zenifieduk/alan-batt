@@ -38,6 +38,9 @@ export default function Home() {
               <Button variant="ghost" asChild>
                 <Link href="/seo">SEO</Link>
               </Button>
+              <Button variant="ghost" asChild>
+                <Link href="/downloads">Downloads</Link>
+              </Button>
               <Button variant="outline" size="sm" asChild>
                 <Link href="https://github.com/zenifieduk/alan-batt" target="_blank">
                   <Github className="h-4 w-4 mr-2" />
