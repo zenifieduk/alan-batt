@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, Download, Upload, FileText, Image, File, Github, Loader2, CheckCircle, AlertCircle, Trash2 } from "lucide-react"
+import { Sparkles, Download, Upload, FileText, Image, File, Github, Loader2, CheckCircle, AlertCircle, Trash2, Lock, Eye, EyeOff } from "lucide-react"
 import { MobileMenu } from "@/components/ui/mobile-menu"
 
 interface UploadedFile {
@@ -17,30 +17,188 @@ interface UploadedFile {
 }
 
 const STORAGE_KEY = 'alan-batt-uploaded-files'
+const AUTH_KEY = 'alan-batt-auth'
 
 export default function DownloadsPage() {
   const [files, setFiles] = useState<UploadedFile[]>([])
   const [isUploading, setIsUploading] = useState(false)
   const [uploadStatus, setUploadStatus] = useState<{type: 'success' | 'error', message: string} | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [authError, setAuthError] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Check authentication on mount
+  useEffect(() => {
+    const savedAuth = localStorage.getItem(AUTH_KEY)
+    if (savedAuth) {
+      const authData = JSON.parse(savedAuth)
+      // Check if session is still valid (24 hours)
+      const sessionAge = Date.now() - authData.timestamp
+      if (sessionAge < 24 * 60 * 60 * 1000) {
+        setIsAuthenticated(true)
+      } else {
+        localStorage.removeItem(AUTH_KEY)
+      }
+    }
+    setIsLoading(false)
+  }, [])
 
   // Load files from localStorage on component mount
   useEffect(() => {
-    const savedFiles = localStorage.getItem(STORAGE_KEY)
-    if (savedFiles) {
-      try {
-        const parsedFiles = JSON.parse(savedFiles)
-        setFiles(parsedFiles)
-      } catch (error) {
-        console.error('Error loading saved files:', error)
+    if (isAuthenticated) {
+      const savedFiles = localStorage.getItem(STORAGE_KEY)
+      if (savedFiles) {
+        try {
+          const parsedFiles = JSON.parse(savedFiles)
+          setFiles(parsedFiles)
+        } catch (error) {
+          console.error('Error loading saved files:', error)
+        }
       }
     }
-  }, [])
+  }, [isAuthenticated])
 
   // Save files to localStorage whenever files state changes
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(files))
-  }, [files])
+    if (isAuthenticated) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(files))
+    }
+  }, [files, isAuthenticated])
 
+  const handleLogin = async () => {
+    setAuthError('')
+    try {
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      })
+
+      if (response.ok) {
+        setIsAuthenticated(true)
+        localStorage.setItem(AUTH_KEY, JSON.stringify({
+          authenticated: true,
+          timestamp: Date.now()
+        }))
+        setPassword('')
+      } else {
+        setAuthError('Invalid access code. Please try again.')
+      }
+    } catch (error) {
+      setAuthError('Connection error. Please try again.')
+    }
+  }
+
+  const handleLogout = () => {
+    setIsAuthenticated(false)
+    localStorage.removeItem(AUTH_KEY)
+    setPassword('')
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleLogin()
+    }
+  }
+
+  // Show loading spinner while checking auth
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-slate-600" />
+      </div>
+    )
+  }
+
+  // Show login form if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+        {/* Header */}
+        <header className="container mx-auto px-4 py-6">
+          <nav className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-primary-foreground" />
+              </div>
+              <span className="text-xl font-bold">Alan Batt Technology Hub</span>
+            </div>
+            <div className="flex items-center space-x-6">
+              <Button variant="ghost" asChild>
+                <Link href="/">← Back to Home</Link>
+              </Button>
+            </div>
+          </nav>
+        </header>
+
+        {/* Login Form */}
+        <main className="container mx-auto px-4 py-16 flex items-center justify-center min-h-[calc(100vh-200px)]">
+          <div className="max-w-md w-full">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Lock className="w-8 h-8 text-indigo-600" />
+                </div>
+                <h1 className="text-2xl font-bold text-slate-900 mb-2">Access Required</h1>
+                <p className="text-slate-600">Enter the access code to use the file management system</p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Enter access code"
+                    className="w-full px-4 py-3 pr-12 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-3 text-slate-500 hover:text-slate-700"
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+
+                {authError && (
+                  <div className="flex items-center space-x-2 p-3 rounded-lg bg-red-50 text-red-800">
+                    <AlertCircle className="w-5 h-5" />
+                    <span className="text-sm font-medium">{authError}</span>
+                  </div>
+                )}
+
+                <Button 
+                  onClick={handleLogin}
+                  disabled={!password.trim()}
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3"
+                >
+                  <Lock className="w-4 h-4 mr-2" />
+                  Access File Manager
+                </Button>
+              </div>
+
+              <div className="mt-6 text-center">
+                <p className="text-xs text-slate-500">
+                  Contact Dan or Jamie at Magicalogical for access codes
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="container mx-auto px-4 py-8 text-center text-slate-500">
+          <p>&copy; 2025 Alan Batt Technology Hub. Secure access required.</p>
+        </footer>
+      </div>
+    )
+  }
+
+  // Rest of existing component code for authenticated users...
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
@@ -110,7 +268,7 @@ export default function DownloadsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      {/* Header */}
+      {/* Header with logout */}
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -143,14 +301,14 @@ export default function DownloadsPage() {
               <Button variant="ghost" asChild className="bg-blue-50 text-blue-600">
                 <Link href="/downloads">Downloads</Link>
               </Button>
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                Logout
+              </Button>
               <Button variant="outline" size="sm" asChild>
                 <Link href="https://github.com/zenifieduk/alan-batt" target="_blank">
                   <Github className="h-4 w-4 mr-2" />
                   GitHub
                 </Link>
-              </Button>
-              <Button variant="outline" size="sm">
-                Contact
               </Button>
             </div>
             
