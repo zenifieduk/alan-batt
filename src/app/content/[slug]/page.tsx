@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, ArrowLeft, Calendar, Clock, CheckCircle, XCircle, Github, Newspaper, Share2, Mail } from "lucide-react"
+import { Sparkles, ArrowLeft, Calendar, Clock, CheckCircle, XCircle, Github, Newspaper, Share2, Mail, List } from "lucide-react"
 import { MobileMenu } from "@/components/ui/mobile-menu"
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -21,11 +21,19 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
+interface TOCItem {
+  id: string
+  title: string
+  level: number
+}
+
 export default function BlogPostPage({ params }: PageProps) {
   const [post, setPost] = useState<BlogPost | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [slug, setSlug] = useState<string>('')
+  const [tocItems, setTocItems] = useState<TOCItem[]>([])
+  const [activeSection, setActiveSection] = useState<string>('')
 
   useEffect(() => {
     const loadParams = async () => {
@@ -54,6 +62,24 @@ export default function BlogPostPage({ params }: PageProps) {
           const publishedLine = lines.find(line => line.includes('Published:'))
           const readTimeLine = lines.find(line => line.includes('Reading time:'))
           
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            const id = title.toLowerCase()
+              .replace(/[^\w\s-]/g, '')
+              .replace(/\s+/g, '-')
+              .replace(/-+/g, '-')
+              .trim()
+            
+            headings.push({ id, title, level })
+          }
+          
+          setTocItems(headings)
           setPost({
             title,
             content,
@@ -74,6 +100,42 @@ export default function BlogPostPage({ params }: PageProps) {
 
     loadPost()
   }, [slug])
+
+  // Intersection Observer for active section tracking
+  useEffect(() => {
+    const observerOptions = {
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    }
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id)
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+
+    // Observe all heading elements
+    const headingElements = document.querySelectorAll('h2[id], h3[id]')
+    headingElements.forEach((el) => observer.observe(el))
+
+    return () => {
+      headingElements.forEach((el) => observer.unobserve(el))
+    }
+  }, [post])
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+  }
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -212,7 +274,7 @@ export default function BlogPostPage({ params }: PageProps) {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Back Button */}
           <div className="mb-8">
             <Button variant="ghost" asChild className="text-slate-600 hover:text-slate-900">
@@ -223,77 +285,149 @@ export default function BlogPostPage({ params }: PageProps) {
             </Button>
           </div>
 
-          {/* Article Header */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8 mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <Calendar className="w-4 h-4 text-slate-500" />
-                  <span className="text-sm text-slate-500">{post.date}</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Clock className="w-4 h-4 text-slate-500" />
-                  <span className="text-sm text-slate-500">{post.readTime}</span>
+          <div className="flex flex-col xl:flex-row gap-8">
+            {/* Table of Contents Sidebar */}
+            {tocItems.length > 0 && (
+              <div className="xl:w-80 xl:flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6">
+                    <div className="flex items-center space-x-2 mb-4">
+                      <List className="w-5 h-5 text-purple-600" />
+                      <h3 className="font-semibold text-slate-900">Table of Contents</h3>
+                    </div>
+                    
+                    <nav className="space-y-1">
+                      {tocItems.map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => scrollToSection(item.id)}
+                          className={`
+                            block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors
+                            ${item.level === 3 ? 'ml-4' : ''}
+                            ${activeSection === item.id 
+                              ? 'bg-purple-100 text-purple-800 font-medium' 
+                              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                            }
+                          `}
+                        >
+                          {item.title}
+                        </button>
+                      ))}
+                    </nav>
+                    
+                    <div className="mt-6 pt-4 border-t border-slate-200">
+                      <div className="text-xs text-slate-500">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                          <span>Current section</span>
+                        </div>
+                        <p>Click any heading to jump to that section. Your progress is automatically tracked.</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              
-              <div className="flex items-center space-x-3">
-                <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(post.category)}`}>
-                  {getCategoryIcon(post.category)}
-                  <span>{post.category}</span>
+            )}
+
+            {/* Article Content */}
+            <div className="flex-1 min-w-0">
+              {/* Article Header */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8 mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="w-4 h-4 text-slate-500" />
+                      <span className="text-sm text-slate-500">{post.date}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-4 h-4 text-slate-500" />
+                      <span className="text-sm text-slate-500">{post.readTime}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-3">
+                    <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(post.category)}`}>
+                      {getCategoryIcon(post.category)}
+                      <span>{post.category}</span>
+                    </div>
+                    <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(post.status)}`}>
+                      {getStatusIcon(post.status)}
+                      <span className="capitalize">{post.status}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(post.status)}`}>
-                  {getStatusIcon(post.status)}
-                  <span className="capitalize">{post.status}</span>
+
+                <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                  {post.title}
+                </h1>
+              </div>
+
+              {/* Article Content */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
+                <div className="prose prose-slate prose-lg max-w-none">
+                  <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      h1: ({ children }) => <h1 className="text-3xl font-bold text-slate-900 mb-6 mt-8 first:mt-0">{children}</h1>,
+                      h2: ({ children }) => {
+                        const text = children?.toString() || ''
+                        const id = text.toLowerCase()
+                          .replace(/[^\w\s-]/g, '')
+                          .replace(/\s+/g, '-')
+                          .replace(/-+/g, '-')
+                          .trim()
+                        return (
+                          <h2 id={id} className="text-2xl font-bold text-slate-900 mb-4 mt-8 scroll-mt-8">
+                            {children}
+                          </h2>
+                        )
+                      },
+                      h3: ({ children }) => {
+                        const text = children?.toString() || ''
+                        const id = text.toLowerCase()
+                          .replace(/[^\w\s-]/g, '')
+                          .replace(/\s+/g, '-')
+                          .replace(/-+/g, '-')
+                          .trim()
+                        return (
+                          <h3 id={id} className="text-xl font-semibold text-slate-900 mb-3 mt-6 scroll-mt-8">
+                            {children}
+                          </h3>
+                        )
+                      },
+                      p: ({ children }) => <p className="text-slate-700 mb-4 leading-relaxed">{children}</p>,
+                      ul: ({ children }) => <ul className="list-disc list-inside text-slate-700 space-y-2 mb-6">{children}</ul>,
+                      strong: ({ children }) => <strong className="font-semibold text-slate-900">{children}</strong>,
+                      em: ({ children }) => <em className="italic text-slate-600">{children}</em>,
+                      blockquote: ({ children }) => (
+                        <blockquote className="border-l-4 border-blue-400 bg-blue-50 p-4 my-6">
+                          {children}
+                        </blockquote>
+                      ),
+                      hr: () => <hr className="border-slate-200 my-8" />
+                    }}
+                  >
+                    {post.content}
+                  </ReactMarkdown>
                 </div>
               </div>
-            </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-              {post.title}
-            </h1>
-          </div>
-
-          {/* Article Content */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
-            <div className="prose prose-slate prose-lg max-w-none">
-              <ReactMarkdown 
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  h1: ({ children }) => <h1 className="text-3xl font-bold text-slate-900 mb-6 mt-8 first:mt-0">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-2xl font-bold text-slate-900 mb-4 mt-8">{children}</h2>,
-                  h3: ({ children }) => <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">{children}</h3>,
-                  p: ({ children }) => <p className="text-slate-700 mb-4 leading-relaxed">{children}</p>,
-                  ul: ({ children }) => <ul className="list-disc list-inside text-slate-700 space-y-2 mb-6">{children}</ul>,
-                  strong: ({ children }) => <strong className="font-semibold text-slate-900">{children}</strong>,
-                  em: ({ children }) => <em className="italic text-slate-600">{children}</em>,
-                  blockquote: ({ children }) => (
-                    <blockquote className="border-l-4 border-blue-400 bg-blue-50 p-4 my-6">
-                      {children}
-                    </blockquote>
-                  ),
-                  hr: () => <hr className="border-slate-200 my-8" />
-                }}
-              >
-                {post.content}
-              </ReactMarkdown>
-            </div>
-          </div>
-
-          {/* Article Actions */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6 mt-8">
-            <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
-              <div className="text-center sm:text-left">
-                <h3 className="font-semibold text-slate-900 mb-1">Found this content helpful?</h3>
-                <p className="text-sm text-slate-600">Get in touch to discuss your property needs.</p>
-              </div>
-              <div className="flex space-x-3">
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/content">More Content</Link>
-                </Button>
-                <Button size="sm" asChild>
-                  <Link href="mailto:hello@alanbatt.co.uk">Contact Us</Link>
-                </Button>
+              {/* Article Actions */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6 mt-8">
+                <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+                  <div className="text-center sm:text-left">
+                    <h3 className="font-semibold text-slate-900 mb-1">Found this content helpful?</h3>
+                    <p className="text-sm text-slate-600">Get in touch to discuss your property needs.</p>
+                  </div>
+                  <div className="flex space-x-3">
+                    <Button variant="outline" size="sm" asChild>
+                      <Link href="/content">More Content</Link>
+                    </Button>
+                    <Button size="sm" asChild>
+                      <Link href="mailto:hello@alanbatt.co.uk">Contact Us</Link>
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
