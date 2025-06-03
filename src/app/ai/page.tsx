@@ -484,6 +484,12 @@ export default function AIPage() {
                         Advanced text-based AI assistant
                       </p>
 
+                      {/* Status Indicator */}
+                      <div className="flex items-center justify-center space-x-2 mb-4">
+                        <div className="w-2 h-2 bg-amber-500 rounded-full" />
+                        <span className="text-sm font-medium text-amber-700">Status: Training</span>
+                      </div>
+
                       {/* Additional Info */}
                       <p className="text-slate-700 font-medium mb-8">
                         Experience intelligent conversation powered by ElevenLabs
