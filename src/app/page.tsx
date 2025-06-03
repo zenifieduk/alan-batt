@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Github, Rocket, Sparkles, Code, Palette, Zap } from "lucide-react"
+import { Github, Rocket, Sparkles, Code, Palette, Zap, Bot } from "lucide-react"
 
 export default function Home() {
   return (
@@ -15,10 +15,18 @@ export default function Home() {
             </div>
             <span className="text-xl font-bold">Alan Batt</span>
           </div>
-          <Button variant="outline" size="sm">
-            <Github className="h-4 w-4 mr-2" />
-            GitHub
-          </Button>
+          <div className="flex items-center space-x-4">
+            <Button variant="ghost" asChild>
+              <a href="/ai">
+                <Bot className="h-4 w-4 mr-2" />
+                AI Demo
+              </a>
+            </Button>
+            <Button variant="outline" size="sm">
+              <Github className="h-4 w-4 mr-2" />
+              GitHub
+            </Button>
+          </div>
         </nav>
       </header>
 
@@ -43,9 +51,11 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Button size="lg" className="text-base px-8">
-              <Code className="h-4 w-4 mr-2" />
-              Start Coding
+            <Button size="lg" className="text-base px-8" asChild>
+              <a href="/ai">
+                <Bot className="h-4 w-4 mr-2" />
+                Try AI Demo
+              </a>
             </Button>
             <Button variant="outline" size="lg" className="text-base px-8">
               <Palette className="h-4 w-4 mr-2" />
@@ -83,12 +93,12 @@ export default function Home() {
           <div className="p-6 rounded-lg border bg-card text-card-foreground shadow-sm">
             <div className="mb-4">
               <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                <Code className="h-6 w-6 text-primary" />
+                <Bot className="h-6 w-6 text-primary" />
               </div>
             </div>
-            <h3 className="text-lg font-semibold mb-2">Developer Ready</h3>
+            <h3 className="text-lg font-semibold mb-2">AI Powered</h3>
             <p className="text-muted-foreground">
-              TypeScript, ESLint, Prettier, and modern tooling configured out of the box.
+              Experience our AI agents with ElevenLabs voice technology integration.
             </p>
           </div>
         </div>
@@ -110,8 +120,8 @@ export default function Home() {
               <span className="text-muted-foreground">Type Safety</span>
             </div>
             <div className="flex flex-col items-center p-4 rounded-lg bg-muted/50">
-              <span className="font-semibold">Radix UI</span>
-              <span className="text-muted-foreground">Components</span>
+              <span className="font-semibold">ElevenLabs</span>
+              <span className="text-muted-foreground">Voice AI</span>
             </div>
           </div>
         </div>
