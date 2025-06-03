@@ -430,7 +430,7 @@ export default function AIPage() {
                 </h2>
                 <p className="text-lg text-slate-600">
                   Ellie Chatbot represents our advanced text-based conversational AI development capabilities. 
-                  Designed for Alan Batt's client services, it demonstrates sophisticated natural language processing 
+                  Designed for Alan Batt&apos;s client services, it demonstrates sophisticated natural language processing 
                   and intelligent response generation for business applications.
                 </p>
               </div>
