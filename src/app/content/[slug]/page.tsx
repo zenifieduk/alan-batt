@@ -81,12 +81,16 @@ export default function BlogPostPage({ params }: PageProps) {
           while ((match = headingRegex.exec(content)) !== null) {
             const level = match[1].length
             const title = match[2].trim()
-            const id = generateHeadingId(title)
             
-            headings.push({ id, title, level })
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
           }
           
           setTocItems(headings)
+          console.log('TOC headings extracted:', headings)
           setPost({
             title,
             content,
@@ -399,6 +403,7 @@ export default function BlogPostPage({ params }: PageProps) {
                       h2: ({ children }) => {
                         const text = children?.toString() || ''
                         const id = generateHeadingId(text)
+                        console.log('H2 rendered:', { text, id })
                         return (
                           <h2 id={id} className="text-2xl font-bold text-slate-900 mb-4 mt-8 scroll-mt-8">
                             {children}
@@ -408,6 +413,7 @@ export default function BlogPostPage({ params }: PageProps) {
                       h3: ({ children }) => {
                         const text = children?.toString() || ''
                         const id = generateHeadingId(text)
+                        console.log('H3 rendered:', { text, id })
                         return (
                           <h3 id={id} className="text-xl font-semibold text-slate-900 mb-3 mt-6 scroll-mt-8">
                             {children}
