@@ -90,7 +90,6 @@ export default function BlogPostPage({ params }: PageProps) {
           }
           
           setTocItems(headings)
-          console.log('TOC headings extracted:', headings)
           setPost({
             title,
             content,
@@ -364,8 +363,12 @@ export default function BlogPostPage({ params }: PageProps) {
             <div className="flex-1 min-w-0">
               {/* Article Header */}
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8 mb-8">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center space-x-4">
+                <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+                  {post.title}
+                </h1>
+                
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                  <div className="flex flex-wrap items-center gap-4">
                     <div className="flex items-center space-x-2">
                       <Calendar className="w-4 h-4 text-slate-500" />
                       <span className="text-sm text-slate-500">{post.date}</span>
@@ -387,10 +390,6 @@ export default function BlogPostPage({ params }: PageProps) {
                     </div>
                   </div>
                 </div>
-
-                <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-                  {post.title}
-                </h1>
               </div>
 
               {/* Article Content */}
@@ -399,11 +398,10 @@ export default function BlogPostPage({ params }: PageProps) {
                   <ReactMarkdown 
                     remarkPlugins={[remarkGfm]}
                     components={{
-                      h1: ({ children }) => <h1 className="text-3xl font-bold text-slate-900 mb-6 mt-8 first:mt-0">{children}</h1>,
+                      h1: () => null,
                       h2: ({ children }) => {
                         const text = children?.toString() || ''
                         const id = generateHeadingId(text)
-                        console.log('H2 rendered:', { text, id })
                         return (
                           <h2 id={id} className="text-2xl font-bold text-slate-900 mb-4 mt-8 scroll-mt-8">
                             {children}
@@ -413,7 +411,6 @@ export default function BlogPostPage({ params }: PageProps) {
                       h3: ({ children }) => {
                         const text = children?.toString() || ''
                         const id = generateHeadingId(text)
-                        console.log('H3 rendered:', { text, id })
                         return (
                           <h3 id={id} className="text-xl font-semibold text-slate-900 mb-3 mt-6 scroll-mt-8">
                             {children}
