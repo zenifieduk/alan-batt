@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, Github, TrendingUp, TrendingDown, Home, PoundSterling, Calendar, BarChart3 } from "lucide-react"
+import { Sparkles, Github, TrendingUp, TrendingDown, Home, PoundSterling, BarChart3 } from "lucide-react"
 import { MobileMenu } from "@/components/ui/mobile-menu"
 
 export default function MarketsPage() {
