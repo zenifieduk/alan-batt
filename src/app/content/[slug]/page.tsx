@@ -27,6 +27,17 @@ interface TOCItem {
   level: number
 }
 
+// Consistent ID generation function
+const generateHeadingId = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .trim()
+}
+
 export default function BlogPostPage({ params }: PageProps) {
   const [post, setPost] = useState<BlogPost | null>(null)
   const [loading, setLoading] = useState(true)
@@ -70,11 +81,7 @@ export default function BlogPostPage({ params }: PageProps) {
           while ((match = headingRegex.exec(content)) !== null) {
             const level = match[1].length
             const title = match[2].trim()
-            const id = title.toLowerCase()
-              .replace(/[^\w\s-]/g, '')
-              .replace(/\s+/g, '-')
-              .replace(/-+/g, '-')
-              .trim()
+            const id = generateHeadingId(title)
             
             headings.push({ id, title, level })
           }
@@ -103,33 +110,53 @@ export default function BlogPostPage({ params }: PageProps) {
 
   // Intersection Observer for active section tracking
   useEffect(() => {
-    const observerOptions = {
-      rootMargin: '-20% 0px -70% 0px',
-      threshold: 0
+    if (!post || tocItems.length === 0) return
+
+    // Set first section as active initially
+    if (tocItems.length > 0 && !activeSection) {
+      setActiveSection(tocItems[0].id)
     }
 
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
+    // Wait for content to be rendered
+    const timer = setTimeout(() => {
+      const observerOptions = {
+        rootMargin: '-10% 0px -60% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      }
+
+      const observerCallback = (entries: IntersectionObserverEntry[]) => {
+        // Find the entry with the highest intersection ratio that is intersecting
+        const visibleEntries = entries.filter(entry => entry.isIntersecting)
+        if (visibleEntries.length > 0) {
+          const mostVisible = visibleEntries.reduce((prev, current) => 
+            current.intersectionRatio > prev.intersectionRatio ? current : prev
+          )
+          setActiveSection(mostVisible.target.id)
         }
-      })
-    }
+      }
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions)
+      const observer = new IntersectionObserver(observerCallback, observerOptions)
 
-    // Observe all heading elements
-    const headingElements = document.querySelectorAll('h2[id], h3[id]')
-    headingElements.forEach((el) => observer.observe(el))
+      // Observe all heading elements
+      const headingElements = document.querySelectorAll('h2[id], h3[id]')
+      if (headingElements.length > 0) {
+        headingElements.forEach((el) => observer.observe(el))
+        
+        return () => {
+          headingElements.forEach((el) => observer.unobserve(el))
+          observer.disconnect()
+        }
+      }
+    }, 200)
 
-    return () => {
-      headingElements.forEach((el) => observer.unobserve(el))
-    }
-  }, [post])
+    return () => clearTimeout(timer)
+  }, [post, tocItems, activeSection])
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
+      // Immediately set as active when clicked
+      setActiveSection(id)
       element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
@@ -371,11 +398,7 @@ export default function BlogPostPage({ params }: PageProps) {
                       h1: ({ children }) => <h1 className="text-3xl font-bold text-slate-900 mb-6 mt-8 first:mt-0">{children}</h1>,
                       h2: ({ children }) => {
                         const text = children?.toString() || ''
-                        const id = text.toLowerCase()
-                          .replace(/[^\w\s-]/g, '')
-                          .replace(/\s+/g, '-')
-                          .replace(/-+/g, '-')
-                          .trim()
+                        const id = generateHeadingId(text)
                         return (
                           <h2 id={id} className="text-2xl font-bold text-slate-900 mb-4 mt-8 scroll-mt-8">
                             {children}
@@ -384,11 +407,7 @@ export default function BlogPostPage({ params }: PageProps) {
                       },
                       h3: ({ children }) => {
                         const text = children?.toString() || ''
-                        const id = text.toLowerCase()
-                          .replace(/[^\w\s-]/g, '')
-                          .replace(/\s+/g, '-')
-                          .replace(/-+/g, '-')
-                          .trim()
+                        const id = generateHeadingId(text)
                         return (
                           <h3 id={id} className="text-xl font-semibold text-slate-900 mb-3 mt-6 scroll-mt-8">
                             {children}
