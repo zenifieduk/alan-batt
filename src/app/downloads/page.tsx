@@ -86,7 +86,7 @@ export default function DownloadsPage() {
       } else {
         setAuthError('Invalid access code. Please try again.')
       }
-    } catch (error) {
+    } catch {
       setAuthError('Connection error. Please try again.')
     }
   }
@@ -252,6 +252,7 @@ export default function DownloadsPage() {
 
   const getFileIcon = (type: string) => {
     if (type.includes('pdf')) return <FileText className="w-5 h-5 text-red-600" />
+    {/* eslint-disable-next-line jsx-a11y/alt-text */}
     if (type.includes('image')) return <Image className="w-5 h-5 text-blue-600" />
     return <File className="w-5 h-5 text-slate-600" />
   }
