@@ -20,7 +20,7 @@ export default function Home() {
           <div className="flex items-center space-x-6">
             {/* Desktop Navigation - Hidden on mobile */}
             <div className="hidden lg:flex items-center space-x-6">
-              <Button variant="ghost" asChild className="bg-blue-50 text-blue-600">
+              <Button variant="ghost" asChild>
                 <Link href="/">Home</Link>
               </Button>
               <Button variant="ghost" asChild>
@@ -37,6 +37,9 @@ export default function Home() {
               </Button>
               <Button variant="ghost" asChild>
                 <Link href="/seo">SEO</Link>
+              </Button>
+              <Button variant="ghost" asChild>
+                <Link href="/markets">Markets</Link>
               </Button>
               <Button variant="ghost" asChild>
                 <Link href="/downloads">Downloads</Link>

@@ -124,6 +124,9 @@ export default function AIPage() {
                 <Link href="/seo">SEO</Link>
               </Button>
               <Button variant="ghost" asChild>
+                <Link href="/markets">Markets</Link>
+              </Button>
+              <Button variant="ghost" asChild>
                 <Link href="/downloads">Downloads</Link>
               </Button>
               <Button variant="outline" size="sm" asChild>

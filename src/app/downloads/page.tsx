@@ -299,6 +299,9 @@ export default function DownloadsPage() {
               <Button variant="ghost" asChild>
                 <Link href="/seo">SEO</Link>
               </Button>
+              <Button variant="ghost" asChild>
+                <Link href="/markets">Markets</Link>
+              </Button>
               <Button variant="ghost" asChild className="bg-blue-50 text-blue-600">
                 <Link href="/downloads">Downloads</Link>
               </Button>
