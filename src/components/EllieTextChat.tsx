@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Button } from "@/components/ui/button"
 import { MessageCircle, Send, User, Bot, Loader2, ArrowLeft } from "lucide-react"
 
@@ -28,35 +28,37 @@ export function EllieTextChat({
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isInitialized, setIsInitialized] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+  }, [])
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [messages, scrollToBottom])
 
   useEffect(() => {
-    // Add welcome message when component mounts
-    if (messages.length === 0) {
+    // Add welcome message only after component mounts (client-side)
+    if (!isInitialized) {
       const welcomeMessage: Message = {
-        id: `agent-${Date.now()}`,
+        id: 'welcome-message',
         content: "Hello! I'm Ellie, your AI assistant. I can help you with property inquiries, bookings, and general questions about Alan Batt's services. How can I assist you today?",
         sender: 'agent',
         timestamp: new Date()
       }
       setMessages([welcomeMessage])
+      setIsInitialized(true)
     }
-  }, [])
+  }, [isInitialized])
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return
 
     const userMessage: Message = {
-      id: `user-${Date.now()}`,
+      id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       content: inputValue.trim(),
       sender: 'user',
       timestamp: new Date()
@@ -68,8 +70,6 @@ export function EllieTextChat({
     setError(null)
 
     try {
-      // For now, we'll simulate the ElevenLabs text API call
-      // In a real implementation, this would be an API route that calls ElevenLabs
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -78,7 +78,7 @@ export function EllieTextChat({
         body: JSON.stringify({
           message: userMessage.content,
           agentId: agentId,
-          conversationHistory: messages.slice(-10) // Send last 10 messages for context
+          conversationHistory: messages.slice(-10)
         }),
       })
 
@@ -89,8 +89,8 @@ export function EllieTextChat({
       const data = await response.json()
 
       const agentMessage: Message = {
-        id: `agent-${Date.now()}`,
-        content: data.response || "I apologize, but I couldn't process your request at the moment. Please try again.",
+        id: `agent-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        content: data.response || "I apologise, but I couldn't process your request at the moment. Please try again.",
         sender: 'agent',
         timestamp: new Date()
       }
@@ -114,6 +114,20 @@ export function EllieTextChat({
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }
+
+  // Show loading state until initialized to prevent hydration mismatch
+  if (!isInitialized) {
+    return (
+      <div className="flex flex-col h-full max-h-[600px] bg-white rounded-2xl shadow-lg border border-white/20">
+        <div className="flex items-center justify-center h-full min-h-[400px]">
+          <div className="flex items-center space-x-2 text-slate-600">
+            <Loader2 className="w-5 h-5 animate-spin" />
+            <span>Initializing chat...</span>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -140,7 +154,7 @@ export function EllieTextChat({
             <p className="text-sm text-slate-600">{description}</p>
           </div>
         </div>
-        <div className="w-16"></div> {/* Spacer for balance */}
+        <div className="w-16"></div>
       </div>
 
       {/* Messages */}

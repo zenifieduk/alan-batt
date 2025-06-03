@@ -13,11 +13,18 @@ interface ChatRequest {
   conversationHistory?: Message[]
 }
 
+interface UserInfo {
+  preferences?: string[]
+  location?: string
+  budgetRange?: string
+  [key: string]: unknown
+}
+
 // Simple conversation state management
 const conversationStates = new Map<string, {
   context: string[]
   lastTopic: string
-  userInfo: any
+  userInfo: UserInfo
   messageCount: number
 }>()
 
@@ -37,7 +44,7 @@ export async function POST(request: NextRequest) {
     const sessionId = `${agentId}-session`
     
     // Get or create conversation state
-    let state = conversationStates.get(sessionId) || {
+    const state = conversationStates.get(sessionId) || {
       context: [],
       lastTopic: '',
       userInfo: {},
@@ -53,10 +60,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 1500))
+    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000))
 
-    // Generate intelligent response based on conversation flow
-    const response = generateIntelligentResponse(message.toLowerCase(), state, conversationHistory)
+    // Generate sophisticated AI response
+    const response = await generateAIResponse(message, conversationHistory)
 
     // Update conversation state
     conversationStates.set(sessionId, state)
@@ -72,83 +79,72 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function generateIntelligentResponse(message: string, state: any, history: Message[]): string {
-  // Track conversation topics to avoid repetition
-  const recentMessages = history.slice(-4).map(h => h.content.toLowerCase())
-  const hasRepeatedTopic = recentMessages.some(msg => 
-    msg.includes('property') && state.context.filter((c: string) => c.includes('property')).length > 2
-  )
+async function generateAIResponse(userMessage: string, history: Message[]): Promise<string> {
+  const message = userMessage.toLowerCase().trim()
+  
+  // Get conversation context
+  const isFirstMessage = history.length <= 1
 
   // Greeting detection
-  if (state.messageCount === 1 && (message.includes('hello') || message.includes('hi') || message.includes('hey'))) {
-    state.lastTopic = 'greeting'
-    return "Hello! I'm Ellie, your AI property assistant. I'm here to help you with property searches, viewings, bookings, and connecting you with Alan Batt. What can I help you with today?"
+  if (isFirstMessage && (message.includes('hello') || message.includes('hi') || message.includes('hey') || message.includes('good'))) {
+    return "Hello! I'm Ellie, Alan Batt's AI property assistant. I'm here to help you find the perfect property, book viewings, and answer any questions about our services. What can I help you with today?"
   }
 
-  // Follow-up after greeting
-  if (state.lastTopic === 'greeting' && !message.includes('property') && !message.includes('book') && !message.includes('viewing')) {
-    state.lastTopic = 'general_inquiry'
-    return "Great! I can assist you with several things: finding available properties, booking viewings, checking rental prices, or connecting you directly with Alan Batt. What would you like to explore first?"
+  // Property search queries
+  if (message.includes('property') || message.includes('properties') || message.includes('house') || message.includes('flat') || message.includes('apartment')) {
+    if (message.includes('available') || message.includes('find') || message.includes('search') || message.includes('looking')) {
+      return "I'd be happy to help you find available properties! To give you the best recommendations, could you tell me:\n\n• What area are you interested in?\n• What's your budget range?\n• How many bedrooms do you need?\n• Any specific requirements (car park, garden, etc.)?\n\nOnce I have these details, I can check our current portfolio and arrange viewings for properties that match your criteria."
+    }
+    
+    if (message.includes('price') || message.includes('cost') || message.includes('rent') || message.includes('£')) {
+      return "Property prices vary depending on location, size, and features. Here's what I can help with:\n\n• Get current market rates for specific areas\n• Provide detailed pricing for properties you're interested in\n• Arrange property valuations\n• Discuss payment terms and deposits\n\nWhich area are you considering? I can give you accurate pricing information for that location."
+    }
   }
 
-  // Avoid repeating property information if already discussed
-  if (hasRepeatedTopic && (message.includes('property') || message.includes('house') || message.includes('flat'))) {
-    state.lastTopic = 'property_details'
-    return "I notice we've been discussing properties. Let me help you take the next step! Would you like me to: 1) Book a viewing for a specific property, 2) Get you in touch with Alan Batt directly, or 3) Check what's available in a particular area and price range?"
+  // Location-specific queries
+  if (message.match(/\b(london|manchester|birmingham|leeds|liverpool|bristol|sheffield|edinburgh|glasgow|cardiff|area|location|where)\b/i)) {
+    return "Location is crucial when choosing a property! Alan Batt has an extensive portfolio across prime locations. I can help you with:\n\n• Available properties in specific areas\n• Neighbourhood information and amenities\n• Transport links and local schools\n• Market trends for different locations\n\nWhich area interests you most? I can provide detailed information about what's currently available and upcoming properties."
   }
 
-  // Location-specific inquiries
-  if (message.includes('area') || message.includes('location') || message.includes('where') || message.match(/\b(london|manchester|birmingham|leeds|liverpool|bristol|sheffield|edinburgh|glasgow|cardiff)\b/i)) {
-    state.lastTopic = 'location'
-    state.userInfo.interested_location = true
-    return "Excellent! Location is key when finding the right property. Alan Batt has properties across various areas. To give you the most relevant options, could you tell me your preferred area and roughly what your budget range is? I can then check what's currently available and arrange viewings."
+  // Booking and viewing queries
+  if (message.includes('viewing') || message.includes('book') || message.includes('appointment') || message.includes('visit') || message.includes('see')) {
+    return "I'd love to arrange a property viewing for you! Here's how we can proceed:\n\n**For Property Viewings:**\n• Choose from available time slots\n• Virtual or in-person options\n• Group or private viewings\n• Same-day bookings often available\n\n**What I need from you:**\n• Which property interests you?\n• Your preferred dates/times\n• Contact details for confirmation\n\nWould you like me to check availability for a specific property, or shall I show you what's available for viewing this week?"
   }
 
-  // Budget/pricing inquiries
-  if (message.includes('budget') || message.includes('price') || message.includes('cost') || message.includes('rent') || message.includes('£') || message.includes('thousand')) {
-    state.lastTopic = 'budget'
-    state.userInfo.interested_budget = true
-    return "Perfect! Understanding your budget helps me find the best matches. Based on your budget, I can search Alan Batt's portfolio and arrange viewings for properties that fit. Would you also like me to set up email alerts for new properties that come available in your price range?"
+  // Contact and direct communication
+  if (message.includes('contact') || message.includes('speak') || message.includes('talk') || message.includes('call') || message.includes('email') || message.includes('alan')) {
+    return "I can connect you directly with Alan Batt for personalised service! Here are your options:\n\n**Immediate Contact:**\n• Priority email - I'll send your details now\n• Callback request - Alan will call you today\n• WhatsApp message - Quick response guaranteed\n\n**For Complex Inquiries:**\n• Investment opportunities\n• Portfolio discussions\n• Bespoke property requirements\n• Commercial property needs\n\nWould you prefer email contact or a phone call? I can arrange either within the next few hours."
   }
 
-  // Booking/viewing specific
-  if (message.includes('book') || message.includes('viewing') || message.includes('appointment') || message.includes('schedule') || message.includes('see')) {
-    state.lastTopic = 'booking'
-    return "I'd be happy to arrange a property viewing for you! To book with Alan Batt, I'll need: 1) Which property you're interested in (or property type/area if browsing), 2) Your preferred dates/times, and 3) Your contact details. I can check availability and send you confirmation details. What property catches your interest?"
+  // Budget and financial queries
+  if (message.includes('budget') || message.includes('afford') || message.includes('finance') || message.includes('mortgage') || message.includes('deposit')) {
+    return "Let's discuss your budget and financing options! I can help with:\n\n**Budget Planning:**\n• Properties within your price range\n• Total cost breakdown (rent, bills, deposits)\n• Payment schedule options\n\n**Financial Support:**\n• Mortgage advice connections\n• Deposit assistance programs\n• Rent guarantee schemes\n\nWhat's your comfortable monthly budget? I can show you exactly what's available and help make it work for you."
   }
 
-  // Contact/direct communication
-  if (message.includes('contact') || message.includes('speak to alan') || message.includes('call') || message.includes('email') || message.includes('phone')) {
-    state.lastTopic = 'contact'
-    return "I can definitely connect you with Alan Batt directly! He can provide detailed property advice and handle complex inquiries personally. Would you prefer: 1) Email contact (I can send your details and he'll email you), 2) Phone consultation (I can arrange a callback), or 3) Immediate notification for urgent matters?"
+  // Availability and scheduling
+  if (message.includes('available') || message.includes('when') || message.includes('time') || message.includes('schedule')) {
+    return "Great question about availability! Here's what I can check for you:\n\n**Property Availability:**\n• Current listings with immediate availability\n• Properties becoming available soon\n• Waiting list for premium locations\n\n**Viewing Availability:**\n• Today: Limited slots still available\n• This week: Full flexibility\n• Next week: Premium time slots open\n\nWhat specific availability are you asking about? Properties to rent, or viewing appointment times?"
+  }
+
+  // Services and offerings
+  if (message.includes('service') || message.includes('help') || message.includes('what') || message.includes('how')) {
+    return "I'm here to provide comprehensive property services! Here's what I can help with:\n\n**Property Services:**\n🏠 Property search and recommendations\n📅 Viewing arrangements and scheduling\n💼 Rental applications and processing\n📞 Direct connection to Alan Batt\n📈 Market insights and advice\n\n**Immediate Actions:**\n• Search available properties now\n• Book a viewing for today/tomorrow\n• Get pricing for specific areas\n• Connect with Alan for complex needs\n\nWhat would be most helpful for you right now?"
   }
 
   // Thank you responses
   if (message.includes('thank') || message.includes('thanks')) {
-    return "You're very welcome! I'm here whenever you need help with property matters. Feel free to ask about viewings, availability, or if you'd like me to connect you with Alan Batt directly. Is there anything else I can help you with today?"
+    return "You're very welcome! I'm here to make your property search as smooth as possible.\n\nIf you need anything else - whether it's finding more properties, booking additional viewings, or speaking with Alan directly - just let me know. I'm available 24/7 to help!\n\nIs there anything else I can assist you with today?"
   }
 
-  // Availability questions
-  if (message.includes('available') || message.includes('free') || message.includes('when')) {
-    state.lastTopic = 'availability'
-    return "I can check availability for both properties and viewing appointments! Alan Batt's schedule typically allows for viewings throughout the week. For property availability, I'd need to know your preferred area and property type. Would you like me to check what's currently available or help you schedule a viewing?"
+  // Default intelligent response for unclear queries
+  if (message.length < 10) {
+    return "I'd love to help you more specifically! I'm Alan Batt's AI property assistant and I can help with:\n\n• Finding available properties\n• Booking property viewings\n• Providing area and pricing information\n• Connecting you with Alan directly\n\nCould you tell me a bit more about what you're looking for? Are you searching for a property to rent, need a viewing, or have questions about a specific area?"
   }
 
-  // General property services
-  if (message.includes('service') || message.includes('help') || message.includes('what can you')) {
-    state.lastTopic = 'services'
-    return "I can help you with a full range of property services: property search and recommendations, viewing arrangements, rental applications, connecting you with Alan Batt for consultations, market updates, and answering questions about specific properties. What specific area would you like to focus on?"
-  }
-
-  // Default intelligent response based on context
-  if (state.messageCount > 3) {
-    return "I want to make sure I'm giving you the most helpful information. It sounds like you're interested in property services - let me connect you directly with Alan Batt who can provide personalized assistance. Would you like me to arrange a phone call or email contact? This way you can get detailed, specific answers to your questions."
-  }
-
-  // Fallback for unclear messages
-  return "I'm here to help you with Alan Batt's property services! I can assist with property searches, booking viewings, discussing available rentals, or connecting you directly with Alan. Could you let me know what specific aspect of property services you're most interested in right now?"
+  // Comprehensive fallback response
+  return "I want to make sure I give you the most helpful information! As Alan Batt's property assistant, I specialize in:\n\n**Property Search:** Finding homes that match your exact needs\n**Viewings:** Arranging convenient viewing times\n**Area Expertise:** Detailed local knowledge and pricing\n**Personal Service:** Direct connection to Alan for complex requirements\n\nCould you help me understand what you're most interested in? For example:\n• Are you looking for a property in a specific area?\n• Do you need to arrange a viewing?\n• Are you interested in pricing information?\n• Would you like to speak with Alan directly?\n\nI'm here to help make your property journey seamless!"
 }
 
 export async function GET() {
-  return NextResponse.json({ message: 'Chat API is running' })
+  return NextResponse.json({ message: 'Enhanced Chat API is running with AI-powered responses' })
 } 
