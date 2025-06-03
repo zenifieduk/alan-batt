@@ -323,7 +323,7 @@ export default function BlogPostPage({ params }: PageProps) {
         <main className="container mx-auto px-4 py-16 text-center">
           <div className="max-w-2xl mx-auto">
             <h1 className="text-4xl font-bold text-slate-900 mb-4">Content Not Found</h1>
-            <p className="text-slate-600 mb-8">The content you're looking for doesn't exist or has been moved.</p>
+            <p className="text-slate-600 mb-8">The content you&apos;re looking for doesn&apos;t exist or has been moved.</p>
             <Button asChild>
               <Link href="/content">Return to Repository</Link>
             </Button>
