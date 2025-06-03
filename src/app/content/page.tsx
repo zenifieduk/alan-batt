@@ -62,7 +62,7 @@ export default function ContentPage() {
               Content Management
             </h1>
             <p className="text-lg text-slate-600 mb-8 max-w-3xl mx-auto">
-              Manage and organize your content, documents, and digital assets.
+              Manage and organise your content, documents, and digital assets.
             </p>
           </div>
 
@@ -78,7 +78,7 @@ export default function ContentPage() {
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center text-slate-500">
-        <p>&copy; 2024 Alan Batt Technology Hub. Content management coming soon.</p>
+        <p>&copy; 2025 Alan Batt Technology Hub. Content management coming soon.</p>
       </footer>
     </div>
   )
