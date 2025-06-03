@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { list } from '@vercel/blob'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // List all files from Vercel Blob
     const { blobs } = await list()

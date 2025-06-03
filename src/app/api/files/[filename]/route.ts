@@ -3,10 +3,10 @@ import { del } from '@vercel/blob'
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { filename: string } }
+  { params }: { params: Promise<{ filename: string }> }
 ) {
   try {
-    const { filename } = params
+    const { filename } = await params
     const { url } = await request.json()
     
     if (!filename || !url) {

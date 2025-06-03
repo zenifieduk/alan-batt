@@ -40,7 +40,7 @@ export default function DownloadsPage() {
         } else {
           localStorage.removeItem(AUTH_KEY)
         }
-      } catch (error) {
+      } catch {
         localStorage.removeItem(AUTH_KEY)
       }
     }
