@@ -15,7 +15,7 @@ export default function Home() {
             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
               <Sparkles className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">Alan Batt Technology Hub</span>
+            <span className="text-xl font-bold">Alan Batt</span>
           </div>
           <div className="flex items-center space-x-6">
             {/* Desktop Navigation - Hidden on mobile */}
@@ -73,11 +73,8 @@ export default function Home() {
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8">
-              <span className="text-primary">Magicalogical</span>
-              <span className="block text-2xl md:text-3xl font-normal text-muted-foreground mt-2">
-                Alan Batt Tech Dev Mini-site
-              </span>
+            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
+              Alan Batt Tech Hub
             </h1>
             
             {/* Professional Explainer */}

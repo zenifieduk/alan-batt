@@ -15,12 +15,30 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'north-west-uk-property-market-insights-june-2025',
+    title: 'North West UK Property Market Insights - June 2025: Wigan and Surrounding Areas',
+    excerpt: 'Comprehensive analysis of the North West property market with Wigan emerging as a standout performer. Detailed insights into regional trends, investment opportunities, and market forecasts.',
+    date: '19th June 2025',
+    readTime: '8 minutes',
+    status: 'draft',
+    category: 'News & Insights Post'
+  },
+  {
+    slug: 'how-increased-home-supply-will-affect-wigan-house-prices-2025',
+    title: 'How Increased Home Supply Will Affect Wigan House Prices in 2025',
+    excerpt: 'Analysis of Wigan\'s unprecedented housing supply increases and their impact on property prices. Explore how over 1,000 new homes at Mosley Common will shape the local market.',
+    date: '12th June 2025',
+    readTime: '7 minutes',
+    status: 'draft',
+    category: 'News & Insights Post'
+  },
+  {
     slug: 'uk-house-price-data-lag-2025',
     title: 'Why UK House Price Data is 6 Months Behind Reality (And How Smart Buyers Are Staying Ahead in 2025)',
     excerpt: 'Official UK house price data lags 2-6 months behind actual market conditions. Discover how to read real-time market signals and make informed property decisions.',
     date: '3rd June 2025',
     readTime: '5 minutes',
-    status: 'published',
+    status: 'draft',
     category: 'News & Insights Post'
   }
   // Add more posts here as they're created

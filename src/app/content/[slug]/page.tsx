@@ -95,7 +95,81 @@ export default function BlogPostPage({ params }: PageProps) {
             content,
             date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '3rd June 2025',
             readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '5 minutes',
-            status: 'published',
+            status: 'draft',
+            category: 'News & Insights Post'
+          })
+        } else if (slug === 'north-west-uk-property-market-insights-june-2025') {
+          const response = await fetch('/articles/North West UK Property Market Insights - June 2025.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '19th June 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '8 minutes',
+            status: 'draft',
+            category: 'News & Insights Post'
+          })
+        } else if (slug === 'how-increased-home-supply-will-affect-wigan-house-prices-2025') {
+          const response = await fetch('/articles/How Increased Home Supply Will Affect Wigan House.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '12th June 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '7 minutes',
+            status: 'draft',
             category: 'News & Insights Post'
           })
         } else {
@@ -307,7 +381,7 @@ export default function BlogPostPage({ params }: PageProps) {
               <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
                 <Sparkles className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">Alan Batt Technology Hub</span>
+              <span className="text-xl font-bold">Alan Batt</span>
             </div>
             <div className="flex items-center space-x-6">
               <Button variant="ghost" asChild>
@@ -342,7 +416,7 @@ export default function BlogPostPage({ params }: PageProps) {
             <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
               <Sparkles className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">Alan Batt Technology Hub</span>
+            <span className="text-xl font-bold">Alan Batt</span>
           </div>
           <div className="flex items-center space-x-6">
             {/* Desktop Navigation - Hidden on mobile */}
@@ -541,7 +615,7 @@ export default function BlogPostPage({ params }: PageProps) {
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center text-slate-500">
-        <p>&copy; 2025 Alan Batt Technology Hub. Professional property insights and analysis.</p>
+        <p>&copy; 2024 Magicalogical. Revolutionising client-developer collaboration through innovative technology demonstration.</p>
       </footer>
     </div>
   )
