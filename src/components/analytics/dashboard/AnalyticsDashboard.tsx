@@ -80,7 +80,7 @@ export function AnalyticsDashboard() {
 
   // Debug logging to verify date range changes
   console.log('🔄 Dashboard - Current date range:', dateRange);
-  console.log('📊 Dashboard - Analytics data period:', (analyticsData as any)?.dateRange?.period);
+  console.log('📊 Dashboard - Analytics data period:', analyticsData?.dateRange?.period);
 
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -202,7 +202,7 @@ export function AnalyticsDashboard() {
         <div className="flex items-center justify-center space-x-4 mt-4">
           <div className="text-xs text-slate-400">
             Selected: <span className="font-medium text-blue-600">{formatDateRange(dateRange)}</span>
-            {(analyticsData as any)?.dateRange?.period !== dateRange && (
+            {analyticsData?.dateRange?.period !== dateRange && (
               <span className="ml-2 text-orange-500">• Updating...</span>
             )}
           </div>

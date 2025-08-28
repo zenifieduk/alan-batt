@@ -204,8 +204,8 @@ export async function getOverviewMetrics(dateRange: string = '30d') {
     console.error('GA4 Property ID:', process.env.GA4_PROPERTY_ID);
     console.error('GA4 Error details:', {
       message: error instanceof Error ? error.message : 'Unknown error',
-      code: error instanceof Error && 'code' in error ? (error as any).code : undefined,
-      details: error instanceof Error && 'details' in error ? (error as any).details : undefined,
+      code: error instanceof Error && 'code' in error ? (error as { code?: unknown }).code : undefined,
+      details: error instanceof Error && 'details' in error ? (error as { details?: unknown }).details : undefined,
       stack: error instanceof Error ? error.stack : undefined,
       name: error instanceof Error ? error.name : undefined
     });
@@ -313,10 +313,10 @@ export async function getTrafficSources(dateRange: string = '30d') {
       throw new Error('Unable to retrieve traffic sources data from GA4');
     }
 
-    const totalSessions = response.rows?.reduce((sum, row: any) =>
+    const totalSessions = response.rows?.reduce((sum, row: { metricValues?: { value?: string }[] }) =>
       sum + parseInt(row.metricValues?.[0]?.value || '0'), 0) || 1;
 
-    return response.rows?.map((row: any) => {
+    return response.rows?.map((row: { metricValues?: { value?: string }[]; dimensionValues?: { value?: string }[] }) => {
       const sessions = parseInt(row.metricValues?.[0]?.value || '0');
       const sourceName = row.dimensionValues?.[0]?.value;
 
@@ -352,7 +352,7 @@ export async function getRealTimeData() {
   console.log('🔄 Attempting to fetch real GA4 real-time data...');
 
   let totalActiveUsers = 0; // Declare outside try block
-  let totalPageViews = 0; // Declare outside try block
+  const totalPageViews = 0; // Declare outside try block
 
   try {
     const client = getGA4Client();
@@ -387,11 +387,11 @@ export async function getRealTimeData() {
     console.log('📊 Getting detailed real-time breakdown...');
 
     // GA4 Real-time API supports limited dimensions
-    let pageResponse, countryResponse, deviceResponse;
+    let countryResponse, deviceResponse;
 
     // Skip page data entirely - GA4 real-time API doesn't support page dimensions
     console.log('⚠️ Skipping page data - GA4 real-time API does not support page dimensions');
-    pageResponse = { rows: [] };
+    const pageResponse = { rows: [] };
 
     try {
       [countryResponse] = await client.runRealtimeReport({
@@ -402,7 +402,7 @@ export async function getRealTimeData() {
         limit: 5,
       });
       console.log('✅ Country data retrieved successfully');
-    } catch (countryError) {
+    } catch {
       console.log('⚠️ Country data not available, continuing without it');
       countryResponse = { rows: [] };
     }
@@ -416,7 +416,7 @@ export async function getRealTimeData() {
         limit: 3,
       });
       console.log('✅ Device data retrieved successfully');
-    } catch (deviceError) {
+    } catch {
       console.log('⚠️ Device data not available, continuing without it');
       deviceResponse = { rows: [] };
     }
@@ -424,7 +424,7 @@ export async function getRealTimeData() {
     const result = {
       activeUsers: totalActiveUsers,
       pageViews: totalPageViews,
-      topPages: pageResponse?.rows?.map((row: any) => {
+      topPages: pageResponse?.rows?.map((row: { metricValues?: { value?: string }[]; dimensionValues?: { value?: string }[] }) => {
         const metrics = row.metricValues || [];
         return {
           page: row.dimensionValues?.[0]?.value || '/',
@@ -432,11 +432,11 @@ export async function getRealTimeData() {
           views: metrics.length > 1 ? parseInt(metrics[1]?.value || '0') : undefined,
         };
       }) || [],
-      topCountries: countryResponse.rows?.map((row: any) => ({
+      topCountries: countryResponse.rows?.map((row: { metricValues?: { value?: string }[]; dimensionValues?: { value?: string }[] }) => ({
         country: row.dimensionValues?.[0]?.value || 'Unknown',
         activeUsers: parseInt(row.metricValues?.[0]?.value || '0'),
       })) || [],
-      devices: deviceResponse.rows?.map((row: any) => ({
+      devices: deviceResponse.rows?.map((row: { metricValues?: { value?: string }[]; dimensionValues?: { value?: string }[] }) => ({
         category: row.dimensionValues?.[0]?.value?.toLowerCase() || 'unknown',
         activeUsers: parseInt(row.metricValues?.[0]?.value || '0'),
       })) || [],
@@ -451,12 +451,12 @@ export async function getRealTimeData() {
     console.error('GA4 Property ID:', process.env.GA4_PROPERTY_ID);
     console.error('Real-time GA4 Error details:', {
       message: error instanceof Error ? error.message : 'Unknown error',
-      code: error instanceof Error && 'code' in error ? (error as any).code : undefined,
-      details: error instanceof Error && 'details' in error ? (error as any).details : undefined,
+      code: error instanceof Error && 'code' in error ? (error as { code?: unknown }).code : undefined,
+      details: error instanceof Error && 'details' in error ? (error as { details?: unknown }).details : undefined,
     });
 
     // Check error types
-    const errorCode = error instanceof Error && (error as any).code;
+    const errorCode = error instanceof Error && (error as { code?: unknown }).code;
     const isQuotaError = errorCode === 8;
     const isApiLimitation = errorCode === 3;
     const quotaResetTime = 'under an hour';
