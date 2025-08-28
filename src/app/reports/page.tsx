@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, BarChart3, Github } from "lucide-react"
+import { Sparkles, Github } from "lucide-react"
 import { MobileMenu } from "@/components/ui/mobile-menu"
+import { AnalyticsDashboard } from "@/components/analytics/dashboard/AnalyticsDashboard"
 
 export default function ReportsPage() {
   return (
@@ -60,28 +61,10 @@ export default function ReportsPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-16 text-center">
-        <div className="max-w-4xl mx-auto">
-          {/* Hero Section */}
-          <div className="mb-16">
-            <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <BarChart3 className="w-8 h-8 text-orange-600" />
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-slate-900">
-              Reports & Analytics
-            </h1>
-            <p className="text-lg text-slate-600 mb-8 max-w-3xl mx-auto">
-              View performance metrics, analytics, and detailed reports across all systems.
-            </p>
-          </div>
-
-          {/* Coming Soon */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">Coming Soon</h2>
-            <p className="text-slate-600">
-              Comprehensive reporting and analytics dashboard is currently in development.
-            </p>
-          </div>
+      <main className="container mx-auto px-4 py-16">
+        <div className="max-w-6xl mx-auto">
+          {/* Analytics Dashboard */}
+          <AnalyticsDashboard />
         </div>
       </main>
 
