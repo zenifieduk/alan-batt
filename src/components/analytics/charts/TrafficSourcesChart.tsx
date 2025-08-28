@@ -90,9 +90,9 @@ export function TrafficSourcesChart({ data }: TrafficSourcesChartProps) {
           <Legend
             verticalAlign="bottom"
             height={36}
-            formatter={(value, entry: { color: string; payload?: { percentage: number; sessions: number } }) => (
-              <span style={{ color: entry.color, fontSize: '12px' }}>
-                {value} ({entry.payload?.sessions})
+            formatter={(value, entry: { color?: string }) => (
+              <span style={{ color: entry.color || '#666', fontSize: '12px' }}>
+                {value}
               </span>
             )}
           />

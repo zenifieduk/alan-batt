@@ -3,10 +3,12 @@
  * These routes demonstrate how to implement various analytics endpoints
  */
 
-// src/app/api/analytics/overview/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { getOverviewMetrics } from '@/lib/analytics/ga4-client';
+import { getOverviewMetrics, getTrafficData, getRealtimeData, getTopPages, getTrafficSources, getDeviceMetrics, getDemographicsData, getDashboardData } from '@/lib/analytics/ga4-client';
 import type { OverviewMetrics } from '@/types/analytics';
+import { unstable_cache } from 'next/cache';
+
+// src/app/api/analytics/overview/route.ts
 
 export async function GET(request: NextRequest) {
   try {
@@ -90,8 +92,6 @@ function calculateGrowthPercentage(current: number, previous: number): number {
 }
 
 // src/app/api/analytics/traffic/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { getTrafficData } from '@/lib/analytics/ga4-client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -143,8 +143,6 @@ function calculateTrend(values: number[]): 'up' | 'down' | 'stable' {
 }
 
 // src/app/api/analytics/realtime/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { getRealtimeData } from '@/lib/analytics/ga4-client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -169,8 +167,6 @@ export async function GET(request: NextRequest) {
 }
 
 // src/app/api/analytics/pages/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { getTopPages } from '@/lib/analytics/ga4-client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -206,8 +202,6 @@ export async function GET(request: NextRequest) {
 }
 
 // src/app/api/analytics/sources/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { getTrafficSources } from '@/lib/analytics/ga4-client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -244,8 +238,6 @@ export async function GET(request: NextRequest) {
 }
 
 // src/app/api/analytics/devices/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { getDeviceMetrics } from '@/lib/analytics/ga4-client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -281,8 +273,6 @@ export async function GET(request: NextRequest) {
 }
 
 // src/app/api/analytics/demographics/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { getDemographicsData } from '@/lib/analytics/ga4-client';
 
 export async function GET(request: NextRequest) {
   try {
@@ -317,9 +307,6 @@ export async function GET(request: NextRequest) {
 }
 
 // src/app/api/analytics/dashboard/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { getDashboardData } from '@/lib/analytics/ga4-client';
-import { unstable_cache } from 'next/cache';
 
 // Cache dashboard data for 1 hour to reduce API calls
 const getCachedDashboardData = unstable_cache(
@@ -369,8 +356,6 @@ export async function GET(request: NextRequest) {
 
 // Middleware for rate limiting (optional)
 // src/middleware.ts
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
 const rateLimitMap = new Map();
 

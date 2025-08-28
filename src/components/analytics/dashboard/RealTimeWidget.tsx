@@ -39,7 +39,11 @@ const mockRealTimeData: RealTimeData = {
 };
 
 export function RealTimeWidget() {
-  const { data: realTimeData, loading, error } = useRealTimeAnalytics({ refreshInterval: 5000 });
+  const { data: realTimeData, loading, error } = useRealTimeAnalytics({ refreshInterval: 5000 }) as {
+    data: RealTimeData | null;
+    loading: boolean;
+    error: string | null;
+  };
   const [pulse, setPulse] = useState(false);
 
   // Pulse animation for live indicator
@@ -93,12 +97,12 @@ export function RealTimeWidget() {
               <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-xl font-bold text-slate-900">Real-Time Activity</h2>
-            {data.quotaExhausted && (
+            {data?.quotaExhausted && (
               <p className="text-xs text-orange-600 mt-1">
                 ⚠️ GA4 Quota exhausted - data will resume in {data.quotaResetTime}
               </p>
             )}
-            {data.apiLimitation && !data.quotaExhausted && (
+            {data?.apiLimitation && !data?.quotaExhausted && (
               <p className="text-xs text-blue-600 mt-1">
                 ℹ️ GA4 real-time API limitations - some features unavailable
               </p>

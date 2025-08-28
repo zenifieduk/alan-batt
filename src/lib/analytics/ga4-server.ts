@@ -313,10 +313,12 @@ export async function getTrafficSources(dateRange: string = '30d') {
       throw new Error('Unable to retrieve traffic sources data from GA4');
     }
 
-    const totalSessions = response.rows?.reduce((sum, row: { metricValues?: { value?: string }[] }) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const totalSessions = (response.rows as any)?.reduce((sum: number, row: any) =>
       sum + parseInt(row.metricValues?.[0]?.value || '0'), 0) || 1;
 
-    return response.rows?.map((row: { metricValues?: { value?: string }[]; dimensionValues?: { value?: string }[] }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (response.rows as any)?.map((row: any) => {
       const sessions = parseInt(row.metricValues?.[0]?.value || '0');
       const sourceName = row.dimensionValues?.[0]?.value;
 
@@ -424,7 +426,8 @@ export async function getRealTimeData() {
     const result = {
       activeUsers: totalActiveUsers,
       pageViews: totalPageViews,
-      topPages: pageResponse?.rows?.map((row: { metricValues?: { value?: string }[]; dimensionValues?: { value?: string }[] }) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      topPages: (pageResponse?.rows as any)?.map((row: any) => {
         const metrics = row.metricValues || [];
         return {
           page: row.dimensionValues?.[0]?.value || '/',
@@ -432,11 +435,13 @@ export async function getRealTimeData() {
           views: metrics.length > 1 ? parseInt(metrics[1]?.value || '0') : undefined,
         };
       }) || [],
-      topCountries: countryResponse.rows?.map((row: { metricValues?: { value?: string }[]; dimensionValues?: { value?: string }[] }) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      topCountries: (countryResponse.rows as any)?.map((row: any) => ({
         country: row.dimensionValues?.[0]?.value || 'Unknown',
         activeUsers: parseInt(row.metricValues?.[0]?.value || '0'),
       })) || [],
-      devices: deviceResponse.rows?.map((row: { metricValues?: { value?: string }[]; dimensionValues?: { value?: string }[] }) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      devices: (deviceResponse.rows as any)?.map((row: any) => ({
         category: row.dimensionValues?.[0]?.value?.toLowerCase() || 'unknown',
         activeUsers: parseInt(row.metricValues?.[0]?.value || '0'),
       })) || [],
