@@ -1,0 +1,442 @@
+{
+  "images": [
+    {
+      "src": "https://www.alanbatt.co.uk/wp-content/plugins/cookie-law-info/lite/frontend/images/revisit.svg",
+      "alt": "Revisit consent button",
+      "width": 36,
+      "height": 36
+    },
+    {
+      "src": "https://www.alanbatt.co.uk/wp-content/plugins/cookie-law-info/lite/frontend/images/close.svg",
+      "alt": "Close",
+      "width": 10,
+      "height": 10
+    },
+    {
+      "src": "https://www.alanbatt.co.uk/wp-content/uploads/2023/10/Group-242.svg",
+      "alt": "Group 242",
+      "width": 256,
+      "height": 222
+    }
+  ],
+  "styles": [
+    {
+      "selector": "img:is([sizes=\"auto\" i], [sizes^=\"auto,\" i])",
+      "styles": "contain-intrinsic-size: 3000px 1500px;"
+    },
+    {
+      "selector": "img.wp-smiley, img.emoji",
+      "styles": "display: inline !important; border: none !important; box-shadow: none !important; height: 1em !important; width: 1em !important; margin: 0px 0.07em !important; vertical-align: -0.1em !important; background: none !important; padding: 0px !important;"
+    },
+    {
+      "selector": ":root",
+      "styles": "--wp--preset--aspect-ratio--square: 1; --wp--preset--aspect-ratio--4-3: 4/3; --wp--preset--aspect-ratio--3-4: 3/4; --wp--preset--aspect-ratio--3-2: 3/2; --wp--preset--aspect-ratio--2-3: 2/3; --wp--preset--aspect-ratio--16-9: 16/9; --wp--preset--aspect-ratio--9-16: 9/16; --wp--preset--color--black: #000000; --wp--preset--color--cyan-bluish-gray: #abb8c3; --wp--preset--color--white: #ffffff; --wp--preset--color--pale-pink: #f78da7; --wp--preset--color--vivid-red: #cf2e2e; --wp--preset--color--luminous-vivid-orange: #ff6900; --wp--preset--color--luminous-vivid-amber: #fcb900; --wp--preset--color--light-green-cyan: #7bdcb5; --wp--preset--color--vivid-green-cyan: #00d084; --wp--preset--color--pale-cyan-blue: #8ed1fc; --wp--preset--color--vivid-cyan-blue: #0693e3; --wp--preset--color--vivid-purple: #9b51e0; --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%); --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%); --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%); --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%); --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%); --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%); --wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%); --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%); --wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%); --wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%); --wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%); --wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%); --wp--preset--font-size--small: 13px; --wp--preset--font-size--medium: 20px; --wp--preset--font-size--large: 36px; --wp--preset--font-size--x-large: 42px; --wp--preset--spacing--20: 0.44rem; --wp--preset--spacing--30: 0.67rem; --wp--preset--spacing--40: 1rem; --wp--preset--spacing--50: 1.5rem; --wp--preset--spacing--60: 2.25rem; --wp--preset--spacing--70: 3.38rem; --wp--preset--spacing--80: 5.06rem; --wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2); --wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4); --wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2); --wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1); --wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);"
+    },
+    {
+      "selector": ":root",
+      "styles": "--wp--style--global--content-size: 800px; --wp--style--global--wide-size: 1200px;"
+    },
+    {
+      "selector": ":where(body)",
+      "styles": "margin: 0px;"
+    },
+    {
+      "selector": ".wp-site-blocks > .alignleft",
+      "styles": "float: left; margin-right: 2em;"
+    },
+    {
+      "selector": ".wp-site-blocks > .alignright",
+      "styles": "float: right; margin-left: 2em;"
+    },
+    {
+      "selector": ".wp-site-blocks > .aligncenter",
+      "styles": "justify-content: center; margin-left: auto; margin-right: auto;"
+    },
+    {
+      "selector": ":where(.wp-site-blocks) > *",
+      "styles": "margin-block: 24px 0px;"
+    },
+    {
+      "selector": ":where(.wp-site-blocks) > :first-child",
+      "styles": "margin-block-start: 0px;"
+    },
+    {
+      "selector": ":where(.wp-site-blocks) > :last-child",
+      "styles": "margin-block-end: 0px;"
+    },
+    {
+      "selector": ":root",
+      "styles": "--wp--style--block-gap: 24px;"
+    },
+    {
+      "selector": ":root :where(.is-layout-flow) > :first-child",
+      "styles": "margin-block-start: 0px;"
+    },
+    {
+      "selector": ":root :where(.is-layout-flow) > :last-child",
+      "styles": "margin-block-end: 0px;"
+    },
+    {
+      "selector": ":root :where(.is-layout-flow) > *",
+      "styles": "margin-block: 24px 0px;"
+    },
+    {
+      "selector": ":root :where(.is-layout-constrained) > :first-child",
+      "styles": "margin-block-start: 0px;"
+    },
+    {
+      "selector": ":root :where(.is-layout-constrained) > :last-child",
+      "styles": "margin-block-end: 0px;"
+    },
+    {
+      "selector": ":root :where(.is-layout-constrained) > *",
+      "styles": "margin-block: 24px 0px;"
+    },
+    {
+      "selector": ":root :where(.is-layout-flex)",
+      "styles": "gap: 24px;"
+    },
+    {
+      "selector": ":root :where(.is-layout-grid)",
+      "styles": "gap: 24px;"
+    },
+    {
+      "selector": ".is-layout-flow > .alignleft",
+      "styles": "float: left; margin-inline: 0px 2em;"
+    },
+    {
+      "selector": ".is-layout-flow > .alignright",
+      "styles": "float: right; margin-inline: 2em 0px;"
+    },
+    {
+      "selector": ".is-layout-flow > .aligncenter",
+      "styles": "margin-left: auto !important; margin-right: auto !important;"
+    },
+    {
+      "selector": ".is-layout-constrained > .alignleft",
+      "styles": "float: left; margin-inline: 0px 2em;"
+    },
+    {
+      "selector": ".is-layout-constrained > .alignright",
+      "styles": "float: right; margin-inline: 2em 0px;"
+    },
+    {
+      "selector": ".is-layout-constrained > .aligncenter",
+      "styles": "margin-left: auto !important; margin-right: auto !important;"
+    },
+    {
+      "selector": ".is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull))",
+      "styles": "max-width: var(--wp--style--global--content-size); margin-left: auto !important; margin-right: auto !important;"
+    },
+    {
+      "selector": ".is-layout-constrained > .alignwide",
+      "styles": "max-width: var(--wp--style--global--wide-size);"
+    },
+    {
+      "selector": "body .is-layout-flex",
+      "styles": "display: flex;"
+    },
+    {
+      "selector": ".is-layout-flex",
+      "styles": "flex-wrap: wrap; align-items: center;"
+    },
+    {
+      "selector": ".is-layout-flex > :is(*, div)",
+      "styles": "margin: 0px;"
+    },
+    {
+      "selector": "body .is-layout-grid",
+      "styles": "display: grid;"
+    },
+    {
+      "selector": ".is-layout-grid > :is(*, div)",
+      "styles": "margin: 0px;"
+    },
+    {
+      "selector": "body",
+      "styles": "padding: 0px;"
+    },
+    {
+      "selector": "a:where(:not(.wp-element-button))",
+      "styles": "text-decoration: underline;"
+    },
+    {
+      "selector": ":root :where(.wp-element-button, .wp-block-button__link)",
+      "styles": "background-color: rgb(50, 55, 60); border-width: 0px; color: rgb(255, 255, 255); font-family: inherit; font-size: inherit; line-height: inherit; padding: calc(0.667em + 2px) calc(1.333em + 2px); text-decoration: none;"
+    },
+    {
+      "selector": ".has-black-color",
+      "styles": "color: var(--wp--preset--color--black) !important;"
+    },
+    {
+      "selector": ".has-cyan-bluish-gray-color",
+      "styles": "color: var(--wp--preset--color--cyan-bluish-gray) !important;"
+    },
+    {
+      "selector": ".has-white-color",
+      "styles": "color: var(--wp--preset--color--white) !important;"
+    },
+    {
+      "selector": ".has-pale-pink-color",
+      "styles": "color: var(--wp--preset--color--pale-pink) !important;"
+    },
+    {
+      "selector": ".has-vivid-red-color",
+      "styles": "color: var(--wp--preset--color--vivid-red) !important;"
+    },
+    {
+      "selector": ".has-luminous-vivid-orange-color",
+      "styles": "color: var(--wp--preset--color--luminous-vivid-orange) !important;"
+    },
+    {
+      "selector": ".has-luminous-vivid-amber-color",
+      "styles": "color: var(--wp--preset--color--luminous-vivid-amber) !important;"
+    },
+    {
+      "selector": ".has-light-green-cyan-color",
+      "styles": "color: var(--wp--preset--color--light-green-cyan) !important;"
+    },
+    {
+      "selector": ".has-vivid-green-cyan-color",
+      "styles": "color: var(--wp--preset--color--vivid-green-cyan) !important;"
+    },
+    {
+      "selector": ".has-pale-cyan-blue-color",
+      "styles": "color: var(--wp--preset--color--pale-cyan-blue) !important;"
+    },
+    {
+      "selector": ".has-vivid-cyan-blue-color",
+      "styles": "color: var(--wp--preset--color--vivid-cyan-blue) !important;"
+    },
+    {
+      "selector": ".has-vivid-purple-color",
+      "styles": "color: var(--wp--preset--color--vivid-purple) !important;"
+    },
+    {
+      "selector": ".has-black-background-color",
+      "styles": "background-color: var(--wp--preset--color--black) !important;"
+    },
+    {
+      "selector": ".has-cyan-bluish-gray-background-color",
+      "styles": "background-color: var(--wp--preset--color--cyan-bluish-gray) !important;"
+    },
+    {
+      "selector": ".has-white-background-color",
+      "styles": "background-color: var(--wp--preset--color--white) !important;"
+    },
+    {
+      "selector": ".has-pale-pink-background-color",
+      "styles": "background-color: var(--wp--preset--color--pale-pink) !important;"
+    },
+    {
+      "selector": ".has-vivid-red-background-color",
+      "styles": "background-color: var(--wp--preset--color--vivid-red) !important;"
+    },
+    {
+      "selector": ".has-luminous-vivid-orange-background-color",
+      "styles": "background-color: var(--wp--preset--color--luminous-vivid-orange) !important;"
+    },
+    {
+      "selector": ".has-luminous-vivid-amber-background-color",
+      "styles": "background-color: var(--wp--preset--color--luminous-vivid-amber) !important;"
+    },
+    {
+      "selector": ".has-light-green-cyan-background-color",
+      "styles": "background-color: var(--wp--preset--color--light-green-cyan) !important;"
+    },
+    {
+      "selector": ".has-vivid-green-cyan-background-color",
+      "styles": "background-color: var(--wp--preset--color--vivid-green-cyan) !important;"
+    },
+    {
+      "selector": ".has-pale-cyan-blue-background-color",
+      "styles": "background-color: var(--wp--preset--color--pale-cyan-blue) !important;"
+    },
+    {
+      "selector": ".has-vivid-cyan-blue-background-color",
+      "styles": "background-color: var(--wp--preset--color--vivid-cyan-blue) !important;"
+    },
+    {
+      "selector": ".has-vivid-purple-background-color",
+      "styles": "background-color: var(--wp--preset--color--vivid-purple) !important;"
+    },
+    {
+      "selector": ".has-black-border-color",
+      "styles": "border-color: var(--wp--preset--color--black) !important;"
+    },
+    {
+      "selector": ".has-cyan-bluish-gray-border-color",
+      "styles": "border-color: var(--wp--preset--color--cyan-bluish-gray) !important;"
+    },
+    {
+      "selector": ".has-white-border-color",
+      "styles": "border-color: var(--wp--preset--color--white) !important;"
+    },
+    {
+      "selector": ".has-pale-pink-border-color",
+      "styles": "border-color: var(--wp--preset--color--pale-pink) !important;"
+    },
+    {
+      "selector": ".has-vivid-red-border-color",
+      "styles": "border-color: var(--wp--preset--color--vivid-red) !important;"
+    },
+    {
+      "selector": ".has-luminous-vivid-orange-border-color",
+      "styles": "border-color: var(--wp--preset--color--luminous-vivid-orange) !important;"
+    },
+    {
+      "selector": ".has-luminous-vivid-amber-border-color",
+      "styles": "border-color: var(--wp--preset--color--luminous-vivid-amber) !important;"
+    },
+    {
+      "selector": ".has-light-green-cyan-border-color",
+      "styles": "border-color: var(--wp--preset--color--light-green-cyan) !important;"
+    },
+    {
+      "selector": ".has-vivid-green-cyan-border-color",
+      "styles": "border-color: var(--wp--preset--color--vivid-green-cyan) !important;"
+    },
+    {
+      "selector": ".has-pale-cyan-blue-border-color",
+      "styles": "border-color: var(--wp--preset--color--pale-cyan-blue) !important;"
+    },
+    {
+      "selector": ".has-vivid-cyan-blue-border-color",
+      "styles": "border-color: var(--wp--preset--color--vivid-cyan-blue) !important;"
+    },
+    {
+      "selector": ".has-vivid-purple-border-color",
+      "styles": "border-color: var(--wp--preset--color--vivid-purple) !important;"
+    },
+    {
+      "selector": ".has-vivid-cyan-blue-to-vivid-purple-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;"
+    },
+    {
+      "selector": ".has-light-green-cyan-to-vivid-green-cyan-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;"
+    },
+    {
+      "selector": ".has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;"
+    },
+    {
+      "selector": ".has-luminous-vivid-orange-to-vivid-red-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;"
+    },
+    {
+      "selector": ".has-very-light-gray-to-cyan-bluish-gray-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;"
+    },
+    {
+      "selector": ".has-cool-to-warm-spectrum-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;"
+    },
+    {
+      "selector": ".has-blush-light-purple-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--blush-light-purple) !important;"
+    },
+    {
+      "selector": ".has-blush-bordeaux-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--blush-bordeaux) !important;"
+    },
+    {
+      "selector": ".has-luminous-dusk-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--luminous-dusk) !important;"
+    },
+    {
+      "selector": ".has-pale-ocean-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--pale-ocean) !important;"
+    },
+    {
+      "selector": ".has-electric-grass-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--electric-grass) !important;"
+    },
+    {
+      "selector": ".has-midnight-gradient-background",
+      "styles": "background: var(--wp--preset--gradient--midnight) !important;"
+    },
+    {
+      "selector": ".has-small-font-size",
+      "styles": "font-size: var(--wp--preset--font-size--small) !important;"
+    },
+    {
+      "selector": ".has-medium-font-size",
+      "styles": "font-size: var(--wp--preset--font-size--medium) !important;"
+    },
+    {
+      "selector": ".has-large-font-size",
+      "styles": "font-size: var(--wp--preset--font-size--large) !important;"
+    },
+    {
+      "selector": ".has-x-large-font-size",
+      "styles": "font-size: var(--wp--preset--font-size--x-large) !important;"
+    },
+    {
+      "selector": ":root :where(.wp-block-pullquote)",
+      "styles": "font-size: 1.5em; line-height: 1.6;"
+    },
+    {
+      "selector": ":root, [data-bs-theme=\"light\"]",
+      "styles": "--bs-blue: #0d6efd; --bs-indigo: #6610f2; --bs-purple: #6f42c1; --bs-pink: #d63384; --bs-red: #dc3545; --bs-orange: #fd7e14; --bs-yellow: #ffc107; --bs-green: #198754; --bs-teal: #20c997; --bs-cyan: #0dcaf0; --bs-black: #000; --bs-white: #fff; --bs-gray: #6c757d; --bs-gray-dark: #343a40; --bs-gray-100: #f8f9fa; --bs-gray-200: #e9ecef; --bs-gray-300: #dee2e6; --bs-gray-400: #ced4da; --bs-gray-500: #adb5bd; --bs-gray-600: #6c757d; --bs-gray-700: #495057; --bs-gray-800: #343a40; --bs-gray-900: #212529; --bs-primary: #0d6efd; --bs-secondary: #6c757d; --bs-success: #198754; --bs-info: #0dcaf0; --bs-warning: #ffc107; --bs-danger: #dc3545; --bs-light: #f8f9fa; --bs-dark: #212529; --bs-primary-rgb: 13,110,253; --bs-secondary-rgb: 108,117,125; --bs-success-rgb: 25,135,84; --bs-info-rgb: 13,202,240; --bs-warning-rgb: 255,193,7; --bs-danger-rgb: 220,53,69; --bs-light-rgb: 248,249,250; --bs-dark-rgb: 33,37,41; --bs-primary-text-emphasis: #052c65; --bs-secondary-text-emphasis: #2b2f32; --bs-success-text-emphasis: #0a3622; --bs-info-text-emphasis: #055160; --bs-warning-text-emphasis: #664d03; --bs-danger-text-emphasis: #58151c; --bs-light-text-emphasis: #495057; --bs-dark-text-emphasis: #495057; --bs-primary-bg-subtle: #cfe2ff; --bs-secondary-bg-subtle: #e2e3e5; --bs-success-bg-subtle: #d1e7dd; --bs-info-bg-subtle: #cff4fc; --bs-warning-bg-subtle: #fff3cd; --bs-danger-bg-subtle: #f8d7da; --bs-light-bg-subtle: #fcfcfd; --bs-dark-bg-subtle: #ced4da; --bs-primary-border-subtle: #9ec5fe; --bs-secondary-border-subtle: #c4c8cb; --bs-success-border-subtle: #a3cfbb; --bs-info-border-subtle: #9eeaf9; --bs-warning-border-subtle: #ffe69c; --bs-danger-border-subtle: #f1aeb5; --bs-light-border-subtle: #e9ecef; --bs-dark-border-subtle: #adb5bd; --bs-white-rgb: 255,255,255; --bs-black-rgb: 0,0,0; --bs-font-sans-serif: system-ui,-apple-system,\"Segoe UI\",Roboto,\"Helvetica Neue\",\"Noto Sans\",\"Liberation Sans\",Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"; --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace; --bs-gradient: linear-gradient(180deg,rgba(255,255,255,0.15),rgba(255,255,255,0)); --bs-body-font-family: var(--bs-font-sans-serif); --bs-body-font-size: 1rem; --bs-body-font-weight: 400; --bs-body-line-height: 1.5; --bs-body-color: #212529; --bs-body-color-rgb: 33,37,41; --bs-body-bg: #fff; --bs-body-bg-rgb: 255,255,255; --bs-emphasis-color: #000; --bs-emphasis-color-rgb: 0,0,0; --bs-secondary-color: rgba(33,37,41,0.75); --bs-secondary-color-rgb: 33,37,41; --bs-secondary-bg: #e9ecef; --bs-secondary-bg-rgb: 233,236,239; --bs-tertiary-color: rgba(33,37,41,0.5); --bs-tertiary-color-rgb: 33,37,41; --bs-tertiary-bg: #f8f9fa; --bs-tertiary-bg-rgb: 248,249,250; --bs-heading-color: inherit; --bs-link-color: #0d6efd; --bs-link-color-rgb: 13,110,253; --bs-link-decoration: underline; --bs-link-hover-color: #0a58ca; --bs-link-hover-color-rgb: 10,88,202; --bs-code-color: #d63384; --bs-highlight-color: #212529; --bs-highlight-bg: #fff3cd; --bs-border-width: 1px; --bs-border-style: solid; --bs-border-color: #dee2e6; --bs-border-color-translucent: rgba(0,0,0,0.175); --bs-border-radius: 0.375rem; --bs-border-radius-sm: 0.25rem; --bs-border-radius-lg: 0.5rem; --bs-border-radius-xl: 1rem; --bs-border-radius-xxl: 2rem; --bs-border-radius-2xl: var(--bs-border-radius-xxl); --bs-border-radius-pill: 50rem; --bs-box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15); --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0,0,0,0.075); --bs-box-shadow-lg: 0 1rem 3rem rgba(0,0,0,0.175); --bs-box-shadow-inset: inset 0 1px 2px rgba(0,0,0,0.075); --bs-focus-ring-width: 0.25rem; --bs-focus-ring-opacity: 0.25; --bs-focus-ring-color: rgba(13,110,253,0.25); --bs-form-valid-color: #198754; --bs-form-valid-border-color: #198754; --bs-form-invalid-color: #dc3545; --bs-form-invalid-border-color: #dc3545;"
+    },
+    {
+      "selector": "[data-bs-theme=\"dark\"]",
+      "styles": "color-scheme: dark; --bs-body-color: #dee2e6; --bs-body-color-rgb: 222,226,230; --bs-body-bg: #212529; --bs-body-bg-rgb: 33,37,41; --bs-emphasis-color: #fff; --bs-emphasis-color-rgb: 255,255,255; --bs-secondary-color: rgba(222,226,230,0.75); --bs-secondary-color-rgb: 222,226,230; --bs-secondary-bg: #343a40; --bs-secondary-bg-rgb: 52,58,64; --bs-tertiary-color: rgba(222,226,230,0.5); --bs-tertiary-color-rgb: 222,226,230; --bs-tertiary-bg: #2b3035; --bs-tertiary-bg-rgb: 43,48,53; --bs-primary-text-emphasis: #6ea8fe; --bs-secondary-text-emphasis: #a7acb1; --bs-success-text-emphasis: #75b798; --bs-info-text-emphasis: #6edff6; --bs-warning-text-emphasis: #ffda6a; --bs-danger-text-emphasis: #ea868f; --bs-light-text-emphasis: #f8f9fa; --bs-dark-text-emphasis: #dee2e6; --bs-primary-bg-subtle: #031633; --bs-secondary-bg-subtle: #161719; --bs-success-bg-subtle: #051b11; --bs-info-bg-subtle: #032830; --bs-warning-bg-subtle: #332701; --bs-danger-bg-subtle: #2c0b0e; --bs-light-bg-subtle: #343a40; --bs-dark-bg-subtle: #1a1d20; --bs-primary-border-subtle: #084298; --bs-secondary-border-subtle: #41464b; --bs-success-border-subtle: #0f5132; --bs-info-border-subtle: #087990; --bs-warning-border-subtle: #997404; --bs-danger-border-subtle: #842029; --bs-light-border-subtle: #495057; --bs-dark-border-subtle: #343a40; --bs-heading-color: inherit; --bs-link-color: #6ea8fe; --bs-link-hover-color: #8bb9fe; --bs-link-color-rgb: 110,168,254; --bs-link-hover-color-rgb: 139,185,254; --bs-code-color: #e685b5; --bs-highlight-color: #dee2e6; --bs-highlight-bg: #664d03; --bs-border-color: #495057; --bs-border-color-translucent: rgba(255,255,255,0.15); --bs-form-valid-color: #75b798; --bs-form-valid-border-color: #75b798; --bs-form-invalid-color: #ea868f; --bs-form-invalid-border-color: #ea868f;"
+    },
+    {
+      "selector": "*, ::after, ::before",
+      "styles": "box-sizing: border-box;"
+    },
+    {
+      "selector": "body",
+      "styles": "margin: 0px; font-family: var(--bs-body-font-family); font-size: var(--bs-body-font-size); font-weight: var(--bs-body-font-weight); line-height: var(--bs-body-line-height); color: var(--bs-body-color); text-align: var(--bs-body-text-align); background-color: var(--bs-body-bg); text-size-adjust: 100%; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"
+    },
+    {
+      "selector": "hr",
+      "styles": "margin: 1rem 0px; color: inherit; border-right: 0px; border-bottom: 0px; border-left: 0px; border-image: initial; border-top: var(--bs-border-width) solid; opacity: 0.25;"
+    },
+    {
+      "selector": ".h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6",
+      "styles": "margin-top: 0px; margin-bottom: 0.5rem; font-weight: 500; line-height: 1.2; color: var(--bs-heading-color);"
+    },
+    {
+      "selector": ".h1, h1",
+      "styles": "font-size: calc(1.375rem + 1.5vw);"
+    },
+    {
+      "selector": ".h2, h2",
+      "styles": "font-size: calc(1.325rem + 0.9vw);"
+    },
+    {
+      "selector": ".h3, h3",
+      "styles": "font-size: calc(1.3rem + 0.6vw);"
+    },
+    {
+      "selector": ".h4, h4",
+      "styles": "font-size: calc(1.275rem + 0.3vw);"
+    },
+    {
+      "selector": ".h5, h5",
+      "styles": "font-size: 1.25rem;"
+    }
+  ],
+  "services": [
+    {
+      "text": "Properties for sale\n    \n    \n        Properties for rent",
+      "className": "nav nav-pills nav__featured-properties d-flex justify-content-center justify-content-md-start",
+      "tagName": "UL"
+    },
+    {
+      "text": "<img src=\"https://tpjcdn.co.uk/alanbatt-2019.iomart.thepropertyjungle.com/resize/09789034-da79-4666-8627-4dd9920073ee/0/768\"  alt=\"Bolney Street, Aspull, WN2\" data-eio=\"l\">\n          For Sale       \n\n    \n    4 Bed House    For Sale  \n        \n         Bolney Street,Aspull, WN2\n\n        \n                        £230,000 \n                                        Price Guide\n            \n\n            \n                         \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n 4\n                                    \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n 2\n                                     \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n 1\n               \n    \n            \n        \n\n        Stylish 4-bed semi-detached house in Aspull. Modern living room, white kitchen with French doors, utility room, en-suite master bedroom, well-kept garden, driveway. Ideal for family living near schools and amenities.... Read more",
+      "className": "tab-content tab-content__featured-properties my-5",
+      "tagName": "DIV"
+    },
+    {
+      "text": "<img src=\"https://tpjcdn.co.uk/alanbatt-2019.iomart.thepropertyjungle.com/resize/09789034-da79-4666-8627-4dd9920073ee/0/768\"  alt=\"Bolney Street, Aspull, WN2\" data-eio=\"l\">\n          For Sale       \n\n    \n    4 Bed House    For Sale  \n        \n         Bolney Street,Aspull, WN2\n\n        \n                        £230,000 \n                                        Price Guide\n            \n\n            \n                         \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n 4\n                                    \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n 2\n                                     \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n 1\n               \n    \n            \n        \n\n        Stylish 4-bed semi-detached house in Aspull. Modern living room, white kitchen with French doors, utility room, en-suite master bedroom, well-kept garden, driveway. Ideal for family living near schools and amenities.... Read more",
+      "className": "property-grid property-grid__featured",
+      "tagName": "DIV"
+    }
+  ],
+  "timestamp": "2025-09-04T13:12:12.933Z"
+}

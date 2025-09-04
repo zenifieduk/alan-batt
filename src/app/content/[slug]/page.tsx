@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Sparkles, ArrowLeft, Calendar, Clock, CheckCircle, XCircle, Github, Newspaper, Share2, Mail, List } from "lucide-react"
-import { MobileMenu } from "@/components/ui/mobile-menu"
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
@@ -72,6 +71,7 @@ export default function BlogPostPage({ params }: PageProps) {
           const title = lines[0].replace('# ', '')
           const publishedLine = lines.find(line => line.includes('Published:'))
           const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
           
           // Extract headings for TOC
           const headingRegex = /^(#{2,3})\s+(.+)$/gm
@@ -96,7 +96,7 @@ export default function BlogPostPage({ params }: PageProps) {
             date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '3rd June 2025',
             readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '5 minutes',
             status: 'draft',
-            category: 'News & Insights Post'
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'News & Insights Post'
           })
         } else if (slug === 'north-west-uk-property-market-insights-june-2025') {
           const response = await fetch('/articles/North West UK Property Market Insights - June 2025.md')
@@ -109,6 +109,7 @@ export default function BlogPostPage({ params }: PageProps) {
           const title = lines[0].replace('# ', '')
           const publishedLine = lines.find(line => line.includes('Published:'))
           const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
           
           // Extract headings for TOC
           const headingRegex = /^(#{2,3})\s+(.+)$/gm
@@ -133,7 +134,7 @@ export default function BlogPostPage({ params }: PageProps) {
             date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '19th June 2025',
             readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '8 minutes',
             status: 'draft',
-            category: 'News & Insights Post'
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'News & Insights Post'
           })
         } else if (slug === 'how-increased-home-supply-will-affect-wigan-house-prices-2025') {
           const response = await fetch('/articles/How Increased Home Supply Will Affect Wigan House.md')
@@ -146,6 +147,7 @@ export default function BlogPostPage({ params }: PageProps) {
           const title = lines[0].replace('# ', '')
           const publishedLine = lines.find(line => line.includes('Published:'))
           const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
           
           // Extract headings for TOC
           const headingRegex = /^(#{2,3})\s+(.+)$/gm
@@ -170,7 +172,273 @@ export default function BlogPostPage({ params }: PageProps) {
             date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '12th June 2025',
             readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '7 minutes',
             status: 'draft',
-            category: 'News & Insights Post'
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'News & Insights Post'
+          })
+        } else if (slug === 'wigan-property-market-2025-outlook') {
+          const response = await fetch('/articles/wigan-property-market-2025-outlook.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '25th June 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '6 minutes',
+            status: 'draft',
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'News & Insights Post'
+          })
+        } else if (slug === 'social-media-property-tips-2025') {
+          const response = await fetch('/articles/social-media-property-tips-2025.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '28th June 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '3 minutes',
+            status: 'draft',
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'Social Post'
+          })
+        } else if (slug === 'email-newsletter-june-2025') {
+          const response = await fetch('/articles/email-newsletter-june-2025.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '30th June 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '4 minutes',
+            status: 'draft',
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'Email'
+          })
+        } else if (slug === 'july-2025-property-market-summer-insights') {
+          const response = await fetch('/articles/july-2025-property-market-summer-insights.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '15th July 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '7 minutes',
+            status: 'draft',
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'News & Insights Post'
+          })
+        } else if (slug === 'summer-property-social-content-2025') {
+          const response = await fetch('/articles/summer-property-social-content-2025.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '20th July 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '4 minutes',
+            status: 'draft',
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'Social Post'
+          })
+        } else if (slug === 'july-august-newsletter-2025') {
+          const response = await fetch('/articles/july-august-newsletter-2025.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '30th July 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '5 minutes',
+            status: 'draft',
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'Email'
+          })
+        } else if (slug === 'august-2025-property-market-forecast') {
+          const response = await fetch('/articles/august-2025-property-market-forecast.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || '25th August 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '8 minutes',
+            status: 'draft',
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'News & Insights Post'
           })
         } else {
           throw new Error('Post not found')
@@ -375,26 +643,7 @@ export default function BlogPostPage({ params }: PageProps) {
   if (error || !post) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-        <header className="container mx-auto px-4 py-6">
-          <nav className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                <Sparkles className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold">Alan Batt</span>
-            </div>
-            <div className="flex items-center space-x-6">
-              <Button variant="ghost" asChild>
-                <Link href="/content">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Repository
-                </Link>
-              </Button>
-            </div>
-          </nav>
-        </header>
-
-        <main className="container mx-auto px-4 py-16 text-center">
+        <main className="px-8 py-16 pt-24 md:pt-16 text-center">
           <div className="max-w-2xl mx-auto">
             <h1 className="text-4xl font-bold text-slate-900 mb-4">Content Not Found</h1>
             <p className="text-slate-600 mb-8">The content you&apos;re looking for doesn&apos;t exist or has been moved.</p>
@@ -409,58 +658,8 @@ export default function BlogPostPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold">Alan Batt</span>
-          </div>
-          <div className="flex items-center space-x-6">
-            {/* Desktop Navigation - Hidden on mobile */}
-            <div className="hidden lg:flex items-center space-x-6">
-              <Button variant="ghost" asChild>
-                <Link href="/">Home</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/ai">AI</Link>
-              </Button>
-              <Button variant="ghost" asChild className="bg-blue-50 text-blue-600">
-                <Link href="/content">Content</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/new-dev">New Dev</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/reports">Reports</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/seo">SEO</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/markets">Markets</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/downloads">Downloads</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link href="https://github.com/zenifieduk/alan-batt" target="_blank">
-                  <Github className="h-4 w-4 mr-2" />
-                  GitHub
-                </Link>
-              </Button>
-            </div>
-            
-            {/* Mobile Menu */}
-            <MobileMenu currentPage="content" />
-          </div>
-        </nav>
-      </header>
-
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="px-8 py-8 pt-24 md:pt-8">
         <div className="max-w-7xl mx-auto">
           {/* Back Button */}
           <div className="mb-8">

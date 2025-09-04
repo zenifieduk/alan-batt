@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import SideNavigation from "@/components/SideNavigation";
+import SidebarProvider from "@/components/SidebarProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +36,12 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         style={{ colorScheme: "light only" }}
       >
-        {children}
+        <SidebarProvider>
+          <SideNavigation />
+          <div className="transition-all duration-300 ease-in-out" id="main-content">
+            {children}
+          </div>
+        </SidebarProvider>
       </body>
     </html>
   );

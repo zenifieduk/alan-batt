@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, FileText, Github, Calendar, Clock, ArrowRight, TrendingUp, CheckCircle, Eye, Users, Mail, Share2, Newspaper } from "lucide-react"
-import { MobileMenu } from "@/components/ui/mobile-menu"
+import { FileText, Newspaper, Share2, Mail, ArrowRight, Sparkles, Github, Calendar, Clock, User, Tag, ExternalLink, CheckCircle, Eye, Users, TrendingUp } from "lucide-react"
 
 interface BlogPost {
   slug: string
@@ -39,6 +38,87 @@ const blogPosts: BlogPost[] = [
     date: '3rd June 2025',
     readTime: '5 minutes',
     status: 'draft',
+    category: 'News & Insights Post'
+  },
+  {
+    slug: 'wigan-property-market-2025-outlook',
+    title: 'Wigan Property Market 2025: Investment Opportunities and Market Trends',
+    excerpt: 'In-depth analysis of Wigan\'s property market performance in 2025, including emerging investment hotspots, price trends, and future development plans.',
+    date: '25th June 2025',
+    readTime: '6 minutes',
+    status: 'draft',
+    category: 'News & Insights Post'
+  },
+  {
+    slug: 'social-media-property-tips-2025',
+    title: 'Top 10 Property Investment Tips for Social Media in 2025',
+    excerpt: 'Engaging social media content featuring practical property investment advice, market insights, and tips for first-time buyers and investors.',
+    date: '28th June 2025',
+    readTime: '3 minutes',
+    status: 'draft',
+    category: 'Social Post'
+  },
+  {
+    slug: 'email-newsletter-june-2025',
+    title: 'June 2025 Property Market Newsletter: Wigan and North West Updates',
+    excerpt: 'Monthly newsletter featuring the latest property market updates, investment opportunities, and expert insights for subscribers.',
+    date: '30th June 2025',
+    readTime: '4 minutes',
+    status: 'draft',
+    category: 'News & Insights Post'
+  },
+  {
+    slug: 'july-2025-property-market-summer-insights',
+    title: 'July 2025 Property Market: Summer Insights and Investment Opportunities',
+    excerpt: 'Comprehensive analysis of the summer property market with July performance data, seasonal trends, and strategic investment opportunities for the summer months.',
+    date: '15th July 2025',
+    readTime: '7 minutes',
+    status: 'draft',
+    category: 'News & Insights Post'
+  },
+  {
+    slug: 'summer-property-social-content-2025',
+    title: 'Summer Property Social Media Content: July-August 2025',
+    excerpt: 'Complete social media content guide for the summer property market with content themes, hashtags, platform strategies, and engagement tips.',
+    date: '20th July 2025',
+    readTime: '4 minutes',
+    status: 'draft',
+    category: 'Social Post'
+  },
+  {
+    slug: 'july-august-newsletter-2025',
+    title: 'July-August 2025 Property Market Newsletter: Summer Insights and Autumn Preparation',
+    excerpt: 'Comprehensive summer market update covering July performance, August forecasts, autumn preparation strategies, and investment opportunities.',
+    date: '30th July 2025',
+    readTime: '5 minutes',
+    status: 'draft',
+    category: 'News & Insights Post'
+  },
+  {
+    slug: 'august-2025-property-market-forecast',
+    title: 'August 2025 Property Market Forecast: Autumn Market Preparation',
+    excerpt: 'Strategic forecast for August 2025 with autumn market predictions, investment strategies, and preparation guidance for the busy autumn season.',
+    date: '25th August 2025',
+    readTime: '8 minutes',
+    status: 'draft',
+    category: 'News & Insights Post'
+  },
+  {
+    slug: 'august-2025-wigan-property-market-update',
+    title: 'August 2025 Wigan Property Market Update: Summer Peak and Autumn Preparation',
+    excerpt: 'Comprehensive August 2025 market analysis for Wigan with updated statistics, investment hotspots, and strategic insights for the autumn market ahead.',
+    date: '25th August 2025',
+    readTime: '7 minutes',
+    status: 'published',
+    category: 'News & Insights Post'
+  },
+  {
+    slug: 'august-2025-property-market-newsletter',
+    title: 'August 2025 Property Market Newsletter: Summer Peak and Autumn Preparation',
+    excerpt: 'August property market newsletter featuring summer performance analysis, investment opportunities, and strategic preparation for the autumn market surge.',
+    date: '30th August 2025',
+    readTime: '5 minutes',
+    status: 'published',
     category: 'News & Insights Post'
   }
   // Add more posts here as they're created
@@ -87,67 +167,13 @@ export default function ContentPage() {
 
   const categoryStats = {
     'News & Insights Post': blogPosts.filter(p => p.category === 'News & Insights Post').length,
-    'Social Post': blogPosts.filter(p => p.category === 'Social Post').length,
-    'Email': blogPosts.filter(p => p.category === 'Email').length
+    'Social Post': blogPosts.filter(p => p.category === 'Social Post').length
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold">Alan Batt Technology Hub</span>
-          </div>
-          <div className="flex items-center space-x-6">
-            {/* Desktop Navigation - Hidden on mobile */}
-            <div className="hidden lg:flex items-center space-x-6">
-              <Button variant="ghost" asChild>
-                <Link href="/">Home</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/ai">AI</Link>
-              </Button>
-              <Button variant="ghost" asChild className="bg-blue-50 text-blue-600">
-                <Link href="/content">Content</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/new-dev">New Dev</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/reports">Reports</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/seo">SEO</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/markets">Markets</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/downloads">Downloads</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link href="https://github.com/zenifieduk/alan-batt" target="_blank">
-                  <Github className="h-4 w-4 mr-2" />
-                  GitHub
-                </Link>
-              </Button>
-              <Button variant="outline" size="sm">
-                Contact
-              </Button>
-            </div>
-            
-            {/* Mobile Menu */}
-            <MobileMenu currentPage="content" />
-          </div>
-        </nav>
-      </header>
-
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-16">
+      <main className="px-8 py-16 pt-24 md:pt-16">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16">
@@ -158,12 +184,12 @@ export default function ContentPage() {
               Content Repository
             </h1>
             <p className="text-lg text-slate-600 mb-8 max-w-3xl mx-auto">
-              Professional content creation and management across all channels - articles, social posts, and email campaigns.
+              Professional content creation and management across all channels - articles, social posts, and newsletters.
             </p>
           </div>
 
           {/* Content Categories Overview */}
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
+          <div className="grid md:grid-cols-2 gap-4 mb-8">
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
               <div className="flex items-center justify-center mb-2">
                 <Newspaper className="w-5 h-5 text-blue-600 mr-2" />
@@ -179,14 +205,6 @@ export default function ContentPage() {
               </div>
               <div className="text-2xl font-bold text-purple-600">{categoryStats['Social Post']}</div>
               <div className="text-sm text-purple-700">Social media content</div>
-            </div>
-            <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-              <div className="flex items-center justify-center mb-2">
-                <Mail className="w-5 h-5 text-green-600 mr-2" />
-                <span className="font-semibold text-green-900">Emails</span>
-              </div>
-              <div className="text-2xl font-bold text-green-600">{categoryStats['Email']}</div>
-              <div className="text-sm text-green-700">Email campaigns</div>
             </div>
           </div>
 
@@ -212,7 +230,14 @@ export default function ContentPage() {
 
           {/* Content Posts */}
           <div className="space-y-6">
-            {blogPosts.map((post) => (
+            {blogPosts
+              .sort((a, b) => {
+                // Convert dates to Date objects for proper sorting
+                const dateA = new Date(a.date.replace(/(\d+)(st|nd|rd|th)/, '$1'));
+                const dateB = new Date(b.date.replace(/(\d+)(st|nd|rd|th)/, '$1'));
+                return dateB.getTime() - dateA.getTime(); // Newest first
+              })
+              .map((post) => (
               <div key={post.slug} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-3">
@@ -291,11 +316,11 @@ export default function ContentPage() {
               </div>
               <h3 className="text-lg font-semibold text-slate-900 mb-2">Multi-Channel Strategy</h3>
               <p className="text-slate-600 text-sm mb-4">
-                Comprehensive content strategy across news articles, social media posts, and email campaigns. 
+                Comprehensive content strategy across news articles, social media posts, and newsletters. 
                 Consistent messaging adapted for each platform and audience.
               </p>
               <div className="text-xs text-slate-500">
-                Content types: Articles • Social Posts • Email Campaigns
+                Content types: Articles • Social Posts • Newsletters
               </div>
             </div>
           </div>
@@ -314,16 +339,10 @@ export default function ContentPage() {
                   Request Article
                 </Link>
               </Button>
-              <Button variant="outline" asChild>
+              <Button asChild>
                 <Link href="mailto:hello@alanbatt.co.uk?subject=Social Content Request">
                   <Share2 className="w-4 h-4 mr-2" />
                   Social Content
-                </Link>
-              </Button>
-              <Button asChild>
-                <Link href="mailto:hello@alanbatt.co.uk?subject=Email Campaign Request">
-                  <Mail className="w-4 h-4 mr-2" />
-                  Email Campaign
                 </Link>
               </Button>
             </div>

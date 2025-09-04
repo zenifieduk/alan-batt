@@ -3,66 +3,12 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Sparkles, Palette, Zap, Bot, Github, ArrowRight, Users, Target, Lightbulb } from "lucide-react"
-import { MobileMenu } from "@/components/ui/mobile-menu"
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold">Alan Batt</span>
-          </div>
-          <div className="flex items-center space-x-6">
-            {/* Desktop Navigation - Hidden on mobile */}
-            <div className="hidden lg:flex items-center space-x-6">
-              <Button variant="ghost" asChild>
-                <Link href="/">Home</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/ai">AI</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/content">Content</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/new-dev">New Dev</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/reports">Reports</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/seo">SEO</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/markets">Markets</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/downloads">Downloads</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link href="https://github.com/zenifieduk/alan-batt" target="_blank">
-                  <Github className="h-4 w-4 mr-2" />
-                  GitHub
-                </Link>
-              </Button>
-              <Button variant="outline" size="sm">
-                Contact
-              </Button>
-            </div>
-            
-            {/* Mobile Menu */}
-            <MobileMenu currentPage="home" />
-          </div>
-        </nav>
-      </header>
-
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-16">
+      <main className="px-8 py-16 pt-24 md:pt-16">
         <div className="max-w-6xl mx-auto">
           {/* Above the fold content */}
           <div className="text-center mb-20">
@@ -125,7 +71,7 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    <div className="flex items-center space-x-3 p-4 bg-purple-50 rounded-lg">
+                    <div className="flex flex-col items-center space-x-3 p-4 bg-purple-50 rounded-lg">
                       <Zap className="h-6 w-6 text-purple-600" />
                       <div>
                         <h4 className="font-semibold text-purple-900">Scalable Solutions</h4>
@@ -231,7 +177,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="container mx-auto px-4 py-8 text-center text-slate-500 mt-20">
+      <footer className="px-8 py-8 text-center text-slate-500 mt-20">
         <p>&copy; 2024 Magicalogical. Revolutionising client-developer collaboration through innovative technology demonstration.</p>
       </footer>
     </div>

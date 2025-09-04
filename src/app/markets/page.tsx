@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Sparkles, Github, TrendingUp, TrendingDown, Home, PoundSterling, BarChart3, Minus, Calendar, CheckCircle } from "lucide-react"
-import { MobileMenu } from "@/components/ui/mobile-menu"
+
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
 
 // Type definitions
@@ -65,17 +65,17 @@ interface MetricType {
 // Sample data - replace with real API calls
 const generateSampleData = (): MarketData => ({
   currentWeek: {
-    endDate: "June 2, 2025",
-    weekNumber: 23
+    endDate: "September 30, 2025",
+    weekNumber: 39
   },
   executive: {
     marketHealth: "STRONG",
-    healthScore: 78,
+    healthScore: 82,
     keyMetrics: [
-      { label: "Median Sale Price", value: "£185,000", change: "+2.3%", trend: "up", period: "MoM" },
-      { label: "Properties Sold", value: "247", change: "+12%", trend: "up", period: "vs last week" },
-      { label: "Days on Market", value: "28", change: "-3", trend: "down", period: "vs last month" },
-      { label: "New Instructions", value: "312", change: "+8%", trend: "up", period: "vs last week" }
+      { label: "Median Sale Price", value: "£189,000", change: "+2.1%", trend: "up", period: "MoM" },
+      { label: "Properties Sold", value: "265", change: "+15%", trend: "up", period: "vs last week" },
+      { label: "Days on Market", value: "26", change: "-2", trend: "down", period: "vs last month" },
+      { label: "New Instructions", value: "328", change: "+11%", trend: "up", period: "vs last week" }
     ]
   },
   priceData: [
@@ -84,14 +84,34 @@ const generateSampleData = (): MarketData => ({
     { month: "Feb 2025", wiganPrice: 180500, northWestPrice: 197500, ukPrice: 287500 },
     { month: "Mar 2025", wiganPrice: 183000, northWestPrice: 200000, ukPrice: 291000 },
     { month: "Apr 2025", wiganPrice: 184500, northWestPrice: 201500, ukPrice: 293500 },
-    { month: "May 2025", wiganPrice: 185000, northWestPrice: 203000, ukPrice: 295000 }
+    { month: "May 2025", wiganPrice: 185000, northWestPrice: 203000, ukPrice: 295000 },
+    { month: "Jun 2025", wiganPrice: 186500, northWestPrice: 204500, ukPrice: 297000 },
+    { month: "Jul 2025", wiganPrice: 187000, northWestPrice: 205000, ukPrice: 298500 },
+    { month: "Aug 2025", wiganPrice: 188500, northWestPrice: 206500, ukPrice: 300000 },
+    { month: "Sep 2025", wiganPrice: 189000, northWestPrice: 207000, ukPrice: 301500 }
   ],
   transactionData: [
     { week: "Week 19", sales: 198, lettings: 156 },
     { week: "Week 20", sales: 215, lettings: 142 },
     { week: "Week 21", sales: 203, lettings: 168 },
     { week: "Week 22", sales: 221, lettings: 175 },
-    { week: "Week 23", sales: 247, lettings: 189 }
+    { week: "Week 23", sales: 247, lettings: 189 },
+    { week: "Week 24", sales: 234, lettings: 182 },
+    { week: "Week 25", sales: 218, lettings: 175 },
+    { week: "Week 26", sales: 225, lettings: 168 },
+    { week: "Week 27", sales: 232, lettings: 171 },
+    { week: "Week 28", sales: 241, lettings: 178 },
+    { week: "Week 29", sales: 228, lettings: 185 },
+    { week: "Week 30", sales: 235, lettings: 179 },
+    { week: "Week 31", sales: 242, lettings: 186 },
+    { week: "Week 32", sales: 238, lettings: 183 },
+    { week: "Week 33", sales: 245, lettings: 187 },
+    { week: "Week 34", sales: 251, lettings: 191 },
+    { week: "Week 35", sales: 248, lettings: 188 },
+    { week: "Week 36", sales: 254, lettings: 194 },
+    { week: "Week 37", sales: 261, lettings: 198 },
+    { week: "Week 38", sales: 258, lettings: 195 },
+    { week: "Week 39", sales: 265, lettings: 201 }
   ],
   propertyTypes: [
     { type: "Terraced", sales: 112, percentage: 45.3, avgPrice: 165000 },
@@ -111,7 +131,11 @@ const generateSampleData = (): MarketData => ({
     { month: "Feb", rate: 4.9, approvals: 9800 },
     { month: "Mar", rate: 4.8, approvals: 10100 },
     { month: "Apr", rate: 4.7, approvals: 10400 },
-    { month: "May", rate: 4.6, approvals: 10800 }
+    { month: "May", rate: 4.6, approvals: 10800 },
+    { month: "Jun", rate: 4.5, approvals: 11100 },
+    { month: "Jul", rate: 4.4, approvals: 11400 },
+    { month: "Aug", rate: 4.3, approvals: 11700 },
+    { month: "Sep", rate: 4.2, approvals: 12000 }
   ]
 });
 
@@ -688,58 +712,10 @@ export default function MarketsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold">Alan Batt Technology Hub</span>
-          </div>
-          <div className="flex items-center space-x-6">
-            {/* Desktop Navigation - Hidden on mobile */}
-            <div className="hidden lg:flex items-center space-x-6">
-              <Button variant="ghost" asChild>
-                <Link href="/">Home</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/ai">AI</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/content">Content</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/new-dev">New Dev</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/reports">Reports</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/seo">SEO</Link>
-              </Button>
-              <Button variant="ghost" asChild className="bg-blue-50 text-blue-600">
-                <Link href="/markets">Markets</Link>
-              </Button>
-              <Button variant="ghost" asChild>
-                <Link href="/downloads">Downloads</Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link href="https://github.com/zenifieduk/alan-batt" target="_blank">
-                  <Github className="h-4 w-4 mr-2" />
-                  GitHub
-                </Link>
-              </Button>
-            </div>
-            
-            {/* Mobile Menu */}
-            <MobileMenu currentPage="markets" />
-          </div>
-        </nav>
-      </header>
+
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-16">
+      <main className="px-8 py-16 pt-24 md:pt-16">
         <div className="max-w-6xl mx-auto space-y-16">
           {/* New Housing Market Report Component */}
           <HousingMarketReport />

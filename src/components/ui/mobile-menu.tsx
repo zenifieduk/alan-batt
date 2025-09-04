@@ -72,6 +72,15 @@ export function MobileMenu({ currentPage }: MobileMenuProps) {
         { href: '/new-dev', label: 'AI Integration', description: 'ElevenLabs and OpenAI' },
         { href: '/new-dev', label: 'Performance Optimization', description: 'Speed and efficiency' },
       ]
+    },
+    {
+      id: 'reports',
+      title: 'REPORTS & ANALYTICS',
+      expandable: true,
+      items: [
+        { href: '/reports', label: 'Web Reports', description: 'Google Analytics & Website Performance' },
+        { href: '/reports/facebook', label: 'Facebook Reports', description: 'Social Media Analytics & Insights' },
+      ]
     }
   ]
 

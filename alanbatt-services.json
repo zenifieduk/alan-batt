@@ -1,0 +1,206 @@
+{
+  "images": [],
+  "styles": [
+    {
+      "selector": ".card",
+      "styles": "--bs-card-spacer-y: 1rem; --bs-card-spacer-x: 1rem; --bs-card-title-spacer-y: 0.5rem; --bs-card-title-color: ; --bs-card-subtitle-color: ; --bs-card-border-width: var(--bs-border-width); --bs-card-border-color: var(--bs-border-color-translucent); --bs-card-border-radius: var(--bs-border-radius); --bs-card-box-shadow: ; --bs-card-inner-border-radius: calc(var(--bs-border-radius) - (var(--bs-border-width))); --bs-card-cap-padding-y: 0.5rem; --bs-card-cap-padding-x: 1rem; --bs-card-cap-bg: rgba(var(--bs-body-color-rgb),0.03); --bs-card-cap-color: ; --bs-card-height: ; --bs-card-color: ; --bs-card-bg: var(--bs-body-bg); --bs-card-img-overlay-padding: 1rem; --bs-card-group-margin: 0.75rem; position: relative; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; flex-direction: column; min-width: 0px; height: var(--bs-card-height); color: var(--bs-body-color); overflow-wrap: break-word; background-color: var(--bs-card-bg); background-clip: border-box; border: var(--bs-card-border-width) solid var(--bs-card-border-color); border-radius: var(--bs-card-border-radius);"
+    },
+    {
+      "selector": ".card > hr",
+      "styles": "margin-right: 0px; margin-left: 0px;"
+    },
+    {
+      "selector": ".card > .list-group",
+      "styles": "border-top: inherit; border-bottom: inherit;"
+    },
+    {
+      "selector": ".card > .list-group:first-child",
+      "styles": "border-top-width: 0px; border-top-left-radius: var(--bs-card-inner-border-radius); border-top-right-radius: var(--bs-card-inner-border-radius);"
+    },
+    {
+      "selector": ".card > .list-group:last-child",
+      "styles": "border-bottom-width: 0px; border-bottom-right-radius: var(--bs-card-inner-border-radius); border-bottom-left-radius: var(--bs-card-inner-border-radius);"
+    },
+    {
+      "selector": ".card > .card-header + .list-group, .card > .list-group + .card-footer",
+      "styles": "border-top: 0px;"
+    },
+    {
+      "selector": ".card-body",
+      "styles": "-webkit-box-flex: 1; flex: 1 1 auto; padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); color: var(--bs-card-color);"
+    },
+    {
+      "selector": ".card-title",
+      "styles": "margin-bottom: var(--bs-card-title-spacer-y); color: var(--bs-card-title-color);"
+    },
+    {
+      "selector": ".card-subtitle",
+      "styles": "margin-top: calc(-0.5 * var(--bs-card-title-spacer-y)); margin-bottom: 0px; color: var(--bs-card-subtitle-color);"
+    },
+    {
+      "selector": ".card-text:last-child",
+      "styles": "margin-bottom: 0px;"
+    },
+    {
+      "selector": ".card-link + .card-link",
+      "styles": "margin-left: var(--bs-card-spacer-x);"
+    },
+    {
+      "selector": ".card-header",
+      "styles": "padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x); margin-bottom: 0px; color: var(--bs-card-cap-color); background-color: var(--bs-card-cap-bg); border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"
+    },
+    {
+      "selector": ".card-header:first-child",
+      "styles": "border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;"
+    },
+    {
+      "selector": ".card-footer",
+      "styles": "padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x); color: var(--bs-card-cap-color); background-color: var(--bs-card-cap-bg); border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);"
+    },
+    {
+      "selector": ".card-footer:last-child",
+      "styles": "border-radius: 0 0 var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius);"
+    },
+    {
+      "selector": ".card-header-tabs",
+      "styles": "margin-right: calc(-0.5 * var(--bs-card-cap-padding-x)); margin-bottom: calc(-1 * var(--bs-card-cap-padding-y)); margin-left: calc(-0.5 * var(--bs-card-cap-padding-x)); border-bottom: 0px;"
+    },
+    {
+      "selector": ".card-header-tabs .nav-link.active",
+      "styles": "background-color: var(--bs-card-bg); border-bottom-color: var(--bs-card-bg);"
+    },
+    {
+      "selector": ".card-header-pills",
+      "styles": "margin-right: calc(-0.5 * var(--bs-card-cap-padding-x)); margin-left: calc(-0.5 * var(--bs-card-cap-padding-x));"
+    },
+    {
+      "selector": ".card-img-overlay",
+      "styles": "position: absolute; inset: 0px; padding: var(--bs-card-img-overlay-padding); border-radius: var(--bs-card-inner-border-radius);"
+    },
+    {
+      "selector": ".card-img, .card-img-bottom, .card-img-top",
+      "styles": "width: 100%;"
+    },
+    {
+      "selector": ".card-img, .card-img-top",
+      "styles": "border-top-left-radius: var(--bs-card-inner-border-radius); border-top-right-radius: var(--bs-card-inner-border-radius);"
+    },
+    {
+      "selector": ".card-img, .card-img-bottom",
+      "styles": "border-bottom-right-radius: var(--bs-card-inner-border-radius); border-bottom-left-radius: var(--bs-card-inner-border-radius);"
+    },
+    {
+      "selector": ".card-group > .card",
+      "styles": "margin-bottom: var(--bs-card-group-margin);"
+    },
+    {
+      "selector": ".swiper-cards",
+      "styles": "overflow: visible;"
+    },
+    {
+      "selector": ".swiper-cards .swiper-slide",
+      "styles": "transform-origin: center bottom; backface-visibility: hidden; overflow: hidden;"
+    },
+    {
+      "selector": ".eicon-menu-card::before",
+      "styles": "content: \"\";"
+    },
+    {
+      "selector": ".eicon-featured-image::before",
+      "styles": "content: \"\";"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-business-reviews.bubble\"] .uael-review-details, .elementor-element[data-widget_type=\"uael-business-reviews.card\"] .uael-review-icon-wrap, .uael-review-image-left .uael-review-details",
+      "styles": "align-self: center;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-business-reviews.card\"] .uael-review-content-wrap",
+      "styles": "margin-bottom: 8px;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.card\"] .uael-post__content-wrap",
+      "styles": "margin: 0px auto;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.card\"] .uael-post__inner-wrap",
+      "styles": "display: inline-block; width: 100%;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.card\"] .uael-post__content-wrap, .elementor-element[data-widget_type=\"uael-posts.card\"] .uael-post__thumbnail",
+      "styles": "position: relative;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.card\"].uael-post__separator-center .uael-post__separator, .elementor-element[data-widget_type=\"uael-posts.card\"].uael-post__separator-left .uael-post__separator",
+      "styles": "margin-right: auto;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.card\"].uael-post__separator-center .uael-post__separator, .elementor-element[data-widget_type=\"uael-posts.card\"].uael-post__separator-right .uael-post__separator",
+      "styles": "margin-left: auto;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.card\"].uael-post__link-complete-yes .uael-post__complete-box-overlay",
+      "styles": "z-index: 2;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-grid__inner, .elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-wrapper-featured, .elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post__inner-wrap, .elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post_structure-featured",
+      "styles": "display: flex;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-wrapper-featured .uael-post__inner-wrap",
+      "styles": "position: relative; height: 100%;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-wrapper-featured .uael-post__bg-wrap, .elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post__thumbnail img",
+      "styles": "height: 100%;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-wrapper-featured .uael-post__content-wrap, .elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-wrapper-featured .uael-post__thumbnail, .elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post__noimage.uael-post__content-wrap",
+      "styles": "width: 100%;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-wrapper.uael-post-wrapper-featured, .elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post_structure-featured .uael-post-grid__inner, .elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post_structure-featured > .uael-post-wrapper",
+      "styles": "width: 50%;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-wrapper.uael-post-wrapper-featured .uael-post__content-wrap",
+      "styles": "position: absolute; bottom: 0px; left: 0px;"
+    },
+    {
+      "selector": ".elementor-element[data-widget_type=\"uael-posts.news\"] .uael-post-wrapper-featured .uael-post__content-wrap",
+      "styles": "background: linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0.5) 100%);"
+    },
+    {
+      "selector": ".uael-post-wrapper.uael-post-wrapper-featured",
+      "styles": "margin: 0px;"
+    },
+    {
+      "selector": ".uael-post_structure-featured.uael-featured_post_structure-inline .uael-post__columns-6 .uael-post-wrapper-featured",
+      "styles": ""
+    },
+    {
+      "selector": ".uael-post_structure-featured.uael-featured_post_structure-inline .uael-post__columns-5 .uael-post-wrapper-featured",
+      "styles": "width: 40%;"
+    },
+    {
+      "selector": ".uael-post_structure-featured.uael-featured_post_structure-inline .uael-post__columns-3 .uael-post-wrapper-featured",
+      "styles": "width: 66.66%;"
+    },
+    {
+      "selector": ".uael-post__columns-2 .uael-post-wrapper, .uael-post_structure-featured.uael-featured_post_structure-inline .uael-post__columns-2 .uael-post-wrapper-featured, .uael-post_structure-featured.uael-featured_post_structure-inline .uael-post__columns-4 .uael-post-wrapper-featured",
+      "styles": "width: 50%;"
+    },
+    {
+      "selector": ".uael-post__columns-1 .uael-post-wrapper, .uael-post_structure-featured.uael-featured_post_structure-inline .uael-post__columns-1 .uael-post-wrapper-featured, .uael-post_structure-featured.uael-featured_post_structure-stack .uael-post-wrapper-featured",
+      "styles": "width: 100%;"
+    },
+    {
+      "selector": ".uael-price-table-feature-content",
+      "styles": "display: inline-flex; -webkit-box-align: center; align-items: center;"
+    },
+    {
+      "selector": ".uael-price-table-feature-content svg",
+      "styles": "flex-shrink: 0;"
+    }
+  ],
+  "timestamp": "2025-09-04T13:17:05.402Z"
+}
