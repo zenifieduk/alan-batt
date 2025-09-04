@@ -13,9 +13,7 @@ export async function POST(request: NextRequest) {
     const { 
       to, 
       subject, 
-      previewText, 
-      templateId = 'newsletter',
-      customData 
+      templateId = 'newsletter'
     } = body;
 
     if (!to || !subject) {
@@ -38,15 +36,15 @@ export async function POST(request: NextRequest) {
       case 'newsletter':
         emailContent = (
           <PropertyNewsletterEmail
-            properties={properties}
+            mainProperty={properties[0]}
+            secondaryProperties={properties.slice(1)}
             blogPosts={blogPosts}
-            subject={subject}
-            previewText={previewText}
             companyName="Alan Batt Estate Agents"
             companyLogo="/logo.png"
             companyAddress="78 Market Street, Wigan, WN1 1HX"
             companyPhone="01942 233 999"
-            companyEmail="info@alanbatt.co.uk"
+            salesEmail="sales@alanbatt.co.uk"
+            rentalsEmail="rentals@alanbatt.co.uk"
           />
         );
         break;
@@ -54,15 +52,15 @@ export async function POST(request: NextRequest) {
       case 'property-alert':
         emailContent = (
           <PropertyNewsletterEmail
-            properties={properties.slice(0, 2)}
+            mainProperty={properties[0]}
+            secondaryProperties={properties.slice(1, 2)}
             blogPosts={blogPosts.slice(0, 1)}
-            subject={subject}
-            previewText={previewText}
             companyName="Alan Batt Estate Agents"
             companyLogo="/logo.png"
             companyAddress="78 Market Street, Wigan, WN1 1HX"
             companyPhone="01942 233 999"
-            companyEmail="info@alanbatt.co.uk"
+            salesEmail="sales@alanbatt.co.uk"
+            rentalsEmail="rentals@alanbatt.co.uk"
           />
         );
         break;
@@ -70,15 +68,15 @@ export async function POST(request: NextRequest) {
       case 'market-update':
         emailContent = (
           <PropertyNewsletterEmail
-            properties={properties.slice(0, 1)}
+            mainProperty={properties[0]}
+            secondaryProperties={[]}
             blogPosts={blogPosts}
-            subject={subject}
-            previewText={previewText}
             companyName="Alan Batt Estate Agents"
             companyLogo="/logo.png"
             companyAddress="78 Market Street, Wigan, WN1 1HX"
             companyPhone="01942 233 999"
-            companyEmail="info@alanbatt.co.uk"
+            salesEmail="sales@alanbatt.co.uk"
+            rentalsEmail="rentals@alanbatt.co.uk"
           />
         );
         break;

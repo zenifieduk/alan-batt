@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, Download, BarChart3, TrendingUp, Users, Eye, Share2, MousePointer, ExternalLink } from 'lucide-react';
+import { RefreshCw, BarChart3, TrendingUp, Users, Eye, Share2, ExternalLink } from 'lucide-react';
 import SocialMediaTrendsChart from '../charts/SocialMediaTrendsChart';
 import { formatNumber } from '@/lib/utils';
 

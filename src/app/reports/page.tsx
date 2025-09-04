@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, Github, BarChart3, Facebook } from "lucide-react"
+import { BarChart3, Facebook } from "lucide-react"
 import { AnalyticsDashboard } from "@/components/analytics/dashboard/AnalyticsDashboard"
 
 export default function ReportsPage() {

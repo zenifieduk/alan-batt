@@ -2,18 +2,14 @@
 
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, Github, Facebook, BarChart3, RefreshCw } from "lucide-react"
+import { Facebook, BarChart3, RefreshCw } from "lucide-react"
 import { useSocialData } from '@/lib/hooks/useSocialData'
 import SocialMediaDashboard from '@/components/analytics/dashboard/SocialMediaDashboard'
 
 export default function FacebookReportsPage() {
   const { data, loading, error, refresh } = useSocialData();
 
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-    return num.toLocaleString();
-  };
+
 
   if (loading) {
     return (

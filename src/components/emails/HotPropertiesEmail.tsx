@@ -193,7 +193,7 @@ export default function HotPropertiesEmail({
               gridTemplateColumns: 'repeat(2, 1fr)',
               gap: '20px'
             }}>
-              {secondaryProperties.map((property, index) => (
+              {secondaryProperties.map((property) => (
                 <div key={property.id} style={{ 
                   border: '1px solid #e5e7eb',
                   borderRadius: '8px',
@@ -334,7 +334,7 @@ export default function HotPropertiesEmail({
                 gridTemplateColumns: 'repeat(2, 1fr)',
                 gap: '20px'
               }}>
-                {blogPosts.map((post, index) => (
+                {blogPosts.map((post) => (
                   <div key={post.id} style={{ 
                     border: '1px solid #e5e7eb',
                     borderRadius: '8px',
@@ -571,7 +571,7 @@ export default function HotPropertiesEmail({
               margin: '0 0 20px 0',
               opacity: 0.9
             }}>
-              At Alan Batt Sales & Lettings, we are here to simplify the process for you. Our reputation for trustworthiness and dedication makes us one of the most respected agents in the area. Here's our guide to help you through each step of buying a property with us from budgets to making an offer…
+              At Alan Batt Sales &amp; Lettings, we are here to simplify the process for you. Our reputation for trustworthiness and dedication makes us one of the most respected agents in the area. Here&apos;s our guide to help you through each step of buying a property with us from budgets to making an offer…
             </p>
             <a 
               href="https://www.alanbatt.co.uk/guide"

@@ -1,8 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { readFileSync, readdirSync } from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
-import fs from 'fs/promises';
 
 export interface BlogPost {
   id: string;
@@ -30,8 +28,8 @@ export async function GET() {
       // Extract frontmatter and content
       const lines = content.split('\n');
       let inFrontmatter = false;
-      let frontmatter: string[] = [];
-      let markdownContent: string[] = [];
+      const frontmatter: string[] = [];
+      const markdownContent: string[] = [];
       
       for (const line of lines) {
         if (line === '---') {

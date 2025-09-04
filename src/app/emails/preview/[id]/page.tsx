@@ -20,15 +20,15 @@ export default async function EmailPreviewPage({ params }: EmailPreviewPageProps
     case 'newsletter':
       emailContent = (
         <PropertyNewsletterEmail
-          properties={properties}
+          mainProperty={properties[0]}
+          secondaryProperties={properties.slice(1)}
           blogPosts={blogPosts}
-          subject="Wigan Property Market Update - August 2025"
-          previewText="Discover the latest properties and market insights from Alan Batt Estate Agents"
           companyName="Alan Batt Estate Agents"
           companyLogo="/logo.png"
           companyAddress="78 Market Street, Wigan, WN1 1HX"
           companyPhone="01942 233 999"
-          companyEmail="info@alanbatt.co.uk"
+          salesEmail="sales@alanbatt.co.uk"
+          rentalsEmail="rentals@alanbatt.co.uk"
         />
       );
       break;
@@ -36,15 +36,15 @@ export default async function EmailPreviewPage({ params }: EmailPreviewPageProps
     case 'property-alert':
       emailContent = (
         <PropertyNewsletterEmail
-          properties={properties.slice(0, 2)}
+          mainProperty={properties[0]}
+          secondaryProperties={properties.slice(1, 2)}
           blogPosts={blogPosts.slice(0, 1)}
-          subject="New Properties Just Listed - Don't Miss Out!"
-          previewText="Exclusive first look at newly listed properties in Wigan"
           companyName="Alan Batt Estate Agents"
           companyLogo="/logo.png"
           companyAddress="78 Market Street, Wigan, WN1 1HX"
           companyPhone="01942 233 999"
-          companyEmail="info@alanbatt.co.uk"
+          salesEmail="sales@alanbatt.co.uk"
+          rentalsEmail="rentals@alanbatt.co.uk"
         />
       );
       break;
@@ -52,15 +52,15 @@ export default async function EmailPreviewPage({ params }: EmailPreviewPageProps
     case 'market-update':
       emailContent = (
         <PropertyNewsletterEmail
-          properties={properties.slice(0, 1)}
+          mainProperty={properties[0]}
+          secondaryProperties={[]}
           blogPosts={blogPosts}
-          subject="Wigan Property Market Insights - July 2025"
-          previewText="Your monthly update on the Wigan property market trends and opportunities"
           companyName="Alan Batt Estate Agents"
           companyLogo="/logo.png"
           companyAddress="78 Market Street, Wigan, WN1 1HX"
           companyPhone="01942 233 999"
-          companyEmail="info@alanbatt.co.uk"
+          salesEmail="sales@alanbatt.co.uk"
+          rentalsEmail="rentals@alanbatt.co.uk"
         />
       );
       break;

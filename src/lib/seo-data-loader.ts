@@ -71,8 +71,6 @@ export class SEODataLoader {
           countryBreakdown: [],
         },
         pageSpeed: {
-          url: `https://${this.DOMAIN}`,
-          lastUpdated: new Date().toISOString(),
           mobile: {
             performance: 0,
             accessibility: 0,
@@ -93,68 +91,42 @@ export class SEODataLoader {
             firstInputDelay: 0,
             cumulativeLayoutShift: 0,
           },
-          overallScore: 0,
-          recommendations: ['PageSpeed data not available'],
+          overall: {
+            performance: 0,
+            accessibility: 0,
+            bestPractices: 0,
+            seo: 0,
+          },
         },
         technical: {
-          url: `https://${this.DOMAIN}`,
-          lastUpdated: new Date().toISOString(),
           crawlability: {
             totalPages: 0,
             indexedPages: 0,
             blockedPages: 0,
             crawlErrors: 0,
-            indexingRate: 0,
           },
           structuredData: {
             totalSchemas: 0,
             validSchemas: 0,
             errors: 0,
             warnings: 0,
-            types: [],
           },
           metaTags: {
             titleIssues: 0,
             descriptionIssues: 0,
             duplicateTitles: 0,
             duplicateDescriptions: 0,
-            missingTitles: 0,
-            missingDescriptions: 0,
           },
           images: {
             totalImages: 0,
-            missingAltText: 0,
+            imagesWithoutAlt: 0,
             oversizedImages: 0,
-            optimizedImages: 0,
           },
           links: {
             internalLinks: 0,
             externalLinks: 0,
             brokenLinks: 0,
-            followLinks: 0,
-            nofollowLinks: 0,
           },
-          performance: {
-            pageLoadTime: 0,
-            serverResponseTime: 0,
-            compressionEnabled: false,
-            cachingEnabled: false,
-            minificationEnabled: false,
-          },
-          security: {
-            httpsEnabled: false,
-            sslCertificate: 'Unknown',
-            securityHeaders: [],
-            vulnerabilities: 0,
-          },
-          mobileOptimization: {
-            responsiveDesign: false,
-            mobileFriendly: false,
-            touchTargets: 'Unknown',
-            viewportMeta: false,
-          },
-          overallScore: 0,
-          recommendations: ['Technical SEO data not available'],
         },
         keywords: {
           totalKeywords: 0,
@@ -180,7 +152,11 @@ export class SEODataLoader {
           domain: this.DOMAIN,
           searchResults: [],
           featuredSnippets: [],
-          knowledgeGraph: null,
+          knowledgeGraph: {
+            title: '',
+            description: '',
+            attributes: [],
+          },
           relatedSearches: [],
           searchVolume: 0,
           competition: 'Unknown',
@@ -274,8 +250,6 @@ export class SEODataLoader {
       console.error('Error loading PageSpeed data:', error);
       console.log('⚠️ PageSpeed API failed - returning empty data');
       return {
-        url: `https://${this.DOMAIN}`,
-        lastUpdated: new Date().toISOString(),
         mobile: {
           performance: 0,
           accessibility: 0,
@@ -296,8 +270,12 @@ export class SEODataLoader {
           firstInputDelay: 0,
           cumulativeLayoutShift: 0,
         },
-        overallScore: 0,
-        recommendations: ['PageSpeed data not available'],
+        overall: {
+          performance: 0,
+          accessibility: 0,
+          bestPractices: 0,
+          seo: 0,
+        },
       };
     }
   }
@@ -314,64 +292,34 @@ export class SEODataLoader {
       console.error('Error loading technical SEO data:', error);
       console.log('⚠️ Technical SEO API failed - returning empty data');
       return {
-        url: `https://${this.DOMAIN}`,
-        lastUpdated: new Date().toISOString(),
         crawlability: {
           totalPages: 0,
           indexedPages: 0,
           blockedPages: 0,
           crawlErrors: 0,
-          indexingRate: 0,
         },
         structuredData: {
           totalSchemas: 0,
           validSchemas: 0,
           errors: 0,
           warnings: 0,
-          types: [],
         },
         metaTags: {
           titleIssues: 0,
           descriptionIssues: 0,
           duplicateTitles: 0,
           duplicateDescriptions: 0,
-          missingTitles: 0,
-          missingDescriptions: 0,
         },
         images: {
           totalImages: 0,
-          missingAltText: 0,
+          imagesWithoutAlt: 0,
           oversizedImages: 0,
-          optimizedImages: 0,
         },
         links: {
           internalLinks: 0,
           externalLinks: 0,
           brokenLinks: 0,
-          followLinks: 0,
-          nofollowLinks: 0,
         },
-        performance: {
-          pageLoadTime: 0,
-          serverResponseTime: 0,
-          compressionEnabled: false,
-          cachingEnabled: false,
-          minificationEnabled: false,
-        },
-        security: {
-          httpsEnabled: false,
-          sslCertificate: 'Unknown',
-          securityHeaders: [],
-          vulnerabilities: 0,
-        },
-        mobileOptimization: {
-          responsiveDesign: false,
-          mobileFriendly: false,
-          touchTargets: 'Unknown',
-          viewportMeta: false,
-        },
-        overallScore: 0,
-        recommendations: ['Technical SEO data not available'],
       };
     }
   }

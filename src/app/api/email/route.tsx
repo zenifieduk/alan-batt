@@ -13,7 +13,6 @@ export async function POST(request: NextRequest) {
       subject, 
       properties, 
       blogPosts, 
-      previewText,
       from = 'Alan Batt Sales & Lettings <newsletter@alanbatt.co.uk>'
     } = body;
 
@@ -28,15 +27,15 @@ export async function POST(request: NextRequest) {
     // Render the email template
     const emailHtml = await render(
       PropertyNewsletterEmail({
-        properties: properties || [],
+        mainProperty: properties?.[0] || null,
+        secondaryProperties: properties?.slice(1) || [],
         blogPosts: blogPosts || [],
-        subject,
-        previewText,
         companyName: "Alan Batt Estate Agents",
         companyLogo: "/logo.png",
         companyAddress: "78 Market Street, Wigan, WN1 1HX",
         companyPhone: "01942 233 999",
-        companyEmail: "info@alanbatt.co.uk"
+        salesEmail: "sales@alanbatt.co.uk",
+        rentalsEmail: "rentals@alanbatt.co.uk"
       }) as React.ReactElement
     );
 
@@ -85,15 +84,15 @@ export async function GET(request: NextRequest) {
     // Render the email template for preview
     const emailHtml = await render(
       PropertyNewsletterEmail({
-        properties: parsedProperties,
+        mainProperty: parsedProperties?.[0] || null,
+        secondaryProperties: parsedProperties?.slice(1) || [],
         blogPosts: parsedBlogPosts,
-        subject: 'Newsletter Preview',
-        previewText: 'Preview of your newsletter email',
         companyName: "Alan Batt Estate Agents",
         companyLogo: "/logo.png",
         companyAddress: "78 Market Street, Wigan, WN1 1HX",
         companyPhone: "01942 233 999",
-        companyEmail: "info@alanbatt.co.uk"
+        salesEmail: "sales@alanbatt.co.uk",
+        rentalsEmail: "rentals@alanbatt.co.uk"
       }) as React.ReactElement
     );
 

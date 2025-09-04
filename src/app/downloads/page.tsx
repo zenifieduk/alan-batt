@@ -1,9 +1,8 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, Download, Upload, FileText, Image, File, Github, Loader2, CheckCircle, AlertCircle, Trash2, Lock, Eye, EyeOff } from "lucide-react"
+import { Download, Upload, FileText, Image, File, Loader2, CheckCircle, AlertCircle, Trash2, Lock, Eye, EyeOff } from "lucide-react"
 
 
 interface UploadedFile {
@@ -92,11 +91,7 @@ export default function DownloadsPage() {
     }
   }
 
-  const handleLogout = () => {
-    setIsAuthenticated(false)
-    localStorage.removeItem(AUTH_KEY)
-    setPassword('')
-  }
+
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {

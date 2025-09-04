@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, TrendingDown, BarChart3, Calendar, Filter } from 'lucide-react';
+import { TrendingUp, TrendingDown, BarChart3, Filter } from 'lucide-react';
 
 interface DailyMetric {
   date: string;

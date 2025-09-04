@@ -1,9 +1,8 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link'
-import { Button } from "@/components/ui/button"
-import { Sparkles, Github, TrendingUp, TrendingDown, Home, PoundSterling, BarChart3, Minus, Calendar, CheckCircle } from "lucide-react"
+
+import { TrendingUp, TrendingDown, Home, PoundSterling, BarChart3, Minus, Calendar, CheckCircle } from "lucide-react"
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
 

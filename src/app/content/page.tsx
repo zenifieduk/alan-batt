@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { FileText, Newspaper, Share2, Mail, ArrowRight, Sparkles, Github, Calendar, Clock, User, Tag, ExternalLink, CheckCircle, Eye, Users, TrendingUp } from "lucide-react"
+import { FileText, Newspaper, Share2, Mail, ArrowRight, Calendar, Clock, CheckCircle, Eye, Users, TrendingUp } from "lucide-react"
 
 interface BlogPost {
   slug: string

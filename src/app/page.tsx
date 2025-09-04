@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, Palette, Zap, Bot, Github, ArrowRight, Users, Target, Lightbulb } from "lucide-react"
+import { Palette, Zap, Bot, ArrowRight, Users, Target, Lightbulb } from "lucide-react"
 
 export default function Home() {
   return (

@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react"
 import { useConversation } from '@elevenlabs/react';
-import Link from 'next/link'
+
 import { Button } from "@/components/ui/button"
 import { Sparkles, Phone, Mic, ArrowLeft, Loader2, PhoneOff, MessageCircle } from "lucide-react"
 import { EllieTextChat } from "@/components/EllieTextChat"

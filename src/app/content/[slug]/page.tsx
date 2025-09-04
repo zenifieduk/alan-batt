@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import { Sparkles, ArrowLeft, Calendar, Clock, CheckCircle, XCircle, Github, Newspaper, Share2, Mail, List } from "lucide-react"
+import { ArrowLeft, Calendar, Clock, CheckCircle, XCircle, Newspaper, Share2, Mail, List } from "lucide-react"
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 

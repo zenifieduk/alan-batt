@@ -1,6 +1,4 @@
-import Link from 'next/link'
-import { Button } from "@/components/ui/button"
-import { Sparkles, Code, Github } from "lucide-react"
+import { Code } from "lucide-react"
 
 export default function NewDevPage() {
   return (
