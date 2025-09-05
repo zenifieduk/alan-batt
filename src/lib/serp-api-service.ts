@@ -65,7 +65,17 @@ export class SERPAPIService {
    * Note: SerpAPI doesn't provide search volume/difficulty directly
    * We'll use related searches and trends instead
    */
-  static async researchKeywords(seedKeyword: string): Promise<any> {
+  static async researchKeywords(seedKeyword: string): Promise<{
+    keyword: string;
+    searchVolume: number;
+    difficulty: number;
+    cpc: string;
+    competition: string;
+    trends: Array<{ month: string; value: number }>;
+    questions?: Array<{ question: string; searchVolume: number }>;
+    relatedKeywords?: Array<{ keyword: string; searchVolume: number; difficulty: number; cpc: string }>;
+    suggestions?: Array<{ keyword: string; searchVolume: number; difficulty: number; opportunity: string }>;
+  }> {
     try {
       console.log(`🔍 Researching keywords for: ${seedKeyword}`);
       
@@ -100,11 +110,13 @@ export class SERPAPIService {
       
       return {
         keyword: seedKeyword,
-        relatedSearches,
-        relatedQuestions,
         searchVolume: Math.floor(Math.random() * 5000) + 500, // Placeholder - not provided by SerpAPI
         difficulty: Math.floor(Math.random() * 60) + 20, // Placeholder - not provided by SerpAPI
+        cpc: (Math.random() * 5 + 0.5).toFixed(2),
+        competition: this.getCompetitionLevel(Math.floor(Math.random() * 60) + 20),
         trends: this.generateTrends(),
+        questions: relatedQuestions,
+        relatedKeywords: relatedSearches,
       };
     } catch (error) {
       console.error(`Error researching keywords for "${seedKeyword}":`, error);
@@ -115,7 +127,25 @@ export class SERPAPIService {
   /**
    * Analyze competitors for a keyword using real SerpAPI data
    */
-  static async analyzeCompetitors(keyword: string): Promise<any> {
+  static async analyzeCompetitors(keyword: string): Promise<{
+    keyword: string;
+    ourDomain: string;
+    ourPosition: number;
+    competitors: Array<{
+      domain: string;
+      domainAuthority: number;
+      position: number;
+      title: string;
+      url: string;
+      features: string[];
+    }>;
+    analysis: {
+      totalCompetitors: number;
+      averageDomainAuthority: number;
+      competitionLevel: string;
+      opportunities: string[];
+    };
+  }> {
     try {
       console.log(`🔍 Analyzing competitors for: ${keyword}`);
       
@@ -144,7 +174,7 @@ export class SERPAPIService {
       const data = await response.json();
       
       // Process organic results to identify competitors
-      const competitors = this.processCompetitorData(data.organic_results || [], keyword);
+      const competitors = this.processCompetitorData(data.organic_results || []);
       
       return {
         keyword,
@@ -187,11 +217,11 @@ export class SERPAPIService {
           // Get keyword research data
           const keywordData = await this.researchKeywords(keyword);
           
-          // Get competitor analysis
-          const competitorData = await this.analyzeCompetitors(keyword);
+          // Get competitor analysis (not used in current implementation)
+          // const competitorData = await this.analyzeCompetitors(keyword);
           
           // Process and combine the data
-          const processedResults = this.processSERPResults(keyword, serpData, keywordData, competitorData);
+          const processedResults = this.processSERPResults(keyword, serpData);
           searchResults.push(...processedResults);
           
           // Extract featured snippets
@@ -245,9 +275,7 @@ export class SERPAPIService {
    */
   private static processSERPResults(
     keyword: string, 
-    serpData: SERPData, 
-    _keywordData: unknown, 
-    _competitorData: unknown
+    serpData: SERPData
   ): SearchResult[] {
     const results: SearchResult[] = [];
     
@@ -295,7 +323,7 @@ export class SERPAPIService {
   /**
    * Process competitor data from SerpAPI results
    */
-  private static processCompetitorData(organicResults: SERPData['searchResults'], _keyword: string): Array<{
+  private static processCompetitorData(organicResults: SERPData['searchResults']): Array<{
     domain: string;
     domainAuthority: number;
     position: number;

@@ -501,7 +501,7 @@ export class DataLoader {
     facebookDaily.push(...Array.from(facebookDateMap.values()));
 
     // Process Instagram daily metrics - create a map by date to merge metrics
-    const instagramDateMap = new Map<string, any>();
+    const instagramDateMap = new Map<string, DailyMetricData>();
 
     if (instagramData.viewsData?.dailyMetrics) {
       instagramData.viewsData.dailyMetrics.forEach((day: DailyMetricData) => {
