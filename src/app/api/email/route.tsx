@@ -3,7 +3,14 @@ import { Resend } from 'resend';
 import { render } from '@react-email/render';
 import PropertyNewsletterEmail from '@/components/emails/PropertyNewsletterEmail';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend lazily to avoid build-time errors
+const getResend = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY environment variable is not set');
+  }
+  return new Resend(apiKey);
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -40,6 +47,7 @@ export async function POST(request: NextRequest) {
     );
 
     // Send the email
+    const resend = getResend();
     const { data, error } = await resend.emails.send({
       from,
       to,
