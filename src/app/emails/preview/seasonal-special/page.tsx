@@ -70,7 +70,7 @@ export default function SeasonalSpecialPreview() {
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome to Autumn</h2>
             <p className="text-gray-700 mb-6 max-w-3xl mx-auto">
-              As the leaves change color and the weather cools, it's the perfect time to find your dream home. 
+              As the leaves change color and the weather cools, it&apos;s the perfect time to find your dream home. 
               Autumn brings unique opportunities in the property market, with many sellers looking to complete 
               transactions before the winter months.
             </p>
@@ -201,7 +201,7 @@ export default function SeasonalSpecialPreview() {
         <div className="bg-orange-50 p-8 text-center">
           <h3 className="text-xl font-bold text-gray-900 mb-4">Ready for Your Autumn Property Search?</h3>
           <p className="text-gray-600 mb-6">
-            Don't let the changing seasons slow down your property search. Autumn offers unique opportunities 
+            Don&apos;t let the changing seasons slow down your property search. Autumn offers unique opportunities 
             to find your perfect home.
           </p>
           <div className="flex justify-center space-x-4">

@@ -108,8 +108,8 @@ export default function PropertyAlertPreview() {
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">New Properties Available</h2>
             <p className="text-gray-700 mb-4">
-              We've just added these fantastic properties to our portfolio. 
-              Don't miss out on these opportunities - they're likely to go quickly!
+              We&apos;ve just added these fantastic properties to our portfolio. 
+              Don&apos;t miss out on these opportunities - they&apos;re likely to go quickly!
             </p>
             <div className="flex justify-center space-x-4">
               <button className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors font-semibold">
@@ -206,7 +206,7 @@ export default function PropertyAlertPreview() {
 
         {/* Call to Action */}
         <div className="bg-green-50 p-8 text-center">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Don't Miss Out on Great Properties</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Don&apos;t Miss Out on Great Properties</h3>
           <p className="text-gray-600 mb-6">
             Set up property alerts to be notified as soon as new properties matching your criteria become available.
           </p>

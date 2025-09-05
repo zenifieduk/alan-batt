@@ -61,7 +61,19 @@ function generateKeywordResearchData(keyword: string, includeQuestions: boolean,
   const baseSearchVolume = Math.floor(Math.random() * 5000) + 500;
   const baseDifficulty = Math.floor(Math.random() * 60) + 20;
   
-  const data: any = {
+  interface KeywordData {
+    keyword: string;
+    searchVolume: number;
+    difficulty: number;
+    cpc: string;
+    competition: string;
+    trends: Array<{ month: string; value: number }>;
+    questions?: Array<{ question: string; searchVolume: number }>;
+    relatedKeywords?: Array<{ keyword: string; searchVolume: number; difficulty: number; cpc: string }>;
+    suggestions?: Array<{ keyword: string; searchVolume: number; difficulty: number; opportunity: string }>;
+  }
+
+  const data: KeywordData = {
     keyword,
     searchVolume: baseSearchVolume,
     difficulty: baseDifficulty,

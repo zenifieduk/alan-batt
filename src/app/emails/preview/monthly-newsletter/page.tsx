@@ -200,10 +200,10 @@ export default function MonthlyNewsletterPreview() {
             </div>
             
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">What's Next?</h4>
+              <h4 className="font-semibold text-gray-900 mb-4">What&apos;s Next?</h4>
               <p className="text-gray-700 leading-relaxed">
                 The autumn market is expected to be strong with continued buyer demand. 
-                We're seeing increased activity from families looking to move before the new school year.
+                We&apos;re seeing increased activity from families looking to move before the new school year.
               </p>
             </div>
           </div>
@@ -221,8 +221,8 @@ export default function MonthlyNewsletterPreview() {
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">Alan Batt Wins Best Estate Agent Award</h4>
                 <p className="text-gray-700 leading-relaxed mb-4">
-                  We're delighted to announce that Alan Batt Estate Agents has been named 
-                  "Best Estate Agent in Wigan" for the third consecutive year at the 
+                  We&apos;re delighted to announce that Alan Batt Estate Agents has been named 
+                  &ldquo;Best Estate Agent in Wigan&rdquo; for the third consecutive year at the 
                   North West Property Awards 2025.
                 </p>
                 <p className="text-gray-700 leading-relaxed">
@@ -272,8 +272,8 @@ export default function MonthlyNewsletterPreview() {
         <div className="bg-purple-50 p-8 text-center">
           <h3 className="text-xl font-bold text-gray-900 mb-4">Ready to Take the Next Step?</h3>
           <p className="text-gray-600 mb-6">
-            Whether you're looking to buy, sell, or just want to stay informed about the local property market, 
-            we're here to help.
+            Whether you&apos;re looking to buy, sell, or just want to stay informed about the local property market, 
+            we&apos;re here to help.
           </p>
           <div className="flex justify-center space-x-4">
             <button className="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors font-semibold">
@@ -315,7 +315,7 @@ export default function MonthlyNewsletterPreview() {
               © 2025 Alan Batt Estate Agents. All rights reserved.
             </p>
             <p className="text-gray-400 text-sm mt-2">
-              You're receiving this email because you subscribed to our newsletter. 
+              You&apos;re receiving this email because you subscribed to our newsletter. 
               <a href="#" className="text-gray-300 hover:text-white ml-1">Unsubscribe</a>
             </p>
           </div>

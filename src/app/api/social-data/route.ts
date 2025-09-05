@@ -56,7 +56,19 @@ export async function GET() {
     ];
 
     // Store daily metrics from each file
-    const facebookDailyMetrics: { [date: string]: any } = {};
+    interface DailyMetric {
+      date: string;
+      views: number;
+      follows: number;
+      reach: number;
+      interactions: number;
+      visits: number;
+      linkClicks: number;
+      impressions?: number;
+      engagement?: number;
+    }
+    
+    const facebookDailyMetrics: { [date: string]: DailyMetric } = {};
 
     for (const file of facebookFiles) {
       try {
@@ -93,7 +105,7 @@ export async function GET() {
           
           // Add daily metrics to the combined object
           if (metrics.dailyMetrics) {
-            metrics.dailyMetrics.forEach((day: any) => {
+            metrics.dailyMetrics.forEach((day: DailyMetric) => {
               if (!facebookDailyMetrics[day.date]) {
                 facebookDailyMetrics[day.date] = {
                   date: day.date,
@@ -153,7 +165,7 @@ export async function GET() {
     ];
 
     // Store daily metrics from each file
-    const instagramDailyMetrics: { [date: string]: any } = {};
+    const instagramDailyMetrics: { [date: string]: DailyMetric } = {};
 
     for (const file of instagramFiles) {
       try {
@@ -190,7 +202,7 @@ export async function GET() {
           
           // Add daily metrics to the combined object
           if (metrics.dailyMetrics) {
-            metrics.dailyMetrics.forEach((day: any) => {
+            metrics.dailyMetrics.forEach((day: DailyMetric) => {
               if (!instagramDailyMetrics[day.date]) {
                 instagramDailyMetrics[day.date] = {
                   date: day.date,
@@ -240,7 +252,7 @@ export async function GET() {
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     // Filter out days where all metrics are 0 to avoid showing empty data
-    const filterEmptyDays = (data: any[]) => {
+    const filterEmptyDays = (data: DailyMetric[]) => {
       return data.filter(day => 
         day.views > 0 || day.follows > 0 || day.reach > 0 || 
         day.interactions > 0 || day.visits > 0 || day.linkClicks > 0

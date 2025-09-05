@@ -28,7 +28,7 @@ const mockTips: Tip[] = [
   },
   {
     id: '3',
-    title: 'Don\'t Skip the Survey',
+    title: 'Don&apos;t Skip the Survey',
     description: 'A professional survey can reveal hidden issues that could cost you thousands in repairs.',
     icon: '🏠',
     category: 'Due Diligence'
@@ -78,7 +78,7 @@ export default function BuyerGuidePreview() {
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Complete Buying Guide</h2>
             <p className="text-gray-700 mb-6 max-w-3xl mx-auto">
-              Buying your first home is one of the biggest decisions you'll ever make. This guide is designed 
+              Buying your first home is one of the biggest decisions you&apos;ll ever make. This guide is designed 
               to help you navigate the process with confidence, from initial research to moving day.
             </p>
             <div className="flex justify-center space-x-4">
@@ -167,7 +167,7 @@ export default function BuyerGuidePreview() {
           
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg p-6 border border-red-200">
-              <h4 className="font-semibold text-gray-900 mb-4 text-red-600">❌ Don't Skip the Survey</h4>
+              <h4 className="font-semibold text-gray-900 mb-4 text-red-600">❌ Don&apos;t Skip the Survey</h4>
               <p className="text-gray-700 text-sm leading-relaxed">
                 While it might seem like an extra cost, a professional survey can save you thousands 
                 by identifying hidden structural issues or necessary repairs.
@@ -175,15 +175,15 @@ export default function BuyerGuidePreview() {
             </div>
             
             <div className="bg-white rounded-lg p-6 border border-red-200">
-              <h4 className="font-semibold text-gray-900 mb-4 text-red-600">❌ Don't Rush the Decision</h4>
+              <h4 className="font-semibold text-gray-900 mb-4 text-red-600">❌ Don&apos;t Rush the Decision</h4>
               <p className="text-gray-700 text-sm leading-relaxed">
-                Take your time to view multiple properties and don't feel pressured to make an offer 
+                Take your time to view multiple properties and don&apos;t feel pressured to make an offer 
                 immediately. This is a major investment decision.
               </p>
             </div>
             
             <div className="bg-white rounded-lg p-6 border border-red-200">
-              <h4 className="font-semibold text-gray-900 mb-4 text-red-600">❌ Don't Ignore Hidden Costs</h4>
+              <h4 className="font-semibold text-gray-900 mb-4 text-red-600">❌ Don&apos;t Ignore Hidden Costs</h4>
               <p className="text-gray-700 text-sm leading-relaxed">
                 Factor in stamp duty, legal fees, moving costs, and any immediate repairs or renovations 
                 when calculating your total budget.
@@ -191,7 +191,7 @@ export default function BuyerGuidePreview() {
             </div>
             
             <div className="bg-white rounded-lg p-6 border border-red-200">
-              <h4 className="font-semibold text-gray-900 mb-4 text-red-600">❌ Don't Forget About the Area</h4>
+              <h4 className="font-semibold text-gray-900 mb-4 text-red-600">❌ Don&apos;t Forget About the Area</h4>
               <p className="text-gray-700 text-sm leading-relaxed">
                 Research the neighborhood thoroughly - visit at different times, check crime rates, 
                 and consider future development plans that might affect the area.

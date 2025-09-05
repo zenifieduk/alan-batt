@@ -1,5 +1,6 @@
 import { SERPData, SearchResult, FeaturedSnippet, KnowledgeGraphData } from '@/types/seo';
 
+
 export class SERPAPIService {
   private static readonly DOMAIN = 'alanbatt.co.uk';
   private static readonly KEYWORDS = [
@@ -22,7 +23,7 @@ export class SERPAPIService {
   /**
    * Analyze SERP data for a specific keyword using real SerpAPI
    */
-  static async analyzeSERP(keyword: string): Promise<any> {
+  static async analyzeSERP(keyword: string): Promise<SERPData> {
     try {
       console.log(`🔍 Analyzing SERP for keyword: ${keyword}`);
       console.log(`🔑 API Key check: ${this.API_KEY ? 'Present' : 'Missing'} (length: ${this.API_KEY.length})`);
@@ -244,22 +245,22 @@ export class SERPAPIService {
    */
   private static processSERPResults(
     keyword: string, 
-    serpData: any, 
-    keywordData: any, 
-    competitorData: any
+    serpData: SERPData, 
+    _keywordData: unknown, 
+    _competitorData: unknown
   ): SearchResult[] {
     const results: SearchResult[] = [];
     
-    if (serpData.organic_results) {
-      serpData.organic_results.forEach((result: any, index: number) => {
-        const isOurDomain = result.link && result.link.includes(this.DOMAIN);
+    if (serpData.searchResults) {
+      serpData.searchResults.forEach((result, index: number) => {
+        const isOurDomain = Boolean(result.url && result.url.includes(this.DOMAIN));
         
         results.push({
           position: index + 1,
           title: result.title || '',
-          url: result.link || '',
-          description: result.snippet || '',
-          domain: this.extractDomain(result.link),
+          url: result.url || '',
+          description: result.description || '',
+          domain: this.extractDomain(result.url),
           isOurDomain,
           featuredSnippet: false, // Featured snippets are handled separately
           knowledgeGraph: false,
@@ -273,16 +274,18 @@ export class SERPAPIService {
   /**
    * Extract featured snippets from real SerpAPI data
    */
-  private static extractFeaturedSnippets(serpData: any, keyword: string): FeaturedSnippet[] {
+  private static extractFeaturedSnippets(serpData: SERPData, keyword: string): FeaturedSnippet[] {
     const snippets: FeaturedSnippet[] = [];
     
-    if (serpData.featured_snippet) {
-      snippets.push({
-        query: keyword,
-        title: serpData.featured_snippet.title || '',
-        description: serpData.featured_snippet.snippet || '',
-        url: serpData.featured_snippet.link || '',
-        position: 0, // Featured snippets are position 0
+    if (serpData.featuredSnippets && serpData.featuredSnippets.length > 0) {
+      serpData.featuredSnippets.forEach(snippet => {
+        snippets.push({
+          query: keyword,
+          title: snippet.title || '',
+          description: snippet.description || '',
+          url: snippet.url || '',
+          position: snippet.position || 1,
+        });
       });
     }
 
@@ -292,7 +295,7 @@ export class SERPAPIService {
   /**
    * Process competitor data from SerpAPI results
    */
-  private static processCompetitorData(organicResults: any[], keyword: string): Array<{
+  private static processCompetitorData(organicResults: SERPData['searchResults'], _keyword: string): Array<{
     domain: string;
     domainAuthority: number;
     position: number;
@@ -309,15 +312,15 @@ export class SERPAPIService {
       features: string[];
     }> = [];
     
-    organicResults.forEach((result: any, index: number) => {
-      const domain = this.extractDomain(result.link);
+    organicResults.forEach((result, index: number) => {
+      const domain = this.extractDomain(result.url);
       if (domain && domain !== this.DOMAIN) {
         competitors.push({
           domain,
           domainAuthority: this.estimateDomainAuthority(domain), // Placeholder - would need separate DA API
           position: index + 1,
           title: result.title || '',
-          url: result.link || '',
+          url: result.url || '',
           features: this.extractSERPFeatures(result),
         });
       }
@@ -329,13 +332,11 @@ export class SERPAPIService {
   /**
    * Extract SERP features from result
    */
-  private static extractSERPFeatures(result: any): string[] {
+  private static extractSERPFeatures(result: SERPData['searchResults'][0]): string[] {
     const features = [];
     
-    if (result.featured_snippet) features.push('Featured Snippet');
-    if (result.local_pack) features.push('Local Pack');
-    if (result.knowledge_graph) features.push('Knowledge Graph');
-    if (result.sitelinks) features.push('Sitelinks');
+    if (result.featuredSnippet) features.push('Featured Snippet');
+    if (result.knowledgeGraph) features.push('Knowledge Graph');
     
     return features;
   }
@@ -361,7 +362,7 @@ export class SERPAPIService {
   /**
    * Calculate average domain authority
    */
-  private static calculateAverageDomainAuthority(competitors: any[]): number {
+  private static calculateAverageDomainAuthority(competitors: Array<{ domainAuthority: number }>): number {
     if (competitors.length === 0) return 0;
     const total = competitors.reduce((sum, c) => sum + c.domainAuthority, 0);
     return Math.round(total / competitors.length);
@@ -453,7 +454,7 @@ export class SERPAPIService {
   /**
    * Get competition level based on competitors
    */
-  private static getCompetitionLevelFromCompetitors(competitors: any[]): string {
+  private static getCompetitionLevelFromCompetitors(competitors: Array<{ domainAuthority: number }>): string {
     const avgAuthority = this.calculateAverageDomainAuthority(competitors);
     
     if (avgAuthority > 85) return 'Very High';
@@ -465,7 +466,7 @@ export class SERPAPIService {
   /**
    * Generate opportunities based on competitor analysis
    */
-  private static generateOpportunities(keyword: string, competitors: any[]): string[] {
+  private static generateOpportunities(keyword: string, competitors: Array<{ domainAuthority: number; features: string[] }>): string[] {
     const opportunities = [];
     
     if (competitors.length < 5) {

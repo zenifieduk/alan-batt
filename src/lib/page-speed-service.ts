@@ -1,5 +1,31 @@
 import { PageSpeedData } from '@/types/seo';
 
+interface PageSpeedAPIResponse {
+  lighthouseResult: {
+    categories: {
+      performance?: {
+        score: number;
+      };
+      accessibility?: {
+        score: number;
+      };
+      'best-practices'?: {
+        score: number;
+      };
+      seo?: {
+        score: number;
+      };
+    };
+    audits: {
+      [key: string]: {
+        score?: number;
+        displayValue?: string;
+        numericValue?: number;
+      };
+    };
+  };
+}
+
 export class PageSpeedService {
   private static readonly API_KEY = process.env.GOOGLE_PAGESPEED_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_PAGESPEED_API_KEY || '';
   private static readonly BASE_URL = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
@@ -65,7 +91,7 @@ export class PageSpeedService {
   /**
    * Fetch PageSpeed data from Google API
    */
-  private static async fetchPageSpeedData(url: string, strategy: 'mobile' | 'desktop'): Promise<any> {
+  private static async fetchPageSpeedData(url: string, strategy: 'mobile' | 'desktop'): Promise<PageSpeedAPIResponse> {
     const params = new URLSearchParams({
       url,
       key: this.API_KEY,
@@ -85,7 +111,7 @@ export class PageSpeedService {
   /**
    * Process raw PageSpeed API data into our format
    */
-  private static processPageSpeedData(mobileData: any, desktopData: any): PageSpeedData {
+  private static processPageSpeedData(mobileData: PageSpeedAPIResponse, desktopData: PageSpeedAPIResponse): PageSpeedData {
     const mobileMetrics = this.extractMetrics(mobileData);
     const desktopMetrics = this.extractMetrics(desktopData);
 
@@ -122,7 +148,7 @@ export class PageSpeedService {
   /**
    * Extract metrics from PageSpeed API response
    */
-  private static extractMetrics(data: any) {
+  private static extractMetrics(data: PageSpeedAPIResponse) {
     const lighthouseResult = data.lighthouseResult;
     const categories = lighthouseResult?.categories || {};
     const audits = lighthouseResult?.audits || {};
@@ -142,7 +168,7 @@ export class PageSpeedService {
   /**
    * Extract time metric from audit
    */
-  private static extractTimeMetric(audit: any): number {
+  private static extractTimeMetric(audit: PageSpeedAPIResponse['lighthouseResult']['audits'][string]): number {
     if (!audit || !audit.numericValue) return 0;
     return Math.round(audit.numericValue / 1000); // Convert from milliseconds to seconds
   }
@@ -150,7 +176,7 @@ export class PageSpeedService {
   /**
    * Extract CLS metric from audit
    */
-  private static extractCLSMetric(audit: any): number {
+  private static extractCLSMetric(audit: PageSpeedAPIResponse['lighthouseResult']['audits'][string]): number {
     if (!audit || !audit.numericValue) return 0;
     return Math.round(audit.numericValue * 1000) / 1000; // Keep 3 decimal places
   }
@@ -158,7 +184,7 @@ export class PageSpeedService {
   /**
    * Generate recommendations based on metrics
    */
-  private static generateRecommendations(mobileMetrics: any, desktopMetrics: any): string[] {
+  private static generateRecommendations(mobileMetrics: PageSpeedData['mobile'], desktopMetrics: PageSpeedData['desktop']): string[] {
     const recommendations = [];
     
     // Performance recommendations
@@ -166,11 +192,11 @@ export class PageSpeedService {
       recommendations.push('Optimize images and reduce JavaScript bundle size');
     }
     
-    if (mobileMetrics.lcp > 2.5 || desktopMetrics.lcp > 2.5) {
+    if (mobileMetrics.largestContentfulPaint > 2.5 || desktopMetrics.largestContentfulPaint > 2.5) {
       recommendations.push('Improve Largest Contentful Paint by optimizing above-the-fold content');
     }
     
-    if (mobileMetrics.cls > 0.1 || desktopMetrics.cls > 0.1) {
+    if (mobileMetrics.cumulativeLayoutShift > 0.1 || desktopMetrics.cumulativeLayoutShift > 0.1) {
       recommendations.push('Reduce Cumulative Layout Shift by setting explicit dimensions for images and ads');
     }
     

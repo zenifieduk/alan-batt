@@ -173,7 +173,16 @@ function generateCompetitorAnalysisData(keyword: string, domain: string, numResu
   };
 }
 
-function getCompetitionLevel(competitors: any[]): string {
+interface Competitor {
+  domain: string;
+  domainAuthority: number;
+  position: number;
+  title: string;
+  url: string;
+  features: string[];
+}
+
+function getCompetitionLevel(competitors: Competitor[]): string {
   const avgAuthority = competitors.reduce((sum, c) => sum + c.domainAuthority, 0) / competitors.length;
   
   if (avgAuthority > 85) return 'Very High';
@@ -182,7 +191,7 @@ function getCompetitionLevel(competitors: any[]): string {
   return 'Low';
 }
 
-function generateOpportunities(keyword: string, competitors: any[]): string[] {
+function generateOpportunities(keyword: string, competitors: Competitor[]): string[] {
   const opportunities = [];
   
   if (competitors.length < 5) {

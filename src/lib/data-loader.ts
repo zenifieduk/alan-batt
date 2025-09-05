@@ -3,7 +3,40 @@
  * Reads and combines data from multiple CSV exports
  */
 
-import { CSVProcessor, CSVData, ProcessedMetrics } from './csv-processor';
+import { CSVProcessor } from './csv-processor';
+
+interface DailyMetricData {
+  date: string;
+  views: number;
+  follows: number;
+  reach: number;
+  interactions: number;
+  visits: number;
+  linkClicks: number;
+  impressions?: number;
+  engagement?: number;
+  audienceSize?: number;
+}
+
+interface MetricData {
+  dailyMetrics: DailyMetricData[];
+}
+
+interface PlatformData {
+  views: number;
+  follows: number;
+  reach: number;
+  interactions: number;
+  visits: number;
+  linkClicks: number;
+  viewsData: MetricData;
+  followsData: MetricData;
+  reachData: MetricData;
+  interactionsData: MetricData;
+  visitsData: MetricData;
+  linkClicksData: MetricData;
+}
+
 
 export interface CombinedMetrics {
   facebook: {
@@ -115,7 +148,7 @@ export class DataLoader {
   /**
    * Load Facebook CSV files
    */
-  private static async loadFacebookData(): Promise<any> {
+  private static async loadFacebookData(): Promise<PlatformData> {
     const files = [
       'Views.csv',
       'Follows.csv',
@@ -125,7 +158,20 @@ export class DataLoader {
       'Link clicks.csv'
     ];
 
-    const data: any = {};
+    const data: PlatformData = {
+      views: 0,
+      follows: 0,
+      reach: 0,
+      interactions: 0,
+      visits: 0,
+      linkClicks: 0,
+      viewsData: { dailyMetrics: [] },
+      followsData: { dailyMetrics: [] },
+      reachData: { dailyMetrics: [] },
+      interactionsData: { dailyMetrics: [] },
+      visitsData: { dailyMetrics: [] },
+      linkClicksData: { dailyMetrics: [] }
+    };
     
     for (const filename of files) {
       try {
@@ -157,33 +203,45 @@ export class DataLoader {
           // Store metrics based on type
           switch (processedData.metadata.metricType) {
             case 'Views':
-              data.views = metrics.pageImpressions;
-              data.viewsData = processedData;
+              data.views = metrics.pageImpressions || 0;
+              data.viewsData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`✅ Set Facebook views to:`, data.views);
               break;
             case 'Follows':
-              data.follows = metrics.pageFollowers;
-              data.followsData = processedData;
+              data.follows = metrics.pageFollowers || 0;
+              data.followsData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`✅ Set Facebook follows to:`, data.follows);
               break;
             case 'Reach':
-              data.reach = metrics.pageReach;
-              data.reachData = processedData;
+              data.reach = metrics.pageReach || 0;
+              data.reachData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`✅ Set Facebook reach to:`, data.reach);
               break;
             case 'Interactions':
-              data.interactions = metrics.pageEngagement;
-              data.interactionsData = processedData;
+              data.interactions = metrics.pageEngagement || 0;
+              data.interactionsData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`✅ Set Facebook interactions to:`, data.interactions);
               break;
             case 'Visits':
-              data.visits = metrics.pageImpressions;
-              data.visitsData = processedData;
+              data.visits = metrics.pageImpressions || 0;
+              data.visitsData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`✅ Set Facebook visits to:`, data.visits);
               break;
             case 'Link Clicks':
-              data.linkClicks = metrics.pageImpressions;
-              data.linkClicksData = processedData;
+              data.linkClicks = metrics.pageImpressions || 0;
+              data.linkClicksData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`✅ Set Facebook linkClicks to:`, data.linkClicks);
               break;
           }
@@ -202,7 +260,7 @@ export class DataLoader {
   /**
    * Load Instagram CSV files
    */
-  private static async loadInstagramData(): Promise<any> {
+  private static async loadInstagramData(): Promise<PlatformData> {
     const files = [
       'Views.csv',
       'Follows.csv',
@@ -212,7 +270,20 @@ export class DataLoader {
       'Link clicks.csv'
     ];
 
-    const data: any = {};
+    const data: PlatformData = {
+      views: 0,
+      follows: 0,
+      reach: 0,
+      interactions: 0,
+      visits: 0,
+      linkClicks: 0,
+      viewsData: { dailyMetrics: [] },
+      followsData: { dailyMetrics: [] },
+      reachData: { dailyMetrics: [] },
+      interactionsData: { dailyMetrics: [] },
+      visitsData: { dailyMetrics: [] },
+      linkClicksData: { dailyMetrics: [] }
+    };
     
     for (const filename of files) {
       try {
@@ -233,33 +304,45 @@ export class DataLoader {
           // Store metrics based on type
           switch (processedData.metadata.metricType) {
             case 'Views':
-              data.views = metrics.pageImpressions;
-              data.viewsData = processedData;
+              data.views = metrics.pageImpressions || 0;
+              data.viewsData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`Instagram set views to:`, data.views);
               break;
             case 'Follows':
-              data.follows = metrics.audienceSize;
-              data.followsData = processedData;
+              data.follows = metrics.audienceSize || 0;
+              data.followsData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`Instagram set follows to:`, data.follows);
               break;
             case 'Reach':
-              data.reach = metrics.pageReach;
-              data.reachData = processedData;
+              data.reach = metrics.pageReach || 0;
+              data.reachData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`Instagram set reach to:`, data.reach);
               break;
             case 'Interactions':
-              data.interactions = metrics.pageEngagement;
-              data.interactionsData = processedData;
+              data.interactions = metrics.pageEngagement || 0;
+              data.interactionsData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`Instagram set interactions to:`, data.interactions);
               break;
             case 'Visits':
-              data.visits = metrics.pageImpressions;
-              data.visitsData = processedData;
+              data.visits = metrics.pageImpressions || 0;
+              data.visitsData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`Instagram set visits to:`, data.visits);
               break;
             case 'Link Clicks':
-              data.linkClicks = metrics.pageImpressions;
-              data.linkClicksData = processedData;
+              data.linkClicks = metrics.pageImpressions || 0;
+              data.linkClicksData = {
+                dailyMetrics: metrics.dailyMetrics || []
+              };
               console.log(`Instagram set linkClicks to:`, data.linkClicks);
               break;
           }
@@ -277,19 +360,19 @@ export class DataLoader {
   /**
    * Combine daily metrics from all sources
    */
-  private static combineDailyMetrics(facebookData: any, instagramData: any): {
-    facebook: Array<any>;
-    instagram: Array<any>;
+  private static combineDailyMetrics(facebookData: PlatformData, instagramData: PlatformData): {
+    facebook: Array<DailyMetricData>;
+    instagram: Array<DailyMetricData>;
   } {
-    const facebookDaily: any[] = [];
-    const instagramDaily: any[] = [];
+    const facebookDaily: DailyMetricData[] = [];
+    const instagramDaily: DailyMetricData[] = [];
 
     // Process Facebook daily metrics - create a map by date to merge metrics
-    const facebookDateMap = new Map<string, any>();
+    const facebookDateMap = new Map<string, DailyMetricData>();
 
     // Process each metric type and merge by date
     if (facebookData.viewsData?.dailyMetrics) {
-      facebookData.viewsData.dailyMetrics.forEach((day: any) => {
+      facebookData.viewsData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!facebookDateMap.has(date)) {
           facebookDateMap.set(date, {
@@ -302,12 +385,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        facebookDateMap.get(date).views = day.views || 0;
+        const existingData = facebookDateMap.get(date);
+        if (existingData) {
+          existingData.views = day.views || 0;
+        }
       });
     }
 
     if (facebookData.followsData?.dailyMetrics) {
-      facebookData.followsData.dailyMetrics.forEach((day: any) => {
+      facebookData.followsData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!facebookDateMap.has(date)) {
           facebookDateMap.set(date, {
@@ -320,12 +406,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        facebookDateMap.get(date).follows = day.follows || 0;
+        const existingData = facebookDateMap.get(date);
+        if (existingData) {
+          existingData.follows = day.follows || 0;
+        }
       });
     }
 
     if (facebookData.reachData?.dailyMetrics) {
-      facebookData.reachData.dailyMetrics.forEach((day: any) => {
+      facebookData.reachData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!facebookDateMap.has(date)) {
           facebookDateMap.set(date, {
@@ -338,12 +427,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        facebookDateMap.get(date).reach = day.reach || 0;
+        const existingData = facebookDateMap.get(date);
+        if (existingData) {
+          existingData.reach = day.reach || 0;
+        }
       });
     }
 
     if (facebookData.interactionsData?.dailyMetrics) {
-      facebookData.interactionsData.dailyMetrics.forEach((day: any) => {
+      facebookData.interactionsData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!facebookDateMap.has(date)) {
           facebookDateMap.set(date, {
@@ -356,12 +448,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        facebookDateMap.get(date).interactions = day.interactions || 0;
+        const existingData = facebookDateMap.get(date);
+        if (existingData) {
+          existingData.interactions = day.interactions || 0;
+        }
       });
     }
 
     if (facebookData.visitsData?.dailyMetrics) {
-      facebookData.visitsData.dailyMetrics.forEach((day: any) => {
+      facebookData.visitsData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!facebookDateMap.has(date)) {
           facebookDateMap.set(date, {
@@ -374,12 +469,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        facebookDateMap.get(date).visits = day.visits || 0;
+        const existingData = facebookDateMap.get(date);
+        if (existingData) {
+          existingData.visits = day.visits || 0;
+        }
       });
     }
 
     if (facebookData.linkClicksData?.dailyMetrics) {
-      facebookData.linkClicksData.dailyMetrics.forEach((day: any) => {
+      facebookData.linkClicksData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!facebookDateMap.has(date)) {
           facebookDateMap.set(date, {
@@ -392,7 +490,10 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        facebookDateMap.get(date).linkClicks = day.linkClicks || 0;
+        const existingData = facebookDateMap.get(date);
+        if (existingData) {
+          existingData.linkClicks = day.linkClicks || 0;
+        }
       });
     }
 
@@ -403,7 +504,7 @@ export class DataLoader {
     const instagramDateMap = new Map<string, any>();
 
     if (instagramData.viewsData?.dailyMetrics) {
-      instagramData.viewsData.dailyMetrics.forEach((day: any) => {
+      instagramData.viewsData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!instagramDateMap.has(date)) {
           instagramDateMap.set(date, {
@@ -416,12 +517,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        instagramDateMap.get(date).views = day.views || 0;
+        const existingData = instagramDateMap.get(date);
+        if (existingData) {
+          existingData.views = day.views || 0;
+        }
       });
     }
 
     if (instagramData.followsData?.dailyMetrics) {
-      instagramData.followsData.dailyMetrics.forEach((day: any) => {
+      instagramData.followsData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!instagramDateMap.has(date)) {
           instagramDateMap.set(date, {
@@ -434,12 +538,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        instagramDateMap.get(date).follows = day.follows || 0;
+        const existingData = instagramDateMap.get(date);
+        if (existingData) {
+          existingData.follows = day.follows || 0;
+        }
       });
     }
 
     if (instagramData.reachData?.dailyMetrics) {
-      instagramData.reachData.dailyMetrics.forEach((day: any) => {
+      instagramData.reachData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!instagramDateMap.has(date)) {
           instagramDateMap.set(date, {
@@ -452,12 +559,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        instagramDateMap.get(date).reach = day.reach || 0;
+        const existingData = instagramDateMap.get(date);
+        if (existingData) {
+          existingData.reach = day.reach || 0;
+        }
       });
     }
 
     if (instagramData.interactionsData?.dailyMetrics) {
-      instagramData.interactionsData.dailyMetrics.forEach((day: any) => {
+      instagramData.interactionsData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!instagramDateMap.has(date)) {
           instagramDateMap.set(date, {
@@ -470,12 +580,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        instagramDateMap.get(date).interactions = day.interactions || 0;
+        const existingData = instagramDateMap.get(date);
+        if (existingData) {
+          existingData.interactions = day.interactions || 0;
+        }
       });
     }
 
     if (instagramData.visitsData?.dailyMetrics) {
-      instagramData.visitsData.dailyMetrics.forEach((day: any) => {
+      instagramData.visitsData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!instagramDateMap.has(date)) {
           instagramDateMap.set(date, {
@@ -488,12 +601,15 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        instagramDateMap.get(date).visits = day.visits || 0;
+        const existingData = instagramDateMap.get(date);
+        if (existingData) {
+          existingData.visits = day.visits || 0;
+        }
       });
     }
 
     if (instagramData.linkClicksData?.dailyMetrics) {
-      instagramData.linkClicksData.dailyMetrics.forEach((day: any) => {
+      instagramData.linkClicksData.dailyMetrics.forEach((day: DailyMetricData) => {
         const date = day.date;
         if (!instagramDateMap.has(date)) {
           instagramDateMap.set(date, {
@@ -506,7 +622,10 @@ export class DataLoader {
             linkClicks: 0
           });
         }
-        instagramDateMap.get(date).linkClicks = day.linkClicks || 0;
+        const existingData = instagramDateMap.get(date);
+        if (existingData) {
+          existingData.linkClicks = day.linkClicks || 0;
+        }
       });
     }
 
@@ -514,7 +633,7 @@ export class DataLoader {
     instagramDaily.push(...Array.from(instagramDateMap.values()));
 
     // Filter out days where all metrics are 0 to avoid showing empty data
-    const filterEmptyDays = (data: any[]) => {
+    const filterEmptyDays = (data: DailyMetricData[]) => {
       return data.filter(day => 
         day.views > 0 || day.follows > 0 || day.reach > 0 || 
         day.interactions > 0 || day.visits > 0 || day.linkClicks > 0

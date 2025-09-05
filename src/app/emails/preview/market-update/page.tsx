@@ -116,7 +116,7 @@ export default function MarketUpdatePreview() {
           
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">What's Driving the Market?</h4>
+              <h4 className="font-semibold text-gray-900 mb-4">What&apos;s Driving the Market?</h4>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
@@ -215,10 +215,10 @@ export default function MarketUpdatePreview() {
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">Alan Batt - Market Expert</h4>
                 <p className="text-gray-700 leading-relaxed">
-                  "The Wigan property market continues to show resilience with strong fundamentals. 
-                  We're seeing increased activity from both buyers and sellers, creating a balanced market. 
+                  &ldquo;The Wigan property market continues to show resilience with strong fundamentals. 
+                  We&apos;re seeing increased activity from both buyers and sellers, creating a balanced market. 
                   For sellers, this is an excellent time to list as demand remains high. For buyers, 
-                  while prices are rising, the market offers good value compared to surrounding areas."
+                  while prices are rising, the market offers good value compared to surrounding areas.&rdquo;
                 </p>
               </div>
             </div>
