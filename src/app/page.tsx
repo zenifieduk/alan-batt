@@ -1,175 +1,290 @@
 "use client"
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import { Palette, Zap, Bot, ArrowRight, Users, Target, Lightbulb } from "lucide-react"
+import { 
+  BarChart3, 
+  Search, 
+  TrendingUp, 
+  FileText, 
+  Bot, 
+  Download, 
+  Code,
+  ArrowRight,
+  Mail,
+  Target,
+  Lightbulb,
+  Users
+} from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
       {/* Hero Section */}
       <main className="px-8 py-16 pt-24 md:pt-16">
         <div className="max-w-6xl mx-auto">
-          {/* Above the fold content */}
+          {/* Hero Content */}
           <div className="text-center mb-20">
-            <div className="mb-8">
-              <span className="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20 mb-6">
-                <Lightbulb className="h-4 w-4 mr-2" />
-                Innovative Client Communication Platform
-              </span>
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
-              Alan Batt Tech Hub
-            </h1>
-            
-            {/* Professional Explainer */}
-            <div className="max-w-4xl mx-auto mb-12">
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-8">
-                Welcome to a revolutionary approach in client-developer collaboration
-              </p>
-              
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-8 md:p-12 text-left">
-                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
-                  Redefining Development Communication
-                </h2>
-                
-                <div className="prose prose-lg max-w-none text-slate-700 leading-relaxed">
-                  <p className="mb-6">
-                    This mini-site represents Magicalogical&apos;s pioneering approach to showcasing development capabilities 
-                    directly to our valued clients. Rather than traditional project documentation, we&apos;ve created an 
-                    interactive platform that demonstrates our expertise in real-time.
-                  </p>
-                  
-                  <p className="mb-6">
-                    From advanced AI integrations and voice technology to cutting-edge content creation tools, 
-                    this platform showcases everything we&apos;re building to keep your operations at the forefront 
-                    of modern technology. Each section demonstrates live capabilities, allowing you to experience 
-                    first-hand how these innovations can transform and scale your business operations.
-                  </p>
-                  
-                  <p className="mb-8">
-                    This represents our commitment to transparency, innovation, and ensuring our clients understand 
-                    not just what we&apos;re building, but how it will revolutionise their competitive advantage in an 
-                    increasingly digital marketplace.
-                  </p>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                    <div className="flex items-center space-x-3 p-4 bg-blue-50 rounded-lg">
-                      <Users className="h-6 w-6 text-blue-600" />
-                      <div>
-                        <h4 className="font-semibold text-blue-900">Client-Centric</h4>
-                        <p className="text-sm text-blue-700">Direct capability demonstration</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-3 p-4 bg-green-50 rounded-lg">
-                      <Target className="h-6 w-6 text-green-600" />
-                      <div>
-                        <h4 className="font-semibold text-green-900">Innovation Focused</h4>
-                        <p className="text-sm text-green-700">Cutting-edge technology showcase</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col items-center space-x-3 p-4 bg-purple-50 rounded-lg">
-                      <Zap className="h-6 w-6 text-purple-600" />
-                      <div>
-                        <h4 className="font-semibold text-purple-900">Scalable Solutions</h4>
-                        <p className="text-sm text-purple-700">Built for operational growth</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            {/* Logo */}
+            <div className="mb-8 flex justify-center">
+              <div className="relative w-48 h-20 md:w-64 md:h-24">
+                <Image
+                  src="/alan-batt-logo.svg"
+                  alt="Alan Batt Logo"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
             </div>
             
-            {/* Call to Action */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button size="lg" className="text-base px-8" asChild>
-                <Link href="/ai">
-                  <Bot className="h-4 w-4 mr-2" />
-                  Explore AI Capabilities
+            <div className="mb-8">
+              <span className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-white ring-1 ring-inset ring-blue-300/20 mb-6" style={{backgroundColor: '#29377c'}}>
+                <Lightbulb className="h-4 w-4 mr-2" />
+                Business Information Dashboard
+              </span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight" style={{color: '#29377c'}}>
+              Tech Hub
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-slate-600 leading-relaxed mb-12 max-w-4xl mx-auto">
+              Access your analytics, content, AI tools, and market data in one place
+            </p>
+          </div>
+
+          {/* Service Sections Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+            {/* Reports Section */}
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
+              <div className="mb-6">
+                <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{backgroundColor: '#29377c'}}>
+                  <BarChart3 className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>Reports & Analytics</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Web analytics, social media insights, and performance tracking data.
+                </p>
+              </div>
+              <Button 
+                className="w-full text-white font-semibold py-3" 
+                style={{backgroundColor: '#f37054'}}
+                asChild
+              >
+                <Link href="/reports">
+                  View Reports
+                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="text-base px-8" asChild>
-                <Link href="/new-dev">
-                  <ArrowRight className="h-4 w-4 mr-2" />
-                  View Development Portfolio
+            </div>
+
+            {/* SEO Section */}
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
+              <div className="mb-6">
+                <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{backgroundColor: '#058895'}}>
+                  <Search className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>SEO Tools</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Search engine optimization tools and website performance analysis.
+                </p>
+              </div>
+              <Button 
+                className="w-full text-white font-semibold py-3" 
+                style={{backgroundColor: '#f37054'}}
+                asChild
+              >
+                <Link href="/seo">
+                  Optimize SEO
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Markets Section */}
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
+              <div className="mb-6">
+                <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{backgroundColor: '#29377c'}}>
+                  <TrendingUp className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>Market Data</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Property market data, trends analysis, and local market insights.
+                </p>
+              </div>
+              <Button 
+                className="w-full text-white font-semibold py-3" 
+                style={{backgroundColor: '#f37054'}}
+                asChild
+              >
+                <Link href="/markets">
+                  Explore Markets
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Content Section */}
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
+              <div className="mb-6">
+                <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{backgroundColor: '#058895'}}>
+                  <FileText className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>Content</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Content creation, management, and distribution tools.
+                </p>
+              </div>
+              <Button 
+                className="w-full text-white font-semibold py-3" 
+                style={{backgroundColor: '#f37054'}}
+                asChild
+              >
+                <Link href="/content">
+                  Manage Content
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* AI Section */}
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
+              <div className="mb-6">
+                <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{backgroundColor: '#29377c'}}>
+                  <Bot className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>AI Tools</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  AI chatbots, voice agents, and automation tools.
+                </p>
+              </div>
+              <Button 
+                className="w-full text-white font-semibold py-3" 
+                style={{backgroundColor: '#f37054'}}
+                asChild
+              >
+                <Link href="/ai">
+                  Explore AI
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Downloads Section */}
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
+              <div className="mb-6">
+                <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{backgroundColor: '#058895'}}>
+                  <Download className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>Downloads</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Reports, templates, guides, and other resources.
+                </p>
+              </div>
+              <Button 
+                className="w-full text-white font-semibold py-3" 
+                style={{backgroundColor: '#f37054'}}
+                asChild
+              >
+                <Link href="/downloads">
+                  Browse Resources
+                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </Button>
             </div>
           </div>
 
-          {/* Below the fold - Technical Showcase */}
-          <div className="border-t border-slate-200 pt-20">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6 text-slate-900">
-                Technical Foundation
+          {/* Additional Services Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+            {/* Development Section */}
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
+              <div className="mb-6">
+                <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{backgroundColor: '#29377c'}}>
+                  <Code className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>Development</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Latest projects, prototypes, and technical developments.
+                </p>
+              </div>
+              <Button 
+                className="w-full text-white font-semibold py-3" 
+                style={{backgroundColor: '#f37054'}}
+                asChild
+              >
+                <Link href="/new-dev">
+                  View Portfolio
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Newsletter Section */}
+            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
+              <div className="mb-6">
+                <div className="h-12 w-12 rounded-lg flex items-center justify-center mb-4" style={{backgroundColor: '#058895'}}>
+                  <Mail className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>Email Newsletters</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Email campaigns, newsletters, and automated communications.
+                </p>
+              </div>
+              <Button 
+                className="w-full text-white font-semibold py-3" 
+                style={{backgroundColor: '#f37054'}}
+                asChild
+              >
+                <Link href="/emails">
+                  Manage Emails
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Key Features Section */}
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 md:p-12">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{color: '#29377c'}}>
+                About This Hub
               </h2>
               <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-                Built with modern technologies and frameworks to ensure performance, scalability, and maintainability.
+                A centralized platform for accessing all your business information and tools.
               </p>
             </div>
 
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
-              <div className="p-6 rounded-lg border bg-card text-card-foreground shadow-sm">
-                <div className="mb-4">
-                  <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                    <Zap className="h-6 w-6 text-primary" />
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{backgroundColor: '#29377c'}}>
+                  <Users className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Lightning Fast</h3>
-                <p className="text-muted-foreground">
-                  Built with Next.js 15 and optimised for performance with the latest React features.
+                <h4 className="text-xl font-semibold mb-3" style={{color: '#29377c'}}>Centralized</h4>
+                <p className="text-slate-600">
+                  All your business information and tools in one organized location.
                 </p>
               </div>
               
-              <div className="p-6 rounded-lg border bg-card text-card-foreground shadow-sm">
-                <div className="mb-4">
-                  <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                    <Palette className="h-6 w-6 text-primary" />
-                  </div>
+              <div className="text-center">
+                <div className="h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{backgroundColor: '#058895'}}>
+                  <Target className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Beautiful Design</h3>
-                <p className="text-muted-foreground">
-                  Tailwind CSS v4 with a comprehensive design system and dark mode support.
+                <h4 className="text-xl font-semibold mb-3" style={{color: '#29377c'}}>Data Access</h4>
+                <p className="text-slate-600">
+                  Analytics, reports, and market data for informed decision making.
                 </p>
               </div>
               
-              <div className="p-6 rounded-lg border bg-card text-card-foreground shadow-sm">
-                <div className="mb-4">
-                  <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
-                    <Bot className="h-6 w-6 text-primary" />
-                  </div>
+              <div className="text-center">
+                <div className="h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{backgroundColor: '#f37054'}}>
+                  <Lightbulb className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">AI Powered</h3>
-                <p className="text-muted-foreground">
-                  Experience our AI agents with ElevenLabs voice technology integration.
+                <h4 className="text-xl font-semibold mb-3" style={{color: '#29377c'}}>Tools & Automation</h4>
+                <p className="text-slate-600">
+                  AI tools, content management, and automation features.
                 </p>
-              </div>
-            </div>
-
-            {/* Tech Stack */}
-            <div className="p-8 rounded-lg border bg-card text-card-foreground shadow-sm max-w-3xl mx-auto">
-              <h3 className="text-2xl font-bold mb-6 text-center">Technology Stack</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                <div className="flex flex-col items-center p-4 rounded-lg bg-muted/50">
-                  <span className="font-semibold">Next.js 15</span>
-                  <span className="text-muted-foreground">React Framework</span>
-                </div>
-                <div className="flex flex-col items-center p-4 rounded-lg bg-muted/50">
-                  <span className="font-semibold">Tailwind v4</span>
-                  <span className="text-muted-foreground">CSS Framework</span>
-                </div>
-                <div className="flex flex-col items-center p-4 rounded-lg bg-muted/50">
-                  <span className="font-semibold">TypeScript</span>
-                  <span className="text-muted-foreground">Type Safety</span>
-                </div>
-                <div className="flex flex-col items-center p-4 rounded-lg bg-muted/50">
-                  <span className="font-semibold">ElevenLabs</span>
-                  <span className="text-muted-foreground">Voice AI</span>
-                </div>
               </div>
             </div>
           </div>
@@ -178,7 +293,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="px-8 py-8 text-center text-slate-500 mt-20">
-        <p>&copy; 2024 Magicalogical. Revolutionising client-developer collaboration through innovative technology demonstration.</p>
+        <p>&copy; 2024 Alan Batt Tech Hub. Business information and tools dashboard.</p>
       </footer>
     </div>
   )

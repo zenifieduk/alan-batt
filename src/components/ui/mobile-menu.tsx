@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Sparkles, Menu, X, ChevronRight, ChevronDown, Github, Phone, Bot, FileText, Code, BarChart3, Search, Download, TrendingUp } from "lucide-react"
 import { LucideIcon } from 'lucide-react'
@@ -112,10 +113,15 @@ export function MobileMenu({ currentPage }: MobileMenuProps) {
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-slate-200">
                 <div className="flex items-center space-x-2">
-                  <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-                    <Sparkles className="h-5 w-5 text-primary-foreground" />
+                  <div className="relative w-24 h-6">
+                    <Image
+                      src="/alan-batt-logo.svg"
+                      alt="Alan Batt Logo"
+                      fill
+                      className="object-contain"
+                      priority
+                    />
                   </div>
-                  <span className="font-bold text-slate-900">Alan Batt</span>
                 </div>
                 <Button
                   variant="ghost"

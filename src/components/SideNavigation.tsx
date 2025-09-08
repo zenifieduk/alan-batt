@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { 
@@ -95,12 +96,14 @@ export default function SideNavigation() {
               {/* Header */}
               <div className="p-4 border-b border-blue-800">
                 <div className="flex items-center space-x-3">
-                  <div className="h-8 w-8 bg-blue-700 rounded-lg flex items-center justify-center">
-                    <Sparkles className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-lg">Alan Batt</div>
-                    <div className="text-xs text-blue-200">Dashboard</div>
+                  <div className="relative w-32 h-8">
+                    <Image
+                      src="/alan-batt-logo.svg"
+                      alt="Alan Batt Logo"
+                      fill
+                      className="object-contain"
+                      priority
+                    />
                   </div>
                 </div>
               </div>
@@ -160,13 +163,19 @@ export default function SideNavigation() {
       {/* Header */}
       <div className="p-4 border-b border-blue-800">
         <div className="flex items-center space-x-3">
-          <div className="h-8 w-8 bg-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
-            <Sparkles className="h-5 w-5" />
-          </div>
-          {!isCollapsed && (
-            <div>
-              <div className="font-bold text-lg">Alan Batt</div>
-              <div className="text-xs text-blue-200">Dashboard</div>
+          {isCollapsed ? (
+            <div className="h-8 w-8 bg-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Sparkles className="h-5 w-5" />
+            </div>
+          ) : (
+            <div className="relative w-32 h-8">
+              <Image
+                src="/alan-batt-logo.svg"
+                alt="Alan Batt Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           )}
         </div>
