@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { RefreshCw, BarChart3, TrendingUp, Users, Eye, Share2, ExternalLink } from 'lucide-react';
+import { RefreshCw, BarChart3, TrendingUp, Users, Eye, Share2, ExternalLink, Calendar } from 'lucide-react';
 import SocialMediaTrendsChart from '../charts/SocialMediaTrendsChart';
 import { formatNumber } from '@/lib/utils';
 
@@ -37,18 +37,33 @@ interface SocialMediaDashboardProps {
   data: CombinedMetrics | null;
   loading: boolean;
   error: string | null;
+  meta?: any;
   onRefresh: () => void;
+  onPeriodChange?: (period: string) => void;
+  currentPeriod?: string;
 }
 
 export default function SocialMediaDashboard({ 
   data, 
   loading, 
   error, 
-  onRefresh 
+  meta,
+  onRefresh,
+  onPeriodChange,
+  currentPeriod = 'all'
 }: SocialMediaDashboardProps) {
   const [selectedMetrics, setSelectedMetrics] = useState<string[]>([
     'views', 'follows', 'reach', 'interactions'
   ]);
+
+  const periodOptions = [
+    { value: '1week', label: '1 Week' },
+    { value: '1month', label: '1 Month' },
+    { value: '3months', label: '3 Months' },
+    { value: '6months', label: '6 Months' },
+    { value: 'year', label: 'This Year' },
+    { value: 'all', label: 'All Time' }
+  ];
 
   const metricConfigs = {
     views: {
@@ -205,6 +220,44 @@ export default function SocialMediaDashboard({
           </CardContent>
         </Card>
       </div>
+
+      {/* Period Filter Controls */}
+      {onPeriodChange && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center">
+              <Calendar className="h-5 w-5 mr-2" />
+              Time Period
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {periodOptions.map((option) => (
+                <Button
+                  key={option.value}
+                  variant={currentPeriod === option.value ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => onPeriodChange(option.value)}
+                  className="text-sm"
+                >
+                  {option.label}
+                </Button>
+              ))}
+            </div>
+            {meta && (
+              <div className="mt-3 text-sm text-slate-600">
+                <p>
+                  Showing data from <strong>{meta.dateRange?.start}</strong> to{' '}
+                  <strong>{meta.dateRange?.end}</strong>
+                  {meta.totalDays && (
+                    <span> ({meta.totalDays} days of data)</span>
+                  )}
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Metric Selection */}
       <Card>

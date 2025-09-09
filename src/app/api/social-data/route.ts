@@ -1,9 +1,53 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { CSVProcessor } from '@/lib/csv-processor';
 import fs from 'fs';
 import path from 'path';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const period = searchParams.get('period') || 'all';
+  
+  // Calculate date range based on period
+  const getDateRange = (period: string) => {
+    const now = new Date();
+    const startOfYear = new Date(now.getFullYear(), 0, 1);
+    
+    switch (period) {
+      case '1week':
+        return {
+          start: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000),
+          end: now
+        };
+      case '1month':
+        return {
+          start: new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()),
+          end: now
+        };
+      case '3months':
+        return {
+          start: new Date(now.getFullYear(), now.getMonth() - 3, now.getDate()),
+          end: now
+        };
+      case '6months':
+        return {
+          start: new Date(now.getFullYear(), now.getMonth() - 6, now.getDate()),
+          end: now
+        };
+      case 'year':
+        return {
+          start: startOfYear,
+          end: now
+        };
+      case 'all':
+      default:
+        return {
+          start: new Date('2025-01-01'), // Start from Jan 1, 2025 as mentioned
+          end: now
+        };
+    }
+  };
+
+  const { start, end } = getDateRange(period);
   try {
     console.log('🚀 Loading social media data from CSV files...');
     
@@ -251,17 +295,41 @@ export async function GET() {
     result.instagram.dailyMetrics = Object.values(instagramDailyMetrics)
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    // Filter out days where all metrics are 0 to avoid showing empty data
-    const filterEmptyDays = (data: DailyMetric[]) => {
-      return data.filter(day => 
-        day.views > 0 || day.follows > 0 || day.reach > 0 || 
-        day.interactions > 0 || day.visits > 0 || day.linkClicks > 0
-      );
+    // Filter data by date range and remove empty days
+    const filterData = (data: DailyMetric[]) => {
+      return data
+        .filter(day => {
+          const dayDate = new Date(day.date);
+          return dayDate >= start && dayDate <= end;
+        })
+        .filter(day => 
+          day.views > 0 || day.follows > 0 || day.reach > 0 || 
+          day.interactions > 0 || day.visits > 0 || day.linkClicks > 0
+        );
     };
 
     // Apply filtering to both platforms
-    result.facebook.dailyMetrics = filterEmptyDays(result.facebook.dailyMetrics);
-    result.instagram.dailyMetrics = filterEmptyDays(result.instagram.dailyMetrics);
+    result.facebook.dailyMetrics = filterData(result.facebook.dailyMetrics);
+    result.instagram.dailyMetrics = filterData(result.instagram.dailyMetrics);
+
+    // Recalculate totals based on filtered data
+    const calculateTotals = (data: DailyMetric[]) => {
+      return data.reduce((totals, day) => ({
+        views: totals.views + (day.views || 0),
+        follows: totals.follows + (day.follows || 0),
+        reach: totals.reach + (day.reach || 0),
+        interactions: totals.interactions + (day.interactions || 0),
+        visits: totals.visits + (day.visits || 0),
+        linkClicks: totals.linkClicks + (day.linkClicks || 0)
+      }), { views: 0, follows: 0, reach: 0, interactions: 0, visits: 0, linkClicks: 0 });
+    };
+
+    // Update totals based on filtered data
+    const facebookTotals = calculateTotals(result.facebook.dailyMetrics);
+    const instagramTotals = calculateTotals(result.instagram.dailyMetrics);
+
+    result.facebook = { ...result.facebook, ...facebookTotals };
+    result.instagram = { ...result.instagram, ...instagramTotals };
 
     console.log('📊 Final result:', result);
     console.log('📅 Facebook daily metrics sample:', result.facebook.dailyMetrics.slice(0, 3));
@@ -270,6 +338,14 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       data: result,
+      meta: {
+        period,
+        dateRange: {
+          start: start.toISOString().split('T')[0],
+          end: end.toISOString().split('T')[0]
+        },
+        totalDays: result.facebook.dailyMetrics.length
+      },
       message: 'Social media data loaded successfully'
     });
   } catch (error) {

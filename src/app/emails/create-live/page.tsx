@@ -8,7 +8,7 @@ interface NewsletterBuilder {
   subject: string;
   previewText: string;
   featuredProperty: Property | null;
-  additionalProperties: Property[];
+  propertyRows: Property[][]; // Changed to support multiple property rows
   articles: BlogPost[];
   recipients: string[];
 }
@@ -18,7 +18,7 @@ export default function LiveEmailBuilderPage() {
     subject: '',
     previewText: '',
     featuredProperty: null,
-    additionalProperties: [],
+    propertyRows: [], // Changed from additionalProperties to propertyRows
     articles: [],
     recipients: []
   });
@@ -28,10 +28,19 @@ export default function LiveEmailBuilderPage() {
   const [newRecipient, setNewRecipient] = useState('');
   const [propertyUrls, setPropertyUrls] = useState('');
   const [articleUrls, setArticleUrls] = useState('');
+  const [articleUrls2, setArticleUrls2] = useState(''); // Second article URL
+  const [currentPropertyRow, setCurrentPropertyRow] = useState(0); // Track which property row we're adding to
 
 
-  const scrapeContent = async (type: 'properties' | 'articles') => {
-    const urls = type === 'properties' ? propertyUrls : articleUrls;
+  const scrapeContent = async (type: 'properties' | 'articles' | 'articles2') => {
+    let urls = '';
+    if (type === 'properties') {
+      urls = propertyUrls;
+    } else if (type === 'articles') {
+      urls = articleUrls;
+    } else if (type === 'articles2') {
+      urls = articleUrls2;
+    }
     
     if (!urls.trim()) {
       alert('Please enter a URL');
@@ -43,7 +52,10 @@ export default function LiveEmailBuilderPage() {
       const response = await fetch('/api/emails/scrape', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: type === 'properties' ? 'properties' : 'blogs', urls: [urls] }),
+        body: JSON.stringify({ 
+          type: type === 'properties' ? 'properties' : 'blogs', 
+          urls: [urls] 
+        }),
       });
 
       const result = await response.json();
@@ -55,11 +67,15 @@ export default function LiveEmailBuilderPage() {
             // Add as featured property
             setBuilder(prev => ({ ...prev, featuredProperty: scrapedItem }));
           } else {
-            // Add as additional property
-            setBuilder(prev => ({ 
-              ...prev, 
-              additionalProperties: [...prev.additionalProperties, scrapedItem]
-            }));
+            // Add to current property row
+            setBuilder(prev => {
+              const newPropertyRows = [...prev.propertyRows];
+              if (!newPropertyRows[currentPropertyRow]) {
+                newPropertyRows[currentPropertyRow] = [];
+              }
+              newPropertyRows[currentPropertyRow] = [...newPropertyRows[currentPropertyRow], scrapedItem];
+              return { ...prev, propertyRows: newPropertyRows };
+            });
           }
           setPropertyUrls('');
         } else {
@@ -68,7 +84,11 @@ export default function LiveEmailBuilderPage() {
             ...prev, 
             articles: [...prev.articles, scrapedItem]
           }));
-          setArticleUrls('');
+          if (type === 'articles') {
+            setArticleUrls('');
+          } else {
+            setArticleUrls2('');
+          }
         }
         alert(`Successfully scraped ${type.slice(0, -1)}!`);
       } else {
@@ -115,7 +135,7 @@ export default function LiveEmailBuilderPage() {
           subject: builder.subject || `Hot Properties Newsletter - ${new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`,
           previewText: builder.previewText,
           mainProperty: builder.featuredProperty,
-          secondaryProperties: builder.additionalProperties,
+          secondaryProperties: builder.propertyRows.flat(), // Flatten all property rows into secondary properties
           blogPosts: builder.articles,
           templateId: 'newsletter'
         }),
@@ -129,7 +149,7 @@ export default function LiveEmailBuilderPage() {
           subject: '',
           previewText: '',
           featuredProperty: null,
-          additionalProperties: [],
+          propertyRows: [],
           articles: [],
           recipients: []
         });
@@ -239,13 +259,27 @@ export default function LiveEmailBuilderPage() {
               )}
             </div>
 
-            {/* Additional Properties */}
+            {/* Property Rows */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6">
-              <h2 className="text-xl font-bold text-slate-900 mb-4">Additional Properties</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">Property Rows</h2>
               
-              {/* Add New Property */}
+              {/* Add New Property Row */}
               <div className="mb-4 p-4 border-2 border-dashed border-slate-300 rounded-lg">
                 <div className="space-y-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <label className="block text-sm font-medium text-slate-700">
+                      Property Row {currentPropertyRow + 1}
+                    </label>
+                    <select
+                      value={currentPropertyRow}
+                      onChange={(e) => setCurrentPropertyRow(parseInt(e.target.value))}
+                      className="px-2 py-1 border border-slate-300 rounded text-sm"
+                    >
+                      {Array.from({ length: Math.max(1, builder.propertyRows.length + 1) }, (_, i) => (
+                        <option key={i} value={i}>Row {i + 1}</option>
+                      ))}
+                    </select>
+                  </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
                       Property URL
@@ -260,36 +294,53 @@ export default function LiveEmailBuilderPage() {
                   </div>
                   <button
                     onClick={() => scrapeContent('properties')}
-                    disabled={scraping || !propertyUrls.trim() || builder.additionalProperties.length >= 2}
+                    disabled={scraping || !propertyUrls.trim()}
                     className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {scraping ? 'Scraping...' : `Add Property ${builder.additionalProperties.length + 1}`}
+                    {scraping ? 'Scraping...' : `Add to Row ${currentPropertyRow + 1}`}
                   </button>
                 </div>
               </div>
 
-              {/* Display Additional Properties */}
-              {builder.additionalProperties.map((property, index) => (
-                <div key={property.id} className="mb-4 border-2 border-[#29377c] rounded-lg p-4 bg-blue-50">
+              {/* Display Property Rows */}
+              {builder.propertyRows.map((row, rowIndex) => (
+                <div key={rowIndex} className="mb-4 border-2 border-[#29377c] rounded-lg p-4 bg-blue-50">
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-semibold text-slate-900">Property {index + 1}</h3>
+                    <h3 className="font-semibold text-slate-900">Property Row {rowIndex + 1}</h3>
                     <button
                       onClick={() => setBuilder(prev => ({
                         ...prev,
-                        additionalProperties: prev.additionalProperties.filter((_, i) => i !== index)
+                        propertyRows: prev.propertyRows.filter((_, i) => i !== rowIndex)
                       }))}
                       className="text-red-500 hover:text-red-700 text-sm"
                     >
-                      Remove
+                      Remove Row
                     </button>
                   </div>
-                  <img
-                    src={property.mainImage}
-                    alt={property.title}
-                    className="w-full h-32 object-cover rounded mb-3"
-                  />
-                  <h4 className="font-semibold text-slate-900">{property.title}</h4>
-                  <p className="text-sm text-slate-600">{property.price}</p>
+                  {row.map((property, propertyIndex) => (
+                    <div key={property.id} className="mb-3 p-3 bg-white rounded border">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-medium text-slate-900">Property {propertyIndex + 1}</h4>
+                        <button
+                          onClick={() => setBuilder(prev => {
+                            const newPropertyRows = [...prev.propertyRows];
+                            newPropertyRows[rowIndex] = newPropertyRows[rowIndex].filter((_, i) => i !== propertyIndex);
+                            return { ...prev, propertyRows: newPropertyRows };
+                          })}
+                          className="text-red-500 hover:text-red-700 text-xs"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      <img
+                        src={property.mainImage}
+                        alt={property.title}
+                        className="w-full h-24 object-cover rounded mb-2"
+                      />
+                      <h5 className="font-medium text-slate-900 text-sm">{property.title}</h5>
+                      <p className="text-xs text-slate-600">{property.price}</p>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -298,12 +349,12 @@ export default function LiveEmailBuilderPage() {
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6">
               <h2 className="text-xl font-bold text-slate-900 mb-4">Articles</h2>
               
-              {/* Add New Article */}
+              {/* Add New Articles */}
               <div className="mb-4 p-4 border-2 border-dashed border-slate-300 rounded-lg">
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Article URL
+                      Article URL 1
                     </label>
                     <input
                       type="url"
@@ -318,7 +369,27 @@ export default function LiveEmailBuilderPage() {
                     disabled={scraping || !articleUrls.trim()}
                     className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {scraping ? 'Scraping...' : 'Add Article'}
+                    {scraping ? 'Scraping...' : 'Add Article 1'}
+                  </button>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Article URL 2
+                    </label>
+                    <input
+                      type="url"
+                      value={articleUrls2}
+                      onChange={(e) => setArticleUrls2(e.target.value)}
+                      placeholder="https://www.alanbatt.co.uk/article-url-2"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#29377c] focus:border-transparent"
+                    />
+                  </div>
+                  <button
+                    onClick={() => scrapeContent('articles2')}
+                    disabled={scraping || !articleUrls2.trim()}
+                    className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {scraping ? 'Scraping...' : 'Add Article 2'}
                   </button>
                 </div>
               </div>
@@ -408,7 +479,7 @@ export default function LiveEmailBuilderPage() {
               {builder.featuredProperty ? (
                 <PropertyNewsletterEmail
                   mainProperty={builder.featuredProperty}
-                  secondaryProperties={builder.additionalProperties}
+                  secondaryProperties={builder.propertyRows.flat()}
                   blogPosts={builder.articles}
                   companyName="Alan Batt Estate Agents"
                   companyLogo="/logo.png"

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { render } from '@react-email/render';
+import PropertyNewsletterEmail from '@/components/emails/PropertyNewsletterEmail';
 
 interface Property {
   id: string;
@@ -63,9 +65,48 @@ const realProperties: Property[] = [
 export default function MonthlyNewsletterPreview() {
   const [mainProperty] = useState<Property>(realProperties[0]);
   const [secondaryProperties] = useState<Property[]>(realProperties.slice(1));
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+
+  const handleSendTestEmail = async () => {
+    setIsSendingEmail(true);
+    try {
+      const response = await fetch('/api/emails/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'dan@magicalogical.co.uk', // You can change this to your email
+          subject: 'Test Newsletter - Alan Batt Properties',
+          previewText: 'Check out our latest properties and market insights',
+          mainProperty: mainProperty,
+          secondaryProperties: secondaryProperties,
+          blogPosts: [],
+          templateId: 'newsletter'
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setEmailSent(true);
+        setTimeout(() => setEmailSent(false), 5000);
+      } else {
+        console.error('Failed to send email:', result.error);
+        alert('Failed to send test email. Please check the console for details.');
+      }
+    } catch (error) {
+      console.error('Error sending test email:', error);
+      alert('Error sending test email. Please check the console for details.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
+      {/* Add Goudy font link */}
+      <link rel="stylesheet" href="https://use.typekit.net/bwg2coj.css" />
       {/* Email Container */}
       <div className="max-w-4xl mx-auto bg-white shadow-lg">
         {/* Top Header - Alan Batt Blue */}
@@ -81,16 +122,16 @@ export default function MonthlyNewsletterPreview() {
               <img 
                 src="/alan-batt-logo.svg" 
                 alt="Alan Batt Sales & Lettings" 
-                className="h-16 mx-auto mb-2"
+                className="h-24 mx-auto mb-2"
               />
               <p className="text-gray-300 text-sm">SALES & LETTINGS</p>
             </div>
             
             {/* Right - Navigation */}
             <div className="text-right space-y-2">
-              <div><a href="#" className="text-white hover:text-gray-200 text-sm">Find a property</a></div>
-              <div><a href="#" className="text-white hover:text-gray-200 text-sm">Book a valuation</a></div>
-              <div><a href="#" className="text-white hover:text-gray-200 text-sm">Contact us</a></div>
+              <div><a href="https://www.alanbatt.co.uk/property-search/?orderby=price_desc&showstc=on" className="text-white hover:text-gray-200 text-sm">Find a property</a></div>
+              <div><a href="https://www.alanbatt.co.uk/property-valuation/" className="text-white hover:text-gray-200 text-sm">Book a valuation</a></div>
+              <div><a href="https://www.alanbatt.co.uk/contact-us/" className="text-white hover:text-gray-200 text-sm">Contact us</a></div>
             </div>
           </div>
         </div>
@@ -99,7 +140,7 @@ export default function MonthlyNewsletterPreview() {
         <div className="p-8">
           {/* Introduction Section */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">August Newsletter</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4" style={{ fontFamily: '"goudy-old-style", serif' }}>August Newsletter</h2>
             <p className="text-gray-600 mb-4 max-w-3xl mx-auto">
               Welcome to our Monthly Newsletter. Here we showcase the latest properties, market insights, and updates from Alan Batt.
             </p>
@@ -129,7 +170,7 @@ export default function MonthlyNewsletterPreview() {
             
             {/* Property Details */}
             <div className="text-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">{mainProperty.title}</h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2" style={{ fontFamily: '"goudy-old-style", serif' }}>{mainProperty.title}</h3>
               <p className="text-3xl font-bold text-gray-800 mb-4">{mainProperty.price}</p>
               <div className="flex justify-center space-x-6 mb-4 text-sm text-gray-600">
                 <span className="flex items-center">
@@ -196,7 +237,7 @@ export default function MonthlyNewsletterPreview() {
                     className="w-full h-48 object-cover"
                   />
                   <div className="p-4 text-center">
-                    <h4 className="font-bold text-gray-800 mb-1">{property.title}</h4>
+                    <h4 className="font-bold text-gray-800 mb-1" style={{ fontFamily: '"goudy-old-style", serif' }}>{property.title}</h4>
                     <p className="text-lg font-bold text-gray-800 mb-3">{property.price}</p>
                     <div className="grid grid-cols-2 gap-2 mb-3">
                       <div className="flex flex-col items-center text-center">
@@ -250,7 +291,7 @@ export default function MonthlyNewsletterPreview() {
                 />
                 <div className="absolute inset-0 overlay-30"></div>
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6 text-center">
-                  <h4 className="font-bold mb-3 text-lg">Early bird property alerts</h4>
+                  <h4 className="font-bold mb-3 text-lg" style={{ fontFamily: '"goudy-old-style", serif' }}>Early bird property alerts</h4>
                   <p className="text-base">Be first to hear about properties that suit you</p>
                 </div>
               </div>
@@ -263,7 +304,7 @@ export default function MonthlyNewsletterPreview() {
                 />
                 <div className="absolute inset-0 overlay-30"></div>
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6 text-center">
-                  <h4 className="font-bold mb-3 text-lg">Selling or letting your property?</h4>
+                  <h4 className="font-bold mb-3 text-lg" style={{ fontFamily: '"goudy-old-style", serif' }}>Selling or letting your property?</h4>
                   <p className="text-base">Book a FREE valuation today!</p>
                 </div>
               </div>
@@ -272,7 +313,7 @@ export default function MonthlyNewsletterPreview() {
                 <img src="/email-images/abemail3.jpg" alt="Letting property" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 overlay-30"></div>
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6 text-center">
-                  <h4 className="font-bold mb-3 text-lg">Letting your property</h4>
+                  <h4 className="font-bold mb-3 text-lg" style={{ fontFamily: '"goudy-old-style", serif' }}>Letting your property</h4>
                   <p className="text-base">Have complete peace of mind</p>
                 </div>
               </div>
@@ -285,28 +326,32 @@ export default function MonthlyNewsletterPreview() {
           <div className="grid md:grid-cols-2 gap-8 mb-6">
             {/* Left - Contact Information */}
             <div>
-              <h4 className="font-semibold mb-4">Contact Information</h4>
+              <h4 className="font-semibold mb-4" style={{ fontFamily: '"goudy-old-style", serif' }}>Contact Information</h4>
               <div className="space-y-2 text-sm">
                 <p>78 Market Street, Wigan, WN1 1HX</p>
-                <p>01942 233 999</p>
-                <p>sales@alanbatt.co.uk</p>
-                <p>rentals@alanbatt.co.uk</p>
+                <p><a href="tel:01942233999" className="text-white hover:text-gray-200">01942 233 999</a></p>
+                <p><a href="mailto:sales@alanbatt.co.uk" className="text-white hover:text-gray-200">sales@alanbatt.co.uk</a></p>
+                <p><a href="mailto:rentals@alanbatt.co.uk" className="text-white hover:text-gray-200">rentals@alanbatt.co.uk</a></p>
               </div>
             </div>
             
             {/* Right - Social Media */}
             <div className="text-right">
-              <h4 className="font-semibold mb-4">Follow Us</h4>
+              <h4 className="font-semibold mb-4" style={{ fontFamily: '"goudy-old-style", serif' }}>Follow Us</h4>
               <div className="flex justify-end space-x-4">
-                <a href="#" className="text-white hover:text-gray-200">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                <a href="https://www.facebook.com/alanbattuk" className="text-white hover:text-gray-200" title="Facebook">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                   </svg>
                 </a>
-                <a href="#" className="text-white hover:text-gray-200">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.84-.5l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.66.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                <a href="https://www.instagram.com/alanbatt_estates/" className="text-white hover:text-gray-200" title="Instagram">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323c-.875.807-2.026 1.297-3.323 1.297zm7.83-9.281c-.49 0-.98-.49-.98-.98s.49-.98.98-.98.98.49.98.98-.49.98-.98.98zm-7.83 1.297c-1.297 0-2.448 1.151-2.448 2.448s1.151 2.448 2.448 2.448 2.448-1.151 2.448-2.448-1.151-2.448-2.448-2.448z"/>
+                  </svg>
+                </a>
+                <a href="https://www.linkedin.com/company/alan-batt-sales-lettings/" className="text-white hover:text-gray-200" title="LinkedIn">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                 </a>
               </div>
@@ -329,6 +374,19 @@ export default function MonthlyNewsletterPreview() {
       <div className="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 border">
         <div className="flex items-center space-x-3">
           <span className="text-sm font-medium text-gray-700">Preview Mode</span>
+          <button
+            onClick={handleSendTestEmail}
+            disabled={isSendingEmail}
+            className={`px-4 py-2 rounded text-sm transition-colors ${
+              isSendingEmail 
+                ? 'bg-gray-400 text-white cursor-not-allowed' 
+                : emailSent
+                ? 'bg-green-600 text-white hover:bg-green-700'
+                : 'bg-[#f37054] text-white hover:bg-[#e65a3f]'
+            }`}
+          >
+            {isSendingEmail ? 'Sending...' : emailSent ? 'Email Sent!' : 'Send Test Email'}
+          </button>
           <Link
             href="/emails"
             className="bg-[#29377c] text-white px-4 py-2 rounded text-sm hover:bg-[#1e2a5c] transition-colors"
