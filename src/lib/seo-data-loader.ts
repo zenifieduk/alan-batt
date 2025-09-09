@@ -29,15 +29,19 @@ export class SEODataLoader {
       const serpData = await this.loadSERPDataWithTimeout();
       
       // Load other SEO data in parallel with timeouts to prevent hanging
-      const [searchConsoleData, pageSpeedData, technicalData, keywordData, backlinkData] = await Promise.allSettled([
+      const results = await Promise.allSettled([
         this.loadSearchConsoleDataWithTimeout(),
         this.loadPageSpeedDataWithTimeout(),
         this.loadTechnicalSEODataWithTimeout(),
         this.loadKeywordData(serpData),
         this.loadBacklinkDataWithTimeout(),
-      ]).then(results => results.map(result => 
-        result.status === 'fulfilled' ? result.value : this.getEmptyDataForType(result.reason)
-      ));
+      ]);
+      
+      const searchConsoleData = results[0].status === 'fulfilled' ? results[0].value : this.getEmptySearchConsoleData();
+      const pageSpeedData = results[1].status === 'fulfilled' ? results[1].value : this.getEmptyPageSpeedData();
+      const technicalData = results[2].status === 'fulfilled' ? results[2].value : this.getEmptyTechnicalSEOData();
+      const keywordData = results[3].status === 'fulfilled' ? results[3].value : { totalKeywords: 0, rankingKeywords: [], keywordGaps: [], competitorKeywords: [] };
+      const backlinkData = results[4].status === 'fulfilled' ? results[4].value : this.getEmptyBacklinkData();
 
       const result: SEOMetrics = {
         searchConsole: searchConsoleData,
@@ -135,14 +139,6 @@ export class SEODataLoader {
     });
   }
 
-  /**
-   * Get empty data for failed API calls
-   */
-  private static getEmptyDataForType(error: any): any {
-    console.log('⚠️ API call failed:', error.message);
-    // Return appropriate empty data based on the error
-    return this.getEmptySearchConsoleData();
-  }
 
   /**
    * Get fallback SEO data when everything fails

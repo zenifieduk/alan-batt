@@ -104,9 +104,6 @@ export default function SocialMediaTrendsChart({
   // Calculate max value for better scaling
   const facebookMax = Math.max(...filteredFacebookData.map(d => getMetricValue(d, metricType)), 1);
   const instagramMax = Math.max(...filteredInstagramData.map(d => getMetricValue(d, metricType)), 1);
-  
-  // Use separate scaling for each platform to make both visible
-  const maxValue = Math.max(facebookMax, instagramMax, 1);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
