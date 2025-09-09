@@ -46,6 +46,32 @@ export default function SEODashboard() {
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600 mx-auto"></div>
             <p className="mt-4 text-lg text-slate-600">Loading SEO data for alanbatt.co.uk...</p>
+            <div className="mt-6 max-w-md mx-auto">
+              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+                <p className="text-sm text-slate-500 mb-2">Loading components:</p>
+                <div className="space-y-2 text-left">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-slate-600">SERP Analysis</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-slate-600">Page Speed Insights</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-slate-600">Keyword Rankings</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-slate-600">Technical SEO</span>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-400 mt-3">
+                  This may take a few moments as we gather real-time data...
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -226,8 +226,10 @@ export default function SocialMediaDashboard({
                   variant={isSelected ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => toggleMetric(key)}
-                  className={`text-xs px-3 py-1 h-8 ${
-                    isSelected ? '' : 'hover:bg-slate-50'
+                  className={`text-xs px-3 py-1 h-8 transition-all duration-200 ${
+                    isSelected 
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md border-blue-600' 
+                      : 'hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
                   }`}
                 >
                   <Icon className="h-3 w-3 mr-1" />

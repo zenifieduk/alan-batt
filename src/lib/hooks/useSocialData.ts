@@ -56,7 +56,6 @@ export function useSocialData() {
       setLoading(true);
       setError(null);
       
-      // Use the new server-side API endpoint
       const response = await fetch('/api/social-data');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

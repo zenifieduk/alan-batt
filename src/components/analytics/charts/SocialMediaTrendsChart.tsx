@@ -101,11 +101,12 @@ export default function SocialMediaTrendsChart({
   const filteredFacebookData = filteredData.facebook;
   const filteredInstagramData = filteredData.instagram;
 
-  const maxValue = Math.max(
-    ...filteredFacebookData.map(d => getMetricValue(d, metricType)),
-    ...filteredInstagramData.map(d => getMetricValue(d, metricType)),
-    1
-  ) || 1; // Ensure we always have a positive value
+  // Calculate max value for better scaling
+  const facebookMax = Math.max(...filteredFacebookData.map(d => getMetricValue(d, metricType)), 1);
+  const instagramMax = Math.max(...filteredInstagramData.map(d => getMetricValue(d, metricType)), 1);
+  
+  // Use separate scaling for each platform to make both visible
+  const maxValue = Math.max(facebookMax, instagramMax, 1);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -155,7 +156,11 @@ export default function SocialMediaTrendsChart({
               variant={timeFilter === filter ? 'default' : 'outline'}
               size="sm"
               onClick={() => setTimeFilter(filter)}
-              className="text-xs px-3 py-1 h-8"
+              className={`text-xs px-3 py-1 h-8 transition-all duration-200 ${
+                timeFilter === filter 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md border-blue-600' 
+                  : 'hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
+              }`}
             >
               {filter}
             </Button>
@@ -168,7 +173,11 @@ export default function SocialMediaTrendsChart({
             variant={showFacebook ? 'default' : 'outline'}
             size="sm"
             onClick={() => setShowFacebook(!showFacebook)}
-            className="text-xs px-3 py-1 h-8 bg-blue-600 hover:bg-blue-700"
+            className={`text-xs px-3 py-1 h-8 transition-all duration-200 ${
+              showFacebook 
+                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md border-blue-600' 
+                : 'hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700'
+            }`}
           >
             Facebook
           </Button>
@@ -176,7 +185,11 @@ export default function SocialMediaTrendsChart({
             variant={showInstagram ? 'default' : 'outline'}
             size="sm"
             onClick={() => setShowInstagram(!showInstagram)}
-            className="text-xs px-3 py-1 h-8 bg-pink-600 hover:bg-pink-700"
+            className={`text-xs px-3 py-1 h-8 transition-all duration-200 ${
+              showInstagram 
+                ? 'bg-pink-600 hover:bg-pink-700 text-white shadow-md border-pink-600' 
+                : 'hover:bg-pink-50 hover:border-pink-300 hover:text-pink-700'
+            }`}
           >
             Instagram
           </Button>
@@ -245,9 +258,14 @@ export default function SocialMediaTrendsChart({
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-blue-700">Facebook</span>
-                <span className="text-xs text-slate-500">
-                  {filteredFacebookData.length} data points
-                </span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-slate-500">
+                    Max: {facebookMax.toLocaleString()}
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    {filteredFacebookData.length} data points
+                  </span>
+                </div>
               </div>
               <div className="flex items-end space-x-1 h-32">
                 {filteredFacebookData.map((data, index) => (
@@ -255,8 +273,8 @@ export default function SocialMediaTrendsChart({
                     <div 
                       className="w-full bg-blue-500 rounded-t-sm transition-all duration-200 hover:bg-blue-600"
                       style={{ 
-                        height: `${Math.max((getMetricValue(data, metricType) / maxValue) * 100, 2)}%`,
-                        minHeight: '2px'
+                        height: `${Math.max((getMetricValue(data, metricType) / facebookMax) * 100, 4)}px`,
+                        minHeight: '4px'
                       }}
                       title={`${formatDate(data.date)}: ${getMetricValue(data, metricType).toLocaleString()}`}
                     />
@@ -275,9 +293,14 @@ export default function SocialMediaTrendsChart({
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-pink-700">Instagram</span>
-                <span className="text-xs text-slate-500">
-                  {filteredInstagramData.length} data points
-                </span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-slate-500">
+                    Max: {instagramMax.toLocaleString()}
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    {filteredInstagramData.length} data points
+                  </span>
+                </div>
               </div>
               <div className="flex items-end space-x-1 h-32">
                 {filteredInstagramData.map((data, index) => (
@@ -285,8 +308,8 @@ export default function SocialMediaTrendsChart({
                     <div 
                       className="w-full bg-pink-500 rounded-t-sm transition-all duration-200 hover:bg-pink-600"
                       style={{ 
-                        height: `${Math.max((getMetricValue(data, metricType) / maxValue) * 100, 2)}%`,
-                        minHeight: '2px'
+                        height: `${Math.max((getMetricValue(data, metricType) / instagramMax) * 100, 4)}px`,
+                        minHeight: '4px'
                       }}
                       title={`${formatDate(data.date)}: ${getMetricValue(data, metricType).toLocaleString()}`}
                     />
