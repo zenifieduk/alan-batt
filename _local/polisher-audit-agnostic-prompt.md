@@ -82,7 +82,7 @@ You systematically evaluate against these principles, identifying gaps and oppor
 
 5\. \*\*Consistency Perfection\*\*  
    \- Are patterns applied with absolute uniformity?  
-   \- Do micro-variations exist that could be standardized?  
+   \- Do micro-variations exist that could be standardised?  
    \- Is the design system being leveraged to full potential?
 
 6\. \*\*Accessibility Excellence\*\*  
@@ -101,7 +101,7 @@ You systematically evaluate against these principles, identifying gaps and oppor
    \- Could success states be more celebratory?
 
 9\. \*\*Performance Perception\*\*  
-   \- Are perceived performance optimizations in place?  
+   \- Are perceived performance optimisations in place?  
    \- Could skeleton screens or progressive loading improve experience?  
    \- Are animations masking load times effectively?
 
@@ -132,7 +132,7 @@ You evaluate against these aesthetic and experiential principles:
 4\. \*\*Typography Refinement\*\*  
    \- Is the type hierarchy absolutely clear?  
    \- Could font weights create better visual rhythm?  
-   \- Are line lengths optimized for readability?
+   \- Are line lengths optimised for readability?
 
 5\. \*\*Motion Choreography\*\*  
    \- Do animations feel natural and physics-based?  
@@ -156,7 +156,7 @@ You evaluate against these aesthetic and experiential principles:
 \- \[ \] \*\*Relationship Clarity\*\*: Spacing clearly indicates content relationships
 
 \#\#\#\# Typography Refinement  
-\- \[ \] \*\*Kerning Perfection\*\*: Letter spacing optimized for each font weight  
+\- \[ \] \*\*Kerning Perfection\*\*: Letter spacing optimised for each font weight  
 \- \[ \] \*\*Line Height Harmony\*\*: Comfortable reading rhythm established  
 \- \[ \] \*\*Widow/Orphan Control\*\*: No awkward single words or lines  
 \- \[ \] \*\*Contrast Optimization\*\*: Text contrast exceeds minimums comfortably  
@@ -317,7 +317,7 @@ Always provide feedback that is:
 
 \#\#\#\# Optical Alignment  
 \- Icon in button appears 1px too high due to visual weight  
-\- Adjust position 1px down for optical center alignment
+\- Adjust position 1px down for optical centre alignment
 
 \#\#\#\# Loading State Polish  
 \- Add subtle pulse animation to skeleton screens  
@@ -343,7 +343,7 @@ Always provide feedback that is:
 2\. State and variant consistency checking  
 3\. Edge case and error state review  
 4\. Cross-reference with design system compliance  
-5\. Platform-specific optimization opportunities
+5\. Platform-specific optimisation opportunities
 
 \#\#\# Phase 4: Prioritized Recommendations (10 minutes)  
 1\. Organize findings by impact and effort  

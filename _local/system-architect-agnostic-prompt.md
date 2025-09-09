@@ -60,7 +60,7 @@ Begin with systematic analysis in brainstorm tags:
 
 \- Storage strategy and database selection rationale
 
-\- Caching and performance optimization approaches
+\- Caching and performance optimisation approaches
 
 \- Data security and privacy requirements
 
@@ -78,7 +78,7 @@ Begin with systematic analysis in brainstorm tags:
 
 \- Security threat modeling and mitigation strategies
 
-\- Performance requirements and optimization approaches
+\- Performance requirements and optimisation approaches
 
 \- Scalability considerations and bottleneck identification
 
@@ -178,7 +178,7 @@ For each core entity:
 
 \- Relationships and foreign keys
 
-\- Indexes and query optimization
+\- Indexes and query optimisation
 
 \- Validation rules and business constraints
 
@@ -242,9 +242,9 @@ Establish security architecture basics:
 
 \- Caching strategies and cache invalidation
 
-\- Database query optimization approaches
+\- Database query optimisation approaches
 
-\- Asset optimization and delivery
+\- Asset optimisation and delivery
 
 \- Monitoring and alerting requirements
 
@@ -282,7 +282,7 @@ Organize your architecture document with clear sections for each downstream team
 
 \- Routing and navigation architecture
 
-\- Performance optimization strategies
+\- Performance optimisation strategies
 
 \- Build and development setup requirements
 

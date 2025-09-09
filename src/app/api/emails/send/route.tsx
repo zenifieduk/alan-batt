@@ -20,6 +20,10 @@ export async function POST(request: NextRequest) {
     const { 
       to, 
       subject, 
+      previewText,
+      mainProperty,
+      secondaryProperties = [],
+      blogPosts = [],
       templateId = 'newsletter'
     } = body;
 
@@ -30,14 +34,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Fetch data for the email
-    const properties = await fetchProperties();
-    const blogPosts = await fetchBlogPosts();
+    // Use provided data or fetch default data
+    let properties, blogPostsData;
+    if (mainProperty) {
+      // Use custom data provided
+      properties = [mainProperty, ...secondaryProperties];
+      blogPostsData = blogPosts;
+    } else {
+      // Fallback to fetching default data
+      properties = await fetchProperties();
+      blogPostsData = await fetchBlogPosts();
+    }
 
     // Generate email content based on template
     let emailContent;
-    const emailSubject = `Hot Properties Newsletter - ${new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`;
-    const emailPreviewText = `Check out our latest hot properties for ${new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`;
+    const emailSubject = subject || `Hot Properties Newsletter - ${new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`;
+    const emailPreviewText = previewText || `Check out our latest hot properties for ${new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`;
     
     switch (templateId) {
       case 'newsletter':
@@ -45,7 +57,7 @@ export async function POST(request: NextRequest) {
           <PropertyNewsletterEmail
             mainProperty={properties[0]}
             secondaryProperties={properties.slice(1)}
-            blogPosts={blogPosts}
+            blogPosts={blogPostsData}
             companyName="Alan Batt Estate Agents"
             companyLogo="/logo.png"
             companyAddress="78 Market Street, Wigan, WN1 1HX"
@@ -61,7 +73,7 @@ export async function POST(request: NextRequest) {
           <PropertyNewsletterEmail
             mainProperty={properties[0]}
             secondaryProperties={properties.slice(1, 2)}
-            blogPosts={blogPosts.slice(0, 1)}
+            blogPosts={blogPostsData.slice(0, 1)}
             companyName="Alan Batt Estate Agents"
             companyLogo="/logo.png"
             companyAddress="78 Market Street, Wigan, WN1 1HX"
@@ -77,7 +89,7 @@ export async function POST(request: NextRequest) {
           <PropertyNewsletterEmail
             mainProperty={properties[0]}
             secondaryProperties={[]}
-            blogPosts={blogPosts}
+            blogPosts={blogPostsData}
             companyName="Alan Batt Estate Agents"
             companyLogo="/logo.png"
             companyAddress="78 Market Street, Wigan, WN1 1HX"

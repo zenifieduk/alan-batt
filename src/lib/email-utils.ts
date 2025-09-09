@@ -32,53 +32,52 @@ export interface EmailTemplate {
 
 /**
  * Fetch properties from your data sources
- * This is a placeholder - replace with your actual property data fetching logic
+ * This function should be replaced with actual property data fetching logic
  */
 export async function fetchProperties(): Promise<Property[]> {
-  // TODO: Replace with actual property data fetching
-  // This could come from your database, CMS, or external API
-  
+  // Real property data from Alan Batt
   return [
     {
       id: '1',
-      title: 'Modern Family Home',
-      address: 'Rylance Road, Winstanley, WN3',
-      price: '£400,000',
-      description: 'A stunning 4-bedroom detached family home with modern amenities, spacious garden, and excellent location near local schools and amenities. Features include a modern kitchen, conservatory, utility room, and four generous bedrooms.',
-      mainImage: '/images/properties/rylance-road-main.jpg',
+      title: 'Grove Road, Upholland, WN8',
+      address: 'Grove Road, Upholland, WN8',
+      price: '£775,000',
+      description: 'Set within approximately 0.5 acres of mature gardens occupying an elevated plot with sweeping lawns and far reaching views across Winter Hill in the heart of the historic village of Upholland, is this fantastic property that stands out from the rest with an impressive double fronted façade making for a dramatic yet charming impression. The property embraces the individual nuances of times gone by but with a keen eye for detail and modern convenience.',
+      mainImage: '/property-images/Grove-Road-image-1.jpg',
       galleryImages: [
-        '/images/properties/rylance-road-1.jpg',
-        '/images/properties/rylance-road-2.jpg',
-        '/images/properties/rylance-road-3.jpg'
+        '/property-images/Grove-Road-image-2.jpg',
+        '/property-images/Grove-Road-image-3.jpg',
+        '/property-images/Grove-Road-image-4.jpg'
       ],
-      slug: 'rylance-road-winstanley'
+      slug: 'grove-road-upholland'
     },
     {
       id: '2',
-      title: 'Town Centre Apartment',
-      address: 'Weston Park, Standish Lower Ground, WN6',
-      price: '£250,000',
-      description: 'Beautiful 2-bedroom apartment in the heart of Standish with modern kitchen, parking, and excellent transport links. Perfect for professionals or small families.',
-      mainImage: '/images/properties/weston-park-main.jpg',
+      title: 'Bannister Way, Winstanley, WN3',
+      address: 'Bannister Way, Winstanley, WN3',
+      price: '£375,000 In Excess of',
+      description: 'Introducing this exceptional five-bedroom detached residence—a harmonious blend of elegance, comfort, and lifestyle convenience. A spacious entrance hall welcomes you, offering access to key ground floor rooms and a separate water closet. The generous living room features bay windows and a charming fireplace, perfect for relaxed evenings or stylish entertaining.',
+      mainImage: '/property-images/Bannister-Way-image-1.jpg',
       galleryImages: [
-        '/images/properties/weston-park-1.jpg',
-        '/images/properties/weston-park-2.jpg'
+        '/property-images/Bannister-Way-image-2.jpg',
+        '/property-images/Bannister-Way-image-3.jpg',
+        '/property-images/Bannister-Way-image-4.jpg'
       ],
-      slug: 'weston-park-standish'
+      slug: 'bannister-way-winstanley'
     },
     {
       id: '3',
-      title: 'Family Semi-Detached',
-      address: 'Bannister Way, Wigan, WN3',
-      price: '£320,000',
-      description: 'Spacious 3-bedroom semi-detached house with large garden, garage, and excellent family-friendly location. Recently updated with modern fixtures.',
-      mainImage: '/images/properties/bannister-way-main.jpg',
+      title: 'Tideswell Avenue, Orrell, WN5',
+      address: 'Tideswell Avenue, Orrell, WN5',
+      price: '£450,000 Offers in Region of',
+      description: 'This exquisite 6-bedroom detached house offers a perfect blend of modern design and everyday functionality. Located in the sought-after area of Orrell, this property provides exceptional family living space with contemporary finishes throughout.',
+      mainImage: '/property-images/Tideswell-Avenue-image-1.jpg',
       galleryImages: [
-        '/images/properties/bannister-way-1.jpg',
-        '/images/properties/bannister-way-2.jpg',
-        '/images/properties/bannister-way-3.jpg'
+        '/property-images/Tideswell-Avenue-image-2.jpg',
+        '/property-images/Tideswell-Avenue-image-3.jpg',
+        '/property-images/Tideswell-Avenue-image-4.jpg'
       ],
-      slug: 'bannister-way-wigan'
+      slug: 'tideswell-avenue-orrell'
     }
   ];
 }
@@ -173,32 +172,9 @@ export function validateEmailTemplate(template: Partial<EmailTemplate>): string[
  * Generate email preview data for testing
  */
 export function generatePreviewData(): { properties: Property[]; blogPosts: BlogPost[] } {
+  // Return empty data for preview - will be populated with real data when needed
   return {
-    properties: [
-      {
-        id: 'preview-1',
-        title: 'Preview Property',
-        address: '123 Example Street, Wigan, WN1',
-        price: '£350,000',
-        description: 'This is a preview property for testing email templates. It includes all the necessary fields to demonstrate the email layout.',
-        mainImage: 'https://via.placeholder.com/400x250/1e3a8a/ffffff?text=Property+Image',
-        galleryImages: [
-          'https://via.placeholder.com/80x80/6b7280/ffffff?text=1',
-          'https://via.placeholder.com/80x80/6b7280/ffffff?text=2',
-          'https://via.placeholder.com/80x80/6b7280/ffffff?text=3'
-        ],
-        slug: 'preview-property'
-      }
-    ],
-    blogPosts: [
-      {
-        id: 'preview-blog',
-        title: 'Preview Blog Post',
-        excerpt: 'This is a preview blog post for testing email templates. It demonstrates how blog content will appear in the newsletter.',
-        slug: 'preview-blog-post',
-        content: 'Preview content...',
-        image: 'https://via.placeholder.com/300x150/0d9488/ffffff?text=Blog+Image'
-      }
-    ]
+    properties: [],
+    blogPosts: []
   };
 }

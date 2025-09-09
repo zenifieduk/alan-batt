@@ -203,7 +203,7 @@ function generateOpportunities(keyword: string, competitors: Competitor[]): stri
   }
   
   if (competitors.some(c => c.features.includes('Local Pack'))) {
-    opportunities.push('Local pack optimization opportunity');
+    opportunities.push('Local pack optimisation opportunity');
   }
   
   if (competitors.length > 0) {

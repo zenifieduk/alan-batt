@@ -251,7 +251,7 @@ export function SearchConsoleWidget({ data }: SearchConsoleWidgetProps) {
             <ul className="text-sm text-green-700 space-y-1">
               {data.averagePosition > 10 && <li>• Focus on improving rankings for top queries</li>}
               {data.ctr < 3 && <li>• Optimize meta descriptions to improve CTR</li>}
-              {data.deviceBreakdown.mobile.clicks > data.deviceBreakdown.desktop.clicks && <li>• Mobile-first optimization is working well</li>}
+              {data.deviceBreakdown.mobile.clicks > data.deviceBreakdown.desktop.clicks && <li>• Mobile-first optimisation is working well</li>}
               <li>• Monitor featured snippet opportunities</li>
             </ul>
           </div>

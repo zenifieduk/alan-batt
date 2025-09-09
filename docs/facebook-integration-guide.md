@@ -6,7 +6,7 @@ This guide outlines how to integrate Facebook Business Suite for real-time analy
 
 ### 1. Facebook Business Suite Access
 - **Business Suite Account**: You already have access to Facebook Business Suite
-- **Page Admin Access**: Admin access to the Facebook pages you want to analyze
+- **Page Admin Access**: Admin access to the Facebook pages you want to analyse
 - **Business Verification**: Your business should be verified by Facebook
 
 ### 2. Business Suite API Setup

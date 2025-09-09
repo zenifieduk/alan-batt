@@ -17,7 +17,8 @@ interface Property {
   propertyType: string;
 }
 
-const mockProperties: Property[] = [
+// Real property data from Alan Batt
+const realProperties: Property[] = [
   {
     id: '1',
     title: 'Grove Road, Upholland, WN8',
@@ -60,8 +61,8 @@ const mockProperties: Property[] = [
 ];
 
 export default function HotPropertiesPreview() {
-  const [mainProperty] = useState<Property>(mockProperties[0]);
-  const [secondaryProperties] = useState<Property[]>(mockProperties.slice(1));
+  const [mainProperty] = useState<Property>(realProperties[0]);
+  const [secondaryProperties] = useState<Property[]>(realProperties.slice(1));
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -98,7 +99,7 @@ export default function HotPropertiesPreview() {
         <div className="p-8">
           {/* Introduction Section */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">August Hot Properties</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">August Newsletter</h2>
             <p className="text-gray-600 mb-4 max-w-3xl mx-auto">
               Welcome to our Hot Properties. Here we showcase just some of the latest properties Alan Batt have to offer.
             </p>

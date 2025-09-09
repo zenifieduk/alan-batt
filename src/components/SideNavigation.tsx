@@ -31,8 +31,8 @@ export default function SideNavigation() {
     { href: '/', label: 'Home', icon: Home },
     { href: '/markets', label: 'Markets', icon: TrendingUp },
     { href: '/content', label: 'Content', icon: FileText },
-    { href: '/reports', label: 'Reports', icon: BarChart3 },
-    { href: '/analytics', label: 'Analytics', icon: BarChart3 },
+    { href: '/reports', label: 'Web Analytics', icon: BarChart3 },
+    { href: '/reports/social', label: 'Social Analytics', icon: BarChart3 },
     { href: '/emails', label: 'Newsletters', icon: Mail },
     { href: '/ai', label: 'AI Chat', icon: Bot },
     { href: '/seo', label: 'SEO', icon: Search },
@@ -168,14 +168,14 @@ export default function SideNavigation() {
               <Sparkles className="h-5 w-5" />
             </div>
           ) : (
-            <div className="relative w-32 h-8">
-              <Image
-                src="/alan-batt-logo.svg"
-                alt="Alan Batt Logo"
-                fill
-                className="object-contain"
-                priority
-              />
+            <div className="flex items-center space-x-2">
+              <div className="h-8 w-8 bg-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Sparkles className="h-5 w-5 text-white" />
+              </div>
+              <div className="flex items-center space-x-1">
+                <span className="text-white font-semibold text-lg">Alan</span>
+                <span className="text-white font-semibold text-lg">Batt</span>
+              </div>
             </div>
           )}
         </div>

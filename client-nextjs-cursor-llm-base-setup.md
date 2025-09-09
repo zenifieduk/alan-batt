@@ -300,7 +300,7 @@ export default function Home() {
             </div>
             <h3 className="text-lg font-semibold mb-2">Lightning Fast</h3>
             <p className="text-muted-foreground">
-              Built with Next.js 15 and optimized for performance with the latest React features.
+              Built with Next.js 15 and optimised for performance with the latest React features.
             </p>
           </div>
           

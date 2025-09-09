@@ -5,7 +5,7 @@
 **ABSOLUTE RULES**:
 1. ALL operations MUST be concurrent/parallel in a single message
 2. **NEVER save working files, text/mds and tests to the root folder**
-3. ALWAYS organize files in appropriate subdirectories
+3. ALWAYS organise files in appropriate subdirectories
 
 ### ⚡ GOLDEN RULE: "1 MESSAGE = ALL RELATED OPERATIONS"
 
@@ -77,7 +77,7 @@ This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Co
 `byzantine-coordinator`, `raft-manager`, `gossip-coordinator`, `consensus-builder`, `crdt-synchronizer`, `quorum-manager`, `security-manager`
 
 ### Performance & Optimization
-`perf-analyzer`, `performance-benchmarker`, `task-orchestrator`, `memory-coordinator`, `smart-agent`
+`perf-analyser`, `performance-benchmarker`, `task-orchestrator`, `memory-coordinator`, `smart-agent`
 
 ### GitHub & Repository
 `github-modes`, `pr-manager`, `code-review-swarm`, `issue-tracker`, `release-manager`, `workflow-automation`, `project-board-sync`, `repo-architect`, `multi-repo-swarm`
@@ -86,7 +86,7 @@ This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Co
 `sparc-coord`, `sparc-coder`, `specification`, `pseudocode`, `architecture`, `refinement`
 
 ### Specialized Development
-`backend-dev`, `mobile-dev`, `ml-developer`, `cicd-engineer`, `api-docs`, `system-architect`, `code-analyzer`, `base-template-generator`
+`backend-dev`, `mobile-dev`, `ml-developer`, `cicd-engineer`, `api-docs`, `system-architect`, `code-analyser`, `base-template-generator`
 
 ### Testing & Validation
 `tdd-london-swarm`, `production-validator`
@@ -136,7 +136,7 @@ claude mcp add claude-flow npx claude-flow@alpha mcp start
 `memory_usage`, `neural_status`, `neural_train`, `neural_patterns`
 
 ### GitHub Integration
-`github_swarm`, `repo_analyze`, `pr_enhance`, `issue_triage`, `code_review`
+`github_swarm`, `repo_analyse`, `pr_enhance`, `issue_triage`, `code_review`
 
 ### System
 `benchmark_run`, `features_detect`, `swarm_monitor`

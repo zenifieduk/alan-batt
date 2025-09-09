@@ -6,7 +6,7 @@ import { Facebook, BarChart3, RefreshCw } from "lucide-react"
 import { useSocialData } from '@/lib/hooks/useSocialData'
 import SocialMediaDashboard from '@/components/analytics/dashboard/SocialMediaDashboard'
 
-export default function FacebookReportsPage() {
+export default function SocialAnalyticsPage() {
   const { data, loading, error, refresh } = useSocialData();
 
 
@@ -59,7 +59,7 @@ export default function FacebookReportsPage() {
                   disabled
                 >
                   <Facebook className="h-4 w-4 mr-2" />
-                  Social Media
+                  Social Analytics
                 </Button>
                 <Button 
                   variant="ghost" 

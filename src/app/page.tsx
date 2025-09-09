@@ -88,7 +88,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-bold mb-3" style={{color: '#29377c'}}>SEO Tools</h3>
                 <p className="text-slate-600 leading-relaxed">
-                  Search engine optimization tools and website performance analysis.
+                  Search engine optimisation tools and website performance analysis.
                 </p>
               </div>
               <Button 
@@ -263,7 +263,7 @@ export default function Home() {
                 </div>
                 <h4 className="text-xl font-semibold mb-3" style={{color: '#29377c'}}>Centralized</h4>
                 <p className="text-slate-600">
-                  All your business information and tools in one organized location.
+                  All your business information and tools in one organised location.
                 </p>
               </div>
               

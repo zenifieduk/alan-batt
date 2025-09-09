@@ -348,7 +348,7 @@ const batchResponse = await analyticsDataClient.batchRunReports({
 #### 3. Request Optimization
 ```typescript
 // Use minimal date ranges and combine dimensions
-const optimizedRequest = {
+const optimisedRequest = {
   property: `properties/${propertyId}`,
   dateRanges: [{ startDate: '7daysAgo', endDate: 'today' }], // Shorter range
   dimensions: [

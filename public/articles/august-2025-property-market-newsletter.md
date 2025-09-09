@@ -17,15 +17,15 @@ As we reach the peak of summer and prepare for the autumn market surge, this edi
 ### Wigan Market Highlights
 
 **August 2025 Key Statistics:**
-- **Average Property Price:** £188,600 (up 0.7% from July)
-- **Monthly Growth Rate:** 0.7% (seasonally adjusted)
-- **Annual Growth Rate:** 10.2% (up from 9.8% in July)
-- **Properties Listed:** 378 (up 11% from July)
-- **Average Days on Market:** 31 days (up from 28 in July)
-- **Transaction Volume:** 142 sales (down 9% from July due to summer holidays)
+- **Average Asking Price:** £261,661 (up 17% year-on-year)
+- **Average Agreed Price:** £224,579 (up 1.9% year-on-year)
+- **Properties for Sale:** 1,912 (down 7.6% year-on-year)
+- **New Listings:** 448 (down 12% year-on-year)
+- **Sales Agreed:** 437 (down 4% year-on-year)
+- **Price per Sq Ft:** £243 (new listings), £223 (agreed sales)
 
 **Summer Market Analysis:**
-August has demonstrated strong market fundamentals with Wigan continuing to outperform regional and national averages. The increase in available properties as sellers prepare for autumn creates opportunities for strategic buyers, while maintaining price growth momentum.
+August 2025 shows a cooling trend in activity but continued strength in pricing. Stock levels remain 16% above the six-year average, giving buyers more choice. While fewer homes are coming to market, pricing remains resilient, particularly for new listings at £261,661.
 
 ### Regional Summer Performance
 

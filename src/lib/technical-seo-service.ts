@@ -12,7 +12,7 @@ export class TechnicalSEOService {
       
       // For now, we'll use a combination of real analysis and enhanced mock data
       // In production, this could integrate with Screaming Frog API or similar
-      const technicalData = await this.analyzeWebsite();
+      const technicalData = await this.analyseWebsite();
       
       console.log('✅ Real technical SEO data loaded successfully');
       return technicalData;
@@ -26,7 +26,7 @@ export class TechnicalSEOService {
   /**
    * Analyze website for technical SEO issues
    */
-  private static async analyzeWebsite(): Promise<TechnicalSEOData> {
+  private static async analyseWebsite(): Promise<TechnicalSEOData> {
     try {
       // TODO: Implement real website analysis with Screaming Frog API or similar
       console.log('⚠️ Real technical SEO analysis not yet implemented - returning empty data');

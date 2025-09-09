@@ -6,38 +6,44 @@
 
 ## Executive Summary
 
-As we reach the peak of summer 2025, Wigan's property market continues to demonstrate exceptional performance, with August showing strong fundamentals and strategic opportunities for investors and homebuyers. This comprehensive update explores the latest market trends, August performance metrics, and strategic insights for the autumn market ahead.
+The Wigan property market in August 2025 reflects a cooling trend in activity but continued strength in pricing, particularly for new listings. Stock levels remain high compared with historical averages, but both supply and demand softened compared with last year and July. This comprehensive update explores the latest market trends, August performance metrics, and strategic insights for the autumn market ahead.
 
 ## August 2025 Market Performance Overview
 
-### Price Growth Trends
+The Wigan property market in August 2025 reflects a cooling trend in activity but continued strength in pricing, particularly for new listings. Stock levels remain high compared with historical averages, but both supply and demand softened compared with last year and July.
 
-Wigan has maintained its position as the North West's top-performing property market, with August showing continued strong growth. Average property values have increased by **10.2%** year-on-year, maintaining the momentum from July's 9.8% growth.
+### Supply and Demand
 
-**Key August Statistics:**
-- **Average Property Price:** £188,600 (up from £187,200 in July)
-- **Monthly Growth Rate:** 0.7% (seasonally adjusted)
-- **Annual Growth Rate:** 10.2% (up from 9.8% in July)
-- **Market Activity:** 15% increase in transactions compared to August 2024
-- **Days on Market:** 31 days (up from 28 in July due to summer lull)
+There were **1,912 properties for sale** in August, down 7.6% year-on-year and slightly lower than July. Even so, stock levels remain 16% above the six-year average, giving buyers more choice than in past years.
 
-### Supply and Demand Dynamics
+New listings fell to **448 in August**, 12% down on last year and 13% below July – but still slightly above the six-year average. This suggests fewer homeowners are coming to market, perhaps waiting for greater stability in demand after a busier first half of the year.
 
-August has seen a typical summer market pattern with supply increasing by 11% from July as sellers prepare for the autumn market surge. This creates a balanced market environment that offers opportunities for both buyers and sellers.
+On the demand side, **437 sales were agreed** in August, 4% fewer than last year and 5% below July. Still, activity was 6% above the long-term average, showing that while demand has eased, it remains stronger than historical norms.
 
-**August Market Characteristics:**
-- **Properties Listed:** 378 (up 11% from July)
-- **Transaction Volume:** 142 sales (down 9% from July due to summer holidays)
-- **Buyer Demand:** Strong, particularly from investors and serious buyers
-- **Seller Motivation:** Mixed, with some waiting for autumn market
+### Pricing Trends
+
+Pricing continues to be one of Wigan's standout features in 2025. New listings came to market at an average asking price of **£261,661**, up 17% compared with last year and 11% higher than July. On a size-adjusted basis, new listings averaged **£243 per sq ft**, 14% higher than last year and up nearly 5% month-on-month.
+
+This reflects ongoing confidence among sellers and a higher share of premium homes entering the market.
+
+For properties where sales were agreed, pricing was steadier. The average agreed asking price was **£224,579**, a modest 1.9% rise on last year and 2.9% above July. On a £ per sq ft basis, agreed deals averaged **£223**, up 5% annually but down slightly (-1.3%) from July.
+
+This suggests that while sellers are ambitious, buyers are still able to negotiate, especially in the face of broader affordability pressures.
+
+### Market Behaviour
+
+Market churn indicators show a noticeable cooling compared with last summer. Price changes fell 14% year-on-year and 20% month-on-month, though they remain 10% above the long-term average. This reflects fewer over-optimistic listings needing adjustment.
+
+Withdrawn listings dropped 12% compared with last year and 27% compared with July, signalling that fewer sellers are giving up on their sales. Fall-throughs also improved slightly, down 3% year-on-year and 2% month-on-month, though they remain 10% higher than the long-term average, hinting at ongoing fragility in transactions.
 
 ## Investment Hotspots in Wigan - August 2025
 
 ### 1. Wigan Town Centre
 
 **August 2025 Highlights:**
-- **Average Price:** £193,800 (up 0.7% from July)
-- **Annual Growth:** 11.8% (up from 11.2% in July)
+- **Average Asking Price:** £261,661 (up 17% year-on-year)
+- **Average Agreed Price:** £224,579 (up 1.9% year-on-year)
+- **Price per Sq Ft:** £243 (new listings), £223 (agreed sales)
 - **Regeneration Progress:** Phase 2 of £135 million project completed
 - **New Transport Hub:** Wigan Wallgate station upgrades operational
 
@@ -317,30 +323,32 @@ August has seen a typical summer market pattern with supply increasing by 11% fr
 - [ ] Review investment performance
 - [ ] Plan next investment
 
-## Conclusion
+## Outlook
 
-Wigan's property market continues to demonstrate exceptional strength in August 2025, with the area maintaining its position as the North West's top-performing market. The combination of strong fundamentals, ongoing regeneration, and favourable supply-demand dynamics creates an environment conducive to both capital growth and rental income.
+Wigan's market in August 2025 is characterised by softer activity but firm prices. While fewer homes are coming to market and fewer sales are being agreed than last year, both new listing and agreed sale prices remain resilient, especially on a per-square-foot basis.
+
+For sellers, this means there is still appetite, but realistic pricing is essential to secure a sale in a market where buyers have more choice. For buyers, the moderation in demand provides scope for negotiation, though premium homes continue to command strong values.
 
 **Key August Takeaways:**
-1. **Market Strength:** Wigan outperforms regional and national averages
-2. **Growth Potential:** 9-13% annual growth expected in prime areas
-3. **Investment Diversity:** Multiple strategies available for different risk profiles
-4. **Long-term Value:** Strategic position in Northern Powerhouse development
-5. **Summer Advantage:** Less competition, better negotiating power
+1. **Pricing Strength:** New listings at £261,661 (up 17% year-on-year)
+2. **Market Activity:** 437 sales agreed (down 4% year-on-year)
+3. **Stock Levels:** 1,912 properties for sale (16% above six-year average)
+4. **Negotiation Scope:** Buyers have more choice and negotiating power
+5. **Premium Performance:** Higher-end properties maintaining strong values
 
-**Strategic Advantages:**
-- Summer market provides opportunities for strategic buyers
-- Autumn market preparation creates momentum
-- Strong fundamentals support long-term growth
-- Diverse investment options across all property types
+**Strategic Implications:**
+- Sellers should price realistically to secure sales
+- Buyers have increased negotiating power
+- Premium properties continue to perform well
+- Market cooling provides opportunities for strategic purchases
 
 **Next Steps:**
-- Take advantage of August market opportunities
-- Prepare for autumn market surge
-- Secure financing at current favourable rates
-- Develop clear investment strategy and timeline
+- Monitor pricing trends carefully
+- Take advantage of increased stock levels
+- Focus on realistic pricing strategies
+- Prepare for potential autumn market changes
 
-The Wigan property market represents a rare combination of growth potential, affordability, and strategic importance that makes it an attractive proposition for property investors in August 2025 and beyond.
+The Wigan property market shows resilience in pricing despite cooling activity, creating a balanced environment for both buyers and sellers in August 2025.
 
 ---
 

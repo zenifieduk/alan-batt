@@ -144,7 +144,7 @@ Your documentation must be:
 
 ColorIQ is a chrome extension that helps users match clothing pieces to their own “color season”. This is based on the concept within the fashion industry of “seasonal color analysis”, or the idea that certain colors mathematically look better on people based on their hair color, skin tone, eye color, etc.
 
-This app allows users to analyze clothing on their website, and match it against the user’s self-defined color season. 
+This app allows users to analyse clothing on their website, and match it against the user’s self-defined color season. 
 
 Read fully the concepts on these two sites to understand better: [https://theconceptwardrobe.com/colour-analysis-comprehensive-guides/seasonal-color-analysis-which-color-season-are-you](https://theconceptwardrobe.com/colour-analysis-comprehensive-guides/seasonal-color-analysis-which-color-season-are-you)
 

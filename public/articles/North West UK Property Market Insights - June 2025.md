@@ -53,7 +53,7 @@ The **majority of Wigan sales (30.8%) occur in the £100,000-£150,000 price ran
 
 ### Leigh
 
-**Leigh maintains affordability with average house prices of £191,703**, showing **4% annual growth**. The market structure favors:
+**Leigh maintains affordability with average house prices of £191,703**, showing **4% annual growth**. The market structure favours:
 
 - **Terraced properties: £144,448** (majority of sales)
 - **Semi-detached properties: £207,787**

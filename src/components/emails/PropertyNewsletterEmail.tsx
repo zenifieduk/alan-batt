@@ -25,12 +25,18 @@ export default function PropertyNewsletterEmail({
   rentalsEmail = 'rentals@alanbatt.co.uk'
 }: PropertyNewsletterEmailProps) {
   return (
-    <div style={{ 
-      fontFamily: 'Arial, sans-serif', 
-      maxWidth: '600px', 
-      margin: '0 auto',
-      backgroundColor: '#f8f9fa'
-    }}>
+    <html>
+      {/* eslint-disable-next-line @next/next/no-head-element */}
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/bwg2coj.css" />
+      </head>
+      <body>
+        <div style={{ 
+          fontFamily: '"goudy-old-style", serif', 
+          maxWidth: '600px', 
+          margin: '0 auto',
+          backgroundColor: '#f8f9fa'
+        }}>
       {/* Email Container */}
       <div style={{ 
         backgroundColor: '#ffffff',
@@ -522,6 +528,8 @@ export default function PropertyNewsletterEmail({
           </div>
         </div>
       </div>
-    </div>
+        </div>
+      </body>
+    </html>
   );
 }

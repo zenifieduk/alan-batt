@@ -42,7 +42,7 @@ npm run dev
 ### **Data Sources**
 - **Google PageSpeed Insights**: Official Google API
 - **Real-time**: Live performance data
-- **Mobile & Desktop**: Both device types analyzed
+- **Mobile & Desktop**: Both device types analysed
 - **Core Web Vitals**: FCP, LCP, FID, CLS metrics
 
 ### **Rate Limiting**
@@ -89,7 +89,7 @@ GET https://www.googleapis.com/pagespeedonline/v5/runPagespeed
 - Cumulative Layout Shift (CLS)
 
 ### **Audit Categories**
-- Performance optimization
+- Performance optimisation
 - Accessibility compliance
 - Best practices adherence
 - SEO technical performance

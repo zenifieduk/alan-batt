@@ -605,6 +605,33 @@ export default function MarketsPage() {
       salesAgreedPrice: 223450,
       salesAgreedPricePerSqFt: 226
     },
+    june2025: {
+      propertiesForSale: 1980,
+      newListings: 520,
+      askingPrice: 247200,
+      pricePerSqFt: 238,
+      salesAgreed: 445,
+      salesAgreedPrice: 225100,
+      salesAgreedPricePerSqFt: 228
+    },
+    july2025: {
+      propertiesForSale: 1850,
+      newListings: 342,
+      askingPrice: 187200,
+      pricePerSqFt: 240,
+      salesAgreed: 156,
+      salesAgreedPrice: 180500,
+      salesAgreedPricePerSqFt: 230
+    },
+    august2025: {
+      propertiesForSale: 1912,
+      newListings: 448,
+      askingPrice: 261661,
+      pricePerSqFt: 243,
+      salesAgreed: 437,
+      salesAgreedPrice: 224579,
+      salesAgreedPricePerSqFt: 223
+    },
     may2024: {
       propertiesForSale: 1890,
       newListings: 452,
@@ -642,18 +669,49 @@ export default function MarketsPage() {
       icon: <Home className="w-5 h-5" />
     },
     {
-      title: "Average Property Price",
-      value: "£245,890",
-      change: "+5.31%",
+      title: "Average Property Price (Aug)",
+      value: "£261,661",
+      change: "+17.0%",
       trend: "up",
       icon: <PoundSterling className="w-5 h-5" />
     },
     {
-      title: "Sales Agreed",
-      value: "463",
-      change: "+4.75%",
-      trend: "up",
+      title: "Sales Agreed (Aug)",
+      value: "437",
+      change: "-4.0%",
+      trend: "down",
       icon: <TrendingUp className="w-5 h-5" />
+    }
+  ]
+
+  const monthlyComparison = [
+    {
+      month: "May 2025",
+      askingPrice: marketData.may2025.askingPrice,
+      salesAgreed: marketData.may2025.salesAgreed,
+      propertiesForSale: marketData.may2025.propertiesForSale,
+      pricePerSqFt: marketData.may2025.pricePerSqFt
+    },
+    {
+      month: "June 2025",
+      askingPrice: marketData.june2025.askingPrice,
+      salesAgreed: marketData.june2025.salesAgreed,
+      propertiesForSale: marketData.june2025.propertiesForSale,
+      pricePerSqFt: marketData.june2025.pricePerSqFt
+    },
+    {
+      month: "July 2025",
+      askingPrice: marketData.july2025.askingPrice,
+      salesAgreed: marketData.july2025.salesAgreed,
+      propertiesForSale: marketData.july2025.propertiesForSale,
+      pricePerSqFt: marketData.july2025.pricePerSqFt
+    },
+    {
+      month: "August 2025",
+      askingPrice: marketData.august2025.askingPrice,
+      salesAgreed: marketData.august2025.salesAgreed,
+      propertiesForSale: marketData.august2025.propertiesForSale,
+      pricePerSqFt: marketData.august2025.pricePerSqFt
     }
   ]
 
@@ -726,11 +784,11 @@ export default function MarketsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-4xl font-bold">UK Property Market Report</h1>
-                  <p className="text-indigo-100 mt-2 text-lg">May 2025 - Alan Batt Local Market Update</p>
+                  <p className="text-indigo-100 mt-2 text-lg">August 2025 - Alan Batt Local Market Update</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold">{formatCurrency(marketData.may2025.askingPrice)}</div>
-                  <div className="text-indigo-100">Average asking price</div>
+                  <div className="text-3xl font-bold">{formatCurrency(marketData.august2025.askingPrice)}</div>
+                  <div className="text-indigo-100">Average asking price (Aug)</div>
                 </div>
               </div>
             </div>
@@ -760,6 +818,12 @@ export default function MarketsPage() {
                   id="mortgages" 
                   label="Mortgages" 
                   active={activeTab === 'mortgages'} 
+                  onClick={setActiveTab} 
+                />
+                <TabButton 
+                  id="monthly" 
+                  label="Monthly Comparison" 
+                  active={activeTab === 'monthly'} 
                   onClick={setActiveTab} 
                 />
               </div>
@@ -955,6 +1019,89 @@ export default function MarketsPage() {
                     <p className="text-amber-700 mt-4 font-semibold text-lg">
                       Buying is now approximately £50 cheaper per month than renting
                     </p>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'monthly' && (
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-semibold text-slate-900">Monthly Market Comparison (May - August 2025)</h3>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Monthly Price Chart */}
+                    <div className="bg-white/60 backdrop-blur-sm border border-slate-200 rounded-2xl p-6">
+                      <h4 className="font-semibold text-slate-900 mb-4 text-xl">Asking Price Trends</h4>
+                      <div className="space-y-4">
+                        {monthlyComparison.map((month, index) => (
+                          <div key={index} className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="font-medium text-slate-700">{month.month}</span>
+                            <span className="text-lg font-bold text-indigo-600">{formatCurrency(month.askingPrice)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Sales Activity Chart */}
+                    <div className="bg-white/60 backdrop-blur-sm border border-slate-200 rounded-2xl p-6">
+                      <h4 className="font-semibold text-slate-900 mb-4 text-xl">Sales Activity</h4>
+                      <div className="space-y-4">
+                        {monthlyComparison.map((month, index) => (
+                          <div key={index} className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="font-medium text-slate-700">{month.month}</span>
+                            <span className="text-lg font-bold text-green-600">{month.salesAgreed} sales</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Properties Available */}
+                    <div className="bg-white/60 backdrop-blur-sm border border-slate-200 rounded-2xl p-6">
+                      <h4 className="font-semibold text-slate-900 mb-4 text-xl">Properties for Sale</h4>
+                      <div className="space-y-4">
+                        {monthlyComparison.map((month, index) => (
+                          <div key={index} className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="font-medium text-slate-700">{month.month}</span>
+                            <span className="text-lg font-bold text-blue-600">{formatNumber(month.propertiesForSale)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Price per Sq Ft */}
+                    <div className="bg-white/60 backdrop-blur-sm border border-slate-200 rounded-2xl p-6">
+                      <h4 className="font-semibold text-slate-900 mb-4 text-xl">Price per Sq Ft</h4>
+                      <div className="space-y-4">
+                        {monthlyComparison.map((month, index) => (
+                          <div key={index} className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                            <span className="font-medium text-slate-700">{month.month}</span>
+                            <span className="text-lg font-bold text-purple-600">£{month.pricePerSqFt}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Key Insights */}
+                  <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-2xl p-6">
+                    <h4 className="font-semibold text-indigo-800 mb-4 text-xl">Key Monthly Insights</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h5 className="font-semibold text-indigo-700 mb-2">Price Growth</h5>
+                        <ul className="space-y-1 text-indigo-600">
+                          <li>• May to August: +6.4% increase</li>
+                          <li>• Strongest growth in August</li>
+                          <li>• £243/sq ft peak in August</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h5 className="font-semibold text-indigo-700 mb-2">Market Activity</h5>
+                        <ul className="space-y-1 text-indigo-600">
+                          <li>• July saw lowest sales (156)</li>
+                          <li>• August recovery (437 sales)</li>
+                          <li>• Stock levels stabilizing</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

@@ -23,7 +23,7 @@ export class SERPAPIService {
   /**
    * Analyze SERP data for a specific keyword using real SerpAPI
    */
-  static async analyzeSERP(keyword: string): Promise<SERPData> {
+  static async analyseSERP(keyword: string): Promise<SERPData> {
     try {
       console.log(`🔍 Analyzing SERP for keyword: ${keyword}`);
       console.log(`🔑 API Key check: ${this.API_KEY ? 'Present' : 'Missing'} (length: ${this.API_KEY.length})`);
@@ -127,7 +127,7 @@ export class SERPAPIService {
   /**
    * Analyze competitors for a keyword using real SerpAPI data
    */
-  static async analyzeCompetitors(keyword: string): Promise<{
+  static async analyseCompetitors(keyword: string): Promise<{
     keyword: string;
     ourDomain: string;
     ourPosition: number;
@@ -212,13 +212,13 @@ export class SERPAPIService {
           console.log(`Processing keyword: ${keyword}`);
           
           // Get SERP analysis for this keyword
-          const serpData = await this.analyzeSERP(keyword);
+          const serpData = await this.analyseSERP(keyword);
           
           // Get keyword research data
           const keywordData = await this.researchKeywords(keyword);
           
           // Get competitor analysis (not used in current implementation)
-          // const competitorData = await this.analyzeCompetitors(keyword);
+          // const competitorData = await this.analyseCompetitors(keyword);
           
           // Process and combine the data
           const processedResults = this.processSERPResults(keyword, serpData);
@@ -506,7 +506,7 @@ export class SERPAPIService {
     }
     
     if (competitors.some(c => c.features.includes('Local Pack'))) {
-      opportunities.push('Local pack optimization opportunity');
+      opportunities.push('Local pack optimisation opportunity');
     }
     
     if (competitors.length > 0) {

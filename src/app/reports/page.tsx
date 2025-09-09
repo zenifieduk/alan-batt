@@ -18,7 +18,7 @@ export default function ReportsPage() {
                   asChild
                   className="px-6 py-2 rounded-xl hover:bg-slate-50 text-slate-600"
                 >
-                  <Link href="/reports/facebook">
+                  <Link href="/reports/social">
                     <Facebook className="h-4 w-4 mr-2" />
                     Social Media
                   </Link>
@@ -91,7 +91,7 @@ export default function ReportsPage() {
                     <span className="font-medium">Includes:</span> Page engagement, post performance, audience demographics
                   </div>
                   <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                    <Link href="/reports/facebook">View Facebook Analytics</Link>
+                    <Link href="/reports/social">View Social Analytics</Link>
                   </Button>
                 </div>
               </div>
