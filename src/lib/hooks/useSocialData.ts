@@ -2,7 +2,7 @@
  * Hook for loading social media data from CSV files
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export interface CombinedMetrics {
   facebook: {
@@ -46,13 +46,16 @@ export function useSocialData(period: string = 'all') {
   const [data, setData] = useState<CombinedMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [meta, setMeta] = useState<any>(null);
+  const [meta, setMeta] = useState<{
+    dateRange?: {
+      start: string;
+      end: string;
+    };
+    totalDays?: number;
+    lastUpdated?: string;
+  } | null>(null);
 
-  useEffect(() => {
-    loadData();
-  }, [period]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -76,7 +79,11 @@ export function useSocialData(period: string = 'all') {
     } finally {
       setLoading(false);
     }
-  };
+  }, [period]);
+
+  useEffect(() => {
+    loadData();
+  }, [period, loadData]);
 
   const refresh = () => {
     loadData();

@@ -33,11 +33,20 @@ interface CombinedMetrics {
   lastUpdated: string;
 }
 
+interface SocialMediaMeta {
+  dateRange?: {
+    start: string;
+    end: string;
+  };
+  totalDays?: number;
+  lastUpdated?: string;
+}
+
 interface SocialMediaDashboardProps {
   data: CombinedMetrics | null;
   loading: boolean;
   error: string | null;
-  meta?: any;
+  meta?: SocialMediaMeta;
   onRefresh: () => void;
   onPeriodChange?: (period: string) => void;
   currentPeriod?: string;

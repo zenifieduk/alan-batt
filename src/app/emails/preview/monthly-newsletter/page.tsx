@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { render } from '@react-email/render';
-import PropertyNewsletterEmail from '@/components/emails/PropertyNewsletterEmail';
 import { fetchBlogPosts } from '@/lib/email-utils';
 
 interface Property {
@@ -66,7 +64,14 @@ const realProperties: Property[] = [
 export default function MonthlyNewsletterPreview() {
   const [mainProperty] = useState<Property>(realProperties[0]);
   const [secondaryProperties] = useState<Property[]>(realProperties.slice(1, 3)); // Take 2 properties for 2-column layout
-  const [blogPosts, setBlogPosts] = useState<any[]>([]);
+  const [blogPosts, setBlogPosts] = useState<Array<{
+    id: string;
+    title: string;
+    excerpt: string;
+    date?: string;
+    slug: string;
+    image?: string;
+  }>>([]);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
 
@@ -319,7 +324,7 @@ export default function MonthlyNewsletterPreview() {
                         {post.excerpt}
                       </p>
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-gray-500">{post.date}</span>
+                        <span className="text-xs text-gray-500">{post.date || 'Recent'}</span>
                         <a 
                           href={`/content/${post.slug}`}
                           className="text-[#058895] text-sm font-semibold hover:text-[#047a85]"

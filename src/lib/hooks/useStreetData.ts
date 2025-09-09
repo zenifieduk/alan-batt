@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { StreetDashboardData } from '@/types/street';
 
 export interface StreetDataMeta {
@@ -13,11 +13,7 @@ export function useStreetData(period: string = '30d') {
   const [error, setError] = useState<string | null>(null);
   const [meta, setMeta] = useState<StreetDataMeta | null>(null);
 
-  useEffect(() => {
-    loadData();
-  }, [period]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -43,7 +39,11 @@ export function useStreetData(period: string = '30d') {
     } finally {
       setLoading(false);
     }
-  };
+  }, [period]);
+
+  useEffect(() => {
+    loadData();
+  }, [period, loadData]);
 
   const refresh = () => {
     loadData();

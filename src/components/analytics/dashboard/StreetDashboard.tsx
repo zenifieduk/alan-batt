@@ -4,18 +4,12 @@ import React, { useState } from 'react';
 import { 
   Home, 
   TrendingUp, 
-  TrendingDown, 
   DollarSign, 
-  Calendar, 
   Users, 
-  Eye,
   RefreshCw,
-  BarChart3,
-  PieChart
+  BarChart3
 } from 'lucide-react';
 import { 
-  LineChart, 
-  Line, 
   BarChart, 
   Bar, 
   PieChart as RechartsPieChart, 
@@ -25,7 +19,6 @@ import {
   YAxis, 
   CartesianGrid, 
   Tooltip, 
-  Legend, 
   ResponsiveContainer 
 } from 'recharts';
 import { useStreetData } from '@/lib/hooks/useStreetData';
@@ -96,7 +89,7 @@ export default function StreetDashboard({ className = '' }: StreetDashboardProps
 
   if (!data) return null;
 
-  const { sales, valuations, viewings } = data;
+  const { sales, valuations } = data;
 
   // Chart data preparation
   const salesByTypeData = sales.metrics.salesByType.map(item => ({

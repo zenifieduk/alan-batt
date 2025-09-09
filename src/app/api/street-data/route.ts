@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     if (useMock) {
       // Use mock data for development or when API key is not available
       console.log('📊 Using mock Street data');
-      data = generateMockStreetData(period);
+      data = generateMockStreetData();
     } else {
       // Use real Street API
       const streetApi = createStreetApiService();

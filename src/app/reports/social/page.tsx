@@ -121,7 +121,7 @@ export default function SocialAnalyticsPage() {
             data={data}
             loading={loading}
             error={error}
-            meta={meta}
+            meta={meta || undefined}
             onRefresh={refresh}
             onPeriodChange={handlePeriodChange}
             currentPeriod={currentPeriod}

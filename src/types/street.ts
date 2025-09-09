@@ -106,7 +106,7 @@ export interface StreetDashboardData {
 
 export interface StreetApiResponse<T> {
   success: boolean;
-  data: T;
+  data: T | null;
   message?: string;
   error?: string;
 }

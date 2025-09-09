@@ -111,8 +111,8 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
         
         // Extract published date and reading time from second line
         const publishedLine = lines.find(line => line.includes('Published:'));
-        const readTimeLine = lines.find(line => line.includes('Reading time:'));
-        const categoryLine = lines.find(line => line.includes('Category:'));
+        // const readTimeLine = lines.find(line => line.includes('Reading time:'));
+        // const categoryLine = lines.find(line => line.includes('Category:'));
         
         // Extract published date
         const publishedDate = publishedLine?.match(/Published:\s*([^|]+)/)?.[1]?.trim() || 'Unknown';

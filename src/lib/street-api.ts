@@ -98,11 +98,12 @@ export class StreetApiService {
         this.getViewingData(period),
       ]);
 
-      // Check if any requests failed
-      if (!salesResponse.success || !valuationsResponse.success || !viewingsResponse.success) {
+      // Check if any requests failed or data is null
+      if (!salesResponse.success || !valuationsResponse.success || !viewingsResponse.success ||
+          !salesResponse.data || !valuationsResponse.data || !viewingsResponse.data) {
         return {
           success: false,
-          data: null as StreetDashboardData,
+          data: null,
           error: 'Failed to fetch one or more data sources',
         };
       }
@@ -121,7 +122,7 @@ export class StreetApiService {
     } catch (error) {
       return {
         success: false,
-        data: null as StreetDashboardData,
+        data: null,
         error: error instanceof Error ? error.message : 'Unknown error',
       };
     }
@@ -140,7 +141,7 @@ export class StreetApiService {
 }
 
 // Mock data generator for development/testing
-export function generateMockStreetData(period: string = '30d'): StreetDashboardData {
+export function generateMockStreetData(): StreetDashboardData {
   const now = new Date();
   const startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
   
