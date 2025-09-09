@@ -83,42 +83,111 @@ export async function fetchProperties(): Promise<Property[]> {
 }
 
 /**
- * Fetch blog posts from your data sources
- * This is a placeholder - replace with your actual blog data fetching logic
+ * Fetch blog posts from markdown files in the articles directory
  */
 export async function fetchBlogPosts(): Promise<BlogPost[]> {
-  // TODO: Replace with actual blog data fetching
-  // This could come from your database, CMS, or external API
-  
-  return [
-    {
-      id: 'august-2025-property-market-forecast',
-      title: 'August 2025 Property Market Forecast',
-      excerpt: 'Get the latest insights into the Wigan property market for August 2025. Discover trends, opportunities, and expert predictions.',
-      slug: 'august-2025-property-market-forecast',
-      content: 'Full blog post content...',
-      image: '/images/blog/august-2025-property-market-forecast.jpg',
-      date: '2025-08-01'
-    },
-    {
-      id: 'wigan-property-market-2025-outlook',
-      title: 'Wigan Property Market 2025 Outlook',
-      excerpt: 'Comprehensive analysis of the Wigan property market outlook for 2025. What to expect and how to prepare.',
-      slug: 'wigan-property-market-2025-outlook',
-      content: 'Full blog post content...',
-      image: '/images/blog/wigan-property-market-2025-outlook.jpg',
-      date: '2025-01-01'
-    },
-    {
-      id: 'july-2025-property-market-summer-insights',
-      title: 'July 2025 Property Market Summer Insights',
-      excerpt: 'Summer insights into the Wigan property market. Seasonal trends and what buyers and sellers should know.',
-      slug: 'july-2025-property-market-summer-insights',
-      content: 'Full blog post content...',
-      image: '/images/blog/july-2025-property-market-summer-insights.jpg',
-      date: '2025-07-01'
+  try {
+    // List of article files to include in the newsletter
+    const articleFiles = [
+      'august-2025-property-market-forecast.md',
+      'wigan-property-market-2025-outlook.md',
+      'july-2025-property-market-summer-insights.md',
+      'first-time-buyers-guide-2025.md',
+      'uk-property-market-forecast-2025.md'
+    ];
+
+    const blogPosts: BlogPost[] = [];
+
+    for (const filename of articleFiles) {
+      try {
+        const response = await fetch(`/articles/${filename}`);
+        if (!response.ok) continue;
+        
+        const content = await response.text();
+        const lines = content.split('\n');
+        
+        // Extract title from first line (remove # prefix)
+        const title = lines[0].replace(/^#\s*/, '').trim();
+        
+        // Extract published date and reading time from second line
+        const publishedLine = lines.find(line => line.includes('Published:'));
+        const readTimeLine = lines.find(line => line.includes('Reading time:'));
+        const categoryLine = lines.find(line => line.includes('Category:'));
+        
+        // Extract published date
+        const publishedDate = publishedLine?.match(/Published:\s*([^|]+)/)?.[1]?.trim() || 'Unknown';
+        
+        // Generate excerpt from first few paragraphs (first 200 characters)
+        const contentStart = lines.findIndex(line => line.trim() === '---') + 1;
+        const excerptStart = contentStart + 1;
+        const excerptLines = lines.slice(excerptStart, excerptStart + 10);
+        const excerptText = excerptLines.join(' ').replace(/#{1,6}\s*/g, '').trim();
+        const excerpt = excerptText.length > 200 ? excerptText.substring(0, 200) + '...' : excerptText;
+        
+        // Generate slug from filename
+        const slug = filename.replace('.md', '');
+        
+        // Try to find a featured image in the content or use a default
+        let featuredImage = '/images/blog/care-fees-property.jpg'; // Default image
+        
+        // Look for image references in the content
+        const imageMatch = content.match(/!\[.*?\]\((.*?)\)/);
+        if (imageMatch && imageMatch[1]) {
+          featuredImage = imageMatch[1];
+        }
+        
+        // Look for specific blog images
+        const blogImageMatch = content.match(/\/images\/blog\/([^)]+)/);
+        if (blogImageMatch && blogImageMatch[1]) {
+          featuredImage = `/images/blog/${blogImageMatch[1]}`;
+        }
+        
+        // Assign specific images based on article content
+        if (slug.includes('property-market') || slug.includes('forecast')) {
+          featuredImage = '/images/blog/care-fees-property.jpg';
+        } else if (slug.includes('first-time') || slug.includes('buyers')) {
+          featuredImage = '/images/blog/divorce-separation-property.jpg';
+        } else if (slug.includes('wigan')) {
+          featuredImage = '/images/blog/care-fees-property.jpg';
+        }
+
+        blogPosts.push({
+          id: slug,
+          title,
+          excerpt,
+          slug,
+          content,
+          image: featuredImage,
+          date: publishedDate
+        });
+      } catch (error) {
+        console.error(`Error processing article ${filename}:`, error);
+        continue;
+      }
     }
-  ];
+
+    // Sort by date (most recent first)
+    return blogPosts.sort((a, b) => {
+      const dateA = new Date(a.date || '');
+      const dateB = new Date(b.date || '');
+      return dateB.getTime() - dateA.getTime();
+    });
+
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
+    // Return fallback data if there's an error
+    return [
+      {
+        id: 'august-2025-property-market-forecast',
+        title: 'August 2025 Property Market Forecast',
+        excerpt: 'Get the latest insights into the Wigan property market for August 2025. Discover trends, opportunities, and expert predictions.',
+        slug: 'august-2025-property-market-forecast',
+        content: 'Full blog post content...',
+        image: '/images/blog/august-2025-property-market-forecast.jpg',
+        date: '2025-08-01'
+      }
+    ];
+  }
 }
 
 /**

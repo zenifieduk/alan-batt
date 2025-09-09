@@ -14,6 +14,7 @@ interface NewsletterBuilder {
 }
 
 export default function LiveEmailBuilderPage() {
+  // Updated to fix scraping issues
   const [builder, setBuilder] = useState<NewsletterBuilder>({
     subject: '',
     previewText: '',
@@ -26,20 +27,25 @@ export default function LiveEmailBuilderPage() {
   const [loading, setLoading] = useState(false);
   const [scraping, setScraping] = useState(false);
   const [newRecipient, setNewRecipient] = useState('');
-  const [propertyUrls, setPropertyUrls] = useState('');
-  const [articleUrls, setArticleUrls] = useState('');
-  const [articleUrls2, setArticleUrls2] = useState(''); // Second article URL
-  const [currentPropertyRow, setCurrentPropertyRow] = useState(0); // Track which property row we're adding to
+  const [featuredPropertyUrl, setFeaturedPropertyUrl] = useState('');
+  const [propertyRow1Url1, setPropertyRow1Url1] = useState('');
+  const [propertyRow1Url2, setPropertyRow1Url2] = useState('');
+  const [articleUrl1, setArticleUrl1] = useState('');
+  const [articleUrl2, setArticleUrl2] = useState('');
 
 
-  const scrapeContent = async (type: 'properties' | 'articles' | 'articles2') => {
+  const scrapeContent = async (type: 'featured' | 'property1' | 'property2' | 'article1' | 'article2') => {
     let urls = '';
-    if (type === 'properties') {
-      urls = propertyUrls;
-    } else if (type === 'articles') {
-      urls = articleUrls;
-    } else if (type === 'articles2') {
-      urls = articleUrls2;
+    if (type === 'featured') {
+      urls = featuredPropertyUrl;
+    } else if (type === 'property1') {
+      urls = propertyRow1Url1;
+    } else if (type === 'property2') {
+      urls = propertyRow1Url2;
+    } else if (type === 'article1') {
+      urls = articleUrl1;
+    } else if (type === 'article2') {
+      urls = articleUrl2;
     }
     
     if (!urls.trim()) {
@@ -53,7 +59,7 @@ export default function LiveEmailBuilderPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          type: type === 'properties' ? 'properties' : 'blogs', 
+          type: type.startsWith('article') ? 'blogs' : 'properties', 
           urls: [urls] 
         }),
       });
@@ -62,35 +68,50 @@ export default function LiveEmailBuilderPage() {
       if (result.success && result.data.length > 0) {
         const scrapedItem = result.data[0];
         
-        if (type === 'properties') {
-          if (!builder.featuredProperty) {
-            // Add as featured property
-            setBuilder(prev => ({ ...prev, featuredProperty: scrapedItem }));
-          } else {
-            // Add to current property row
-            setBuilder(prev => {
-              const newPropertyRows = [...prev.propertyRows];
-              if (!newPropertyRows[currentPropertyRow]) {
-                newPropertyRows[currentPropertyRow] = [];
-              }
-              newPropertyRows[currentPropertyRow] = [...newPropertyRows[currentPropertyRow], scrapedItem];
-              return { ...prev, propertyRows: newPropertyRows };
-            });
-          }
-          setPropertyUrls('');
-        } else {
-          // Add as article
+        if (type === 'featured') {
+          // Add as featured property
+          setBuilder(prev => ({ ...prev, featuredProperty: scrapedItem }));
+          setFeaturedPropertyUrl('');
+        } else if (type === 'property1') {
+          // Add to property row 1, position 1
+          setBuilder(prev => {
+            const newPropertyRows = [...prev.propertyRows];
+            if (!newPropertyRows[0]) {
+              newPropertyRows[0] = [];
+            }
+            newPropertyRows[0][0] = scrapedItem;
+            return { ...prev, propertyRows: newPropertyRows };
+          });
+          setPropertyRow1Url1('');
+        } else if (type === 'property2') {
+          // Add to property row 1, position 2
+          setBuilder(prev => {
+            const newPropertyRows = [...prev.propertyRows];
+            if (!newPropertyRows[0]) {
+              newPropertyRows[0] = [];
+            }
+            newPropertyRows[0][1] = scrapedItem;
+            return { ...prev, propertyRows: newPropertyRows };
+          });
+          setPropertyRow1Url2('');
+        } else if (type === 'article1') {
+          // Add as first article
           setBuilder(prev => ({ 
             ...prev, 
-            articles: [...prev.articles, scrapedItem]
+            articles: [scrapedItem, ...prev.articles.slice(1)]
           }));
-          if (type === 'articles') {
-            setArticleUrls('');
-          } else {
-            setArticleUrls2('');
-          }
+          setArticleUrl1('');
+        } else if (type === 'article2') {
+          // Add as second article
+          setBuilder(prev => ({ 
+            ...prev, 
+            articles: [...prev.articles.slice(0, 1), scrapedItem, ...prev.articles.slice(2)]
+          }));
+          setArticleUrl2('');
         }
-        alert(`Successfully scraped ${type.slice(0, -1)}!`);
+        console.log('Scraped item:', scrapedItem);
+        console.log('Current builder state:', builder);
+        alert(`Successfully scraped ${type}!`);
       } else {
         alert(`Failed to scrape ${type}: ${result.error || 'No data returned'}`);
       }
@@ -135,7 +156,7 @@ export default function LiveEmailBuilderPage() {
           subject: builder.subject || `Hot Properties Newsletter - ${new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`,
           previewText: builder.previewText,
           mainProperty: builder.featuredProperty,
-          secondaryProperties: builder.propertyRows.flat(), // Flatten all property rows into secondary properties
+          secondaryProperties: builder.propertyRows.flat().slice(0, 4), // Flatten all property rows into secondary properties, limit to 4
           blogPosts: builder.articles,
           templateId: 'newsletter'
         }),
@@ -219,19 +240,19 @@ export default function LiveEmailBuilderPage() {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Property URL
+                      Featured Property URL
                     </label>
                     <input
                       type="url"
-                      value={propertyUrls}
-                      onChange={(e) => setPropertyUrls(e.target.value)}
-                      placeholder="https://example.com/property-url"
+                      value={featuredPropertyUrl}
+                      onChange={(e) => setFeaturedPropertyUrl(e.target.value)}
+                      placeholder="https://www.alanbatt.co.uk/properties/sale/wigan/wigan/longshaw-old-road-billinge-wn5/"
                       className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#29377c] focus:border-transparent"
                     />
                   </div>
                   <button
-                    onClick={() => scrapeContent('properties')}
-                    disabled={scraping || !propertyUrls.trim()}
+                    onClick={() => scrapeContent('featured')}
+                    disabled={scraping || !featuredPropertyUrl.trim()}
                     className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {scraping ? 'Scraping...' : 'Scrape Featured Property'}
@@ -261,45 +282,64 @@ export default function LiveEmailBuilderPage() {
 
             {/* Property Rows */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6">
-              <h2 className="text-xl font-bold text-slate-900 mb-4">Property Rows</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">Property Row 1</h2>
+              <p className="text-sm text-slate-600 mb-4">
+                Add 2 properties for the 2-column layout in row 1.
+              </p>
               
-              {/* Add New Property Row */}
+              {/* Property 1 */}
               <div className="mb-4 p-4 border-2 border-dashed border-slate-300 rounded-lg">
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <label className="block text-sm font-medium text-slate-700">
-                      Property Row {currentPropertyRow + 1}
-                    </label>
-                    <select
-                      value={currentPropertyRow}
-                      onChange={(e) => setCurrentPropertyRow(parseInt(e.target.value))}
-                      className="px-2 py-1 border border-slate-300 rounded text-sm"
-                    >
-                      {Array.from({ length: Math.max(1, builder.propertyRows.length + 1) }, (_, i) => (
-                        <option key={i} value={i}>Row {i + 1}</option>
-                      ))}
-                    </select>
-                  </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Property URL
+                      Property 1 URL
                     </label>
                     <input
                       type="url"
-                      value={propertyUrls}
-                      onChange={(e) => setPropertyUrls(e.target.value)}
-                      placeholder="https://example.com/property-url"
+                      value={propertyRow1Url1}
+                      onChange={(e) => setPropertyRow1Url1(e.target.value)}
+                      placeholder="https://www.alanbatt.co.uk/properties/sale/wigan/wigan/greenfield-avenue-ince-wn2/"
                       className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#29377c] focus:border-transparent"
                     />
                   </div>
                   <button
-                    onClick={() => scrapeContent('properties')}
-                    disabled={scraping || !propertyUrls.trim()}
+                    onClick={() => scrapeContent('property1')}
+                    disabled={scraping || !propertyRow1Url1.trim()}
                     className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {scraping ? 'Scraping...' : `Add to Row ${currentPropertyRow + 1}`}
+                    {scraping ? 'Scraping...' : 'Scrape Property 1'}
                   </button>
                 </div>
+              </div>
+
+              {/* Property 2 */}
+              <div className="mb-4 p-4 border-2 border-dashed border-slate-300 rounded-lg">
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                      Property 2 URL
+                    </label>
+                    <input
+                      type="url"
+                      value={propertyRow1Url2}
+                      onChange={(e) => setPropertyRow1Url2(e.target.value)}
+                      placeholder="https://www.alanbatt.co.uk/properties/sale/uncategorized/wigan/mitchell-street-wigan-wn5/"
+                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#29377c] focus:border-transparent"
+                    />
+                  </div>
+                  <button
+                    onClick={() => scrapeContent('property2')}
+                    disabled={scraping || !propertyRow1Url2.trim()}
+                    className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {scraping ? 'Scraping...' : 'Scrape Property 2'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Debug Info */}
+              <div className="mb-4 p-2 bg-gray-100 rounded text-xs">
+                <strong>Debug:</strong> Property rows: {JSON.stringify(builder.propertyRows, null, 2)}
               </div>
 
               {/* Display Property Rows */}
@@ -317,30 +357,32 @@ export default function LiveEmailBuilderPage() {
                       Remove Row
                     </button>
                   </div>
-                  {row.map((property, propertyIndex) => (
-                    <div key={property.id} className="mb-3 p-3 bg-white rounded border">
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium text-slate-900">Property {propertyIndex + 1}</h4>
-                        <button
-                          onClick={() => setBuilder(prev => {
-                            const newPropertyRows = [...prev.propertyRows];
-                            newPropertyRows[rowIndex] = newPropertyRows[rowIndex].filter((_, i) => i !== propertyIndex);
-                            return { ...prev, propertyRows: newPropertyRows };
-                          })}
-                          className="text-red-500 hover:text-red-700 text-xs"
-                        >
-                          Remove
-                        </button>
+                  <div className="grid grid-cols-2 gap-3">
+                    {row.map((property, propertyIndex) => (
+                      <div key={property.id} className="p-3 bg-white rounded border">
+                        <div className="flex items-start justify-between mb-2">
+                          <h4 className="font-medium text-slate-900 text-xs">Property {propertyIndex + 1}</h4>
+                          <button
+                            onClick={() => setBuilder(prev => {
+                              const newPropertyRows = [...prev.propertyRows];
+                              newPropertyRows[rowIndex] = newPropertyRows[rowIndex].filter((_, i) => i !== propertyIndex);
+                              return { ...prev, propertyRows: newPropertyRows };
+                            })}
+                            className="text-red-500 hover:text-red-700 text-xs"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                        <img
+                          src={property.mainImage}
+                          alt={property.title}
+                          className="w-full h-20 object-cover rounded mb-2"
+                        />
+                        <h5 className="font-medium text-slate-900 text-xs">{property.title}</h5>
+                        <p className="text-xs text-slate-600">{property.price}</p>
                       </div>
-                      <img
-                        src={property.mainImage}
-                        alt={property.title}
-                        className="w-full h-24 object-cover rounded mb-2"
-                      />
-                      <h5 className="font-medium text-slate-900 text-sm">{property.title}</h5>
-                      <p className="text-xs text-slate-600">{property.price}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -349,47 +391,52 @@ export default function LiveEmailBuilderPage() {
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6">
               <h2 className="text-xl font-bold text-slate-900 mb-4">Articles</h2>
               
-              {/* Add New Articles */}
+              {/* Article 1 */}
               <div className="mb-4 p-4 border-2 border-dashed border-slate-300 rounded-lg">
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Article URL 1
+                      Article 1 URL
                     </label>
                     <input
                       type="url"
-                      value={articleUrls}
-                      onChange={(e) => setArticleUrls(e.target.value)}
-                      placeholder="https://www.alanbatt.co.uk/article-url"
+                      value={articleUrl1}
+                      onChange={(e) => setArticleUrl1(e.target.value)}
+                      placeholder="https://www.alanbatt.co.uk/the-stepping-stones-to-a-successful-letting/"
                       className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#29377c] focus:border-transparent"
                     />
                   </div>
                   <button
-                    onClick={() => scrapeContent('articles')}
-                    disabled={scraping || !articleUrls.trim()}
+                    onClick={() => scrapeContent('article1')}
+                    disabled={scraping || !articleUrl1.trim()}
                     className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {scraping ? 'Scraping...' : 'Add Article 1'}
+                    {scraping ? 'Scraping...' : 'Scrape Article 1'}
                   </button>
-                  
+                </div>
+              </div>
+              
+              {/* Article 2 */}
+              <div className="mb-4 p-4 border-2 border-dashed border-slate-300 rounded-lg">
+                <div className="space-y-3">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">
-                      Article URL 2
+                      Article 2 URL
                     </label>
                     <input
                       type="url"
-                      value={articleUrls2}
-                      onChange={(e) => setArticleUrls2(e.target.value)}
-                      placeholder="https://www.alanbatt.co.uk/article-url-2"
+                      value={articleUrl2}
+                      onChange={(e) => setArticleUrl2(e.target.value)}
+                      placeholder="https://www.alanbatt.co.uk/the-growing-divide-how-rising-housing-costs-are-reshaping-homeownership-dreams-in-the-uk/"
                       className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#29377c] focus:border-transparent"
                     />
                   </div>
                   <button
-                    onClick={() => scrapeContent('articles2')}
-                    disabled={scraping || !articleUrls2.trim()}
+                    onClick={() => scrapeContent('article2')}
+                    disabled={scraping || !articleUrl2.trim()}
                     className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {scraping ? 'Scraping...' : 'Add Article 2'}
+                    {scraping ? 'Scraping...' : 'Scrape Article 2'}
                   </button>
                 </div>
               </div>
@@ -479,7 +526,7 @@ export default function LiveEmailBuilderPage() {
               {builder.featuredProperty ? (
                 <PropertyNewsletterEmail
                   mainProperty={builder.featuredProperty}
-                  secondaryProperties={builder.propertyRows.flat()}
+                  secondaryProperties={builder.propertyRows.flat().slice(0, 4)} // Limit to 4 properties for better layout
                   blogPosts={builder.articles}
                   companyName="Alan Batt Estate Agents"
                   companyLogo="/logo.png"

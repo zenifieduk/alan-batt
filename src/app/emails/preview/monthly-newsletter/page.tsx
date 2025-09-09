@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { render } from '@react-email/render';
 import PropertyNewsletterEmail from '@/components/emails/PropertyNewsletterEmail';
+import { fetchBlogPosts } from '@/lib/email-utils';
 
 interface Property {
   id: string;
@@ -64,9 +65,23 @@ const realProperties: Property[] = [
 
 export default function MonthlyNewsletterPreview() {
   const [mainProperty] = useState<Property>(realProperties[0]);
-  const [secondaryProperties] = useState<Property[]>(realProperties.slice(1));
+  const [secondaryProperties] = useState<Property[]>(realProperties.slice(1, 3)); // Take 2 properties for 2-column layout
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+
+  // Load blog posts on component mount
+  useEffect(() => {
+    const loadBlogPosts = async () => {
+      try {
+        const posts = await fetchBlogPosts();
+        setBlogPosts(posts);
+      } catch (error) {
+        console.error('Error loading blog posts:', error);
+      }
+    };
+    loadBlogPosts();
+  }, []);
 
   const handleSendTestEmail = async () => {
     setIsSendingEmail(true);
@@ -82,7 +97,7 @@ export default function MonthlyNewsletterPreview() {
           previewText: 'Check out our latest properties and market insights',
           mainProperty: mainProperty,
           secondaryProperties: secondaryProperties,
-          blogPosts: [],
+          blogPosts: blogPosts,
           templateId: 'newsletter'
         }),
       });
@@ -279,6 +294,45 @@ export default function MonthlyNewsletterPreview() {
               ))}
             </div>
           </div>
+
+          {/* Blog Posts Section */}
+          {blogPosts.length > 0 && (
+            <div className="mb-12">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center" style={{ fontFamily: '"goudy-old-style", serif' }}>
+                Latest Market Insights
+              </h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                {blogPosts.slice(0, 4).map((post) => (
+                  <div key={post.id} className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                    {post.image && (
+                      <img 
+                        src={post.image} 
+                        alt={post.title}
+                        className="w-full h-48 object-cover"
+                      />
+                    )}
+                    <div className="p-4">
+                      <h4 className="font-bold text-gray-800 mb-2" style={{ fontFamily: '"goudy-old-style", serif' }}>
+                        {post.title}
+                      </h4>
+                      <p className="text-gray-600 text-sm mb-3 line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-gray-500">{post.date}</span>
+                        <a 
+                          href={`/content/${post.slug}`}
+                          className="text-[#058895] text-sm font-semibold hover:text-[#047a85]"
+                        >
+                          Read More →
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Service Promotion Blocks - 3 Column Layout with New Email Images */}
           <div className="mb-12">
