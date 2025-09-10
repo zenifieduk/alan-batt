@@ -31,7 +31,7 @@ export default function NewDevPage() {
 
       {/* Footer */}
       <footer className="px-8 py-8 text-center text-slate-500">
-        <p>&copy; 2024 Alan Batt Technology Hub. Development showcase coming soon.</p>
+        <p>&copy; 2025 Alan Batt Technology Hub. Development showcase coming soon.</p>
       </footer>
     </div>
   )

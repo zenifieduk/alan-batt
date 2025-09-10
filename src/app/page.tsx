@@ -293,7 +293,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="px-8 py-8 text-center text-slate-500 mt-20">
-        <p>&copy; 2024 Alan Batt Tech Hub. Business information and tools dashboard.</p>
+        <p>&copy; 2025 Alan Batt Tech Hub. Business information and tools dashboard.</p>
       </footer>
     </div>
   )

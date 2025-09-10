@@ -852,7 +852,7 @@ export default function BlogPostPage({ params }: PageProps) {
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center text-slate-500">
-        <p>&copy; 2024 Magicalogical. Revolutionising client-developer collaboration through innovative technology demonstration.</p>
+        <p>&copy; 2025 Magicalogical. Revolutionising client-developer collaboration through innovative technology demonstration.</p>
       </footer>
     </div>
   )

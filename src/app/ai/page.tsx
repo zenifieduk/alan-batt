@@ -510,7 +510,7 @@ export default function AIPage() {
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center text-slate-500">
-        <p>&copy; 2024 Alan Batt. Experience the future of AI conversation.</p>
+        <p>&copy; 2025 Alan Batt. Experience the future of AI conversation.</p>
       </footer>
     </div>
   )

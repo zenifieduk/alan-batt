@@ -111,7 +111,7 @@ export default function ReportsPage() {
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center text-slate-500">
-        <p>&copy; 2024 Alan Batt Technology Hub. Analytics dashboard coming soon.</p>
+        <p>&copy; 2025 Alan Batt Technology Hub. Analytics dashboard coming soon.</p>
       </footer>
     </div>
   )

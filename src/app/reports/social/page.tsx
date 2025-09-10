@@ -152,7 +152,7 @@ export default function SocialAnalyticsPage() {
 
       {/* Footer */}
       <footer className="container mx-auto px-4 py-8 text-center text-slate-500">
-        <p>&copy; 2024 Alan Batt Technology Hub. Social media analytics powered by CSV data exports.</p>
+        <p>&copy; 2025 Alan Batt Technology Hub. Social media analytics powered by CSV data exports.</p>
       </footer>
     </div>
   )
