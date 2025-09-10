@@ -64,8 +64,8 @@ interface MetricType {
 // Sample data - replace with real API calls
 const generateSampleData = (): MarketData => ({
   currentWeek: {
-    endDate: "September 30, 2025",
-    weekNumber: 39
+    endDate: "September 7, 2025",
+    weekNumber: 36
   },
   executive: {
     marketHealth: "STRONG",
@@ -784,7 +784,7 @@ export default function MarketsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-4xl font-bold">UK Property Market Report</h1>
-                  <p className="text-indigo-100 mt-2 text-lg">August 2025 - Alan Batt Local Market Update</p>
+                  <p className="text-indigo-100 mt-2 text-lg">Week 36 - Week ending Sept 7th - Alan Batt Local Market Update</p>
                 </div>
                 <div className="text-right">
                   <div className="text-3xl font-bold">{formatCurrency(marketData.august2025.askingPrice)}</div>
