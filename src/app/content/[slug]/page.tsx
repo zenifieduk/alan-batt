@@ -440,6 +440,44 @@ export default function BlogPostPage({ params }: PageProps) {
             status: 'draft',
             category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'News & Insights Post'
           })
+        } else if (slug === 'wigan-property-market-august-2025') {
+          const response = await fetch('/articles/wigan-property-market-august-2025.md')
+          if (!response.ok) throw new Error('Post not found')
+          
+          const content = await response.text()
+          
+          // Parse the frontmatter-style content
+          const lines = content.split('\n')
+          const title = lines[0].replace('# ', '')
+          const publishedLine = lines.find(line => line.includes('Published:'))
+          const readTimeLine = lines.find(line => line.includes('Reading time:'))
+          const categoryLine = lines.find(line => line.includes('Category:'))
+          
+          // Extract headings for TOC
+          const headingRegex = /^(#{2,3})\s+(.+)$/gm
+          const headings: TOCItem[] = []
+          let match
+          
+          while ((match = headingRegex.exec(content)) !== null) {
+            const level = match[1].length
+            const title = match[2].trim()
+            
+            // Skip headings that are just markdown separators or don't contain meaningful content
+            if (title && !title.startsWith('---') && title.length > 1) {
+              const id = generateHeadingId(title)
+              headings.push({ id, title, level })
+            }
+          }
+          
+          setTocItems(headings)
+          setPost({
+            title,
+            content,
+            date: publishedLine?.split('Published: ')[1]?.split(' |')[0] || 'August 2025',
+            readTime: readTimeLine?.split('Reading time: ')[1]?.replace('*', '') || '6 minutes',
+            status: 'published',
+            category: (categoryLine?.split('Category: ')[1]?.trim() as 'News & Insights Post' | 'Social Post' | 'Email') || 'News & Insights Post'
+          })
         } else {
           throw new Error('Post not found')
         }

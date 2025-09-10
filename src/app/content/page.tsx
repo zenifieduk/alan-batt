@@ -14,6 +14,15 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'wigan-property-market-august-2025',
+    title: 'Wigan Property Market August 2025: Strong Prices Meet Cooling Activity',
+    excerpt: 'Wigan\'s property market shows remarkable pricing resilience despite moderated activity levels. New listings achieved 17.2% annual price growth, whilst transaction volumes remain healthy above historical averages.',
+    date: '1st September 2025',
+    readTime: '6 minutes',
+    status: 'published',
+    category: 'News & Insights Post'
+  },
+  {
     slug: 'north-west-uk-property-market-insights-june-2025',
     title: 'North West UK Property Market Insights - June 2025: Wigan and Surrounding Areas',
     excerpt: 'Comprehensive analysis of the North West property market with Wigan emerging as a standout performer. Detailed insights into regional trends, investment opportunities, and market forecasts.',
